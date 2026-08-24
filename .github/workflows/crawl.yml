@@ -17,4 +17,4 @@ jobs:
         env: {KOPIS_SERVICE_KEY: '${{ secrets.KOPIS_SERVICE_KEY }}'}
         run: python scripts/crawl_all.py
       - name: 결과 커밋
-        run: git config user.name "musical-bot" && git config user.email "bot@users.noreply.github.com" && git add docs/data/*.json && (git diff --cached --quiet || git commit -m "auto update") && git push
+        run: git config user.name "musical-bot" && git config user.email "bot@users.noreply.github.com" && git add docs/data/musicals.json && (git diff --cached --quiet || git commit -m "auto update") && git push
