@@ -308,38 +308,61 @@ function renderCal(){
   renderDay();
 }
 
+function parseTicketLinks(예매처){
+  if(!예매처) return [];
+  return 예매처.split("|").map(seg=>seg.trim()).filter(Boolean).map(seg=>{
+    const idx=seg.indexOf("http");
+    if(idx===-1) return null;
+    const url=seg.slice(idx);
+    let name=seg.slice(0,idx).replace(/:\s*$/,"").trim();
+    if(!name) name="예매처";
+    return {name,url};
+  }).filter(Boolean);
+}
+function linksHtml(예매처){
+  return parseTicketLinks(예매처).map(l=>'<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.name)+'</a>').join(' · ');
+}
+
 function renderDay(){
   const box=$("dayDetail");
   const map=castByDate();
   const dayCasts=map[selDate]||[];
   const dayEvents=eventDates(selDate);
-  const castShowNames=new Set(dayCasts.map(c=>c.공연명));
-  const generalShows=showsOnDate(selDate).filter(s=>!castShowNames.has(s.공연명));
+  const dayShows=showsOnDate(selDate);
   const [y,m,d]=selDate.split("-");
   let html='<div class="h">'+Number(m)+'월 '+Number(d)+'일</div>';
 
-  if(!dayCasts.length && !dayEvents.length && !generalShows.length){
+  // 이 날짜에 관련된 공연명 = 진행중인 공연 + 캐스트 데이터가 있는 공연
+  const names=[...new Set([...dayShows.map(s=>s.공연명), ...dayCasts.map(c=>c.공연명)])].sort();
+
+  if(!names.length && !dayEvents.length){
     html+='<div class="empty"><b>비어 있는 날</b>이 날짜에 진행 중인 공연 정보가 없습니다.</div>';
     box.innerHTML=html; return;
   }
-  // 공연+회차별 그룹
-  const groups={};
-  for(const c of dayCasts){
-    const k=c.공연명+"|"+(c.회차||"");
-    (groups[k]=groups[k]||[]).push(c);
+
+  for(const name of names){
+    const show=musicals.find(mu=>mu.공연명===name);
+    const casts_=dayCasts.filter(c=>c.공연명===name);
+    const links=show?linksHtml(show.예매처):"";
+
+    html+='<div class="slot"><div class="t"><b>'+esc(name)+'</b><span>'+esc(show&&show.공연시간?show.공연시간:"")+'</span></div>';
+    // 공연장 · 가격 · 예매처 (항상 표시)
+    const info=[];
+    if(show&&show.공연장) info.push(esc(show.공연장));
+    if(show&&show.티켓가격) info.push(esc(show.티켓가격));
+    if(links) info.push(links);
+    if(info.length) html+='<div class="castline" style="color:var(--muted)">'+info.join(' · ')+'</div>';
+    // 캐스트 (있을 때만)
+    if(casts_.length){
+      const lines=casts_.map(c=>{
+        const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
+        return c.배역?esc(c.배역)+" "+actor:actor;
+      }).join(" · ");
+      html+='<div class="castline">'+lines+'</div>';
+    }
+    html+='</div>';
   }
-  for(const k of Object.keys(groups).sort()){
-    const [name,time]=k.split("|");
-    const lines=groups[k].map(c=>{
-      const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
-      return c.배역?esc(c.배역)+" "+actor:actor;
-    }).join(" · ");
-    html+='<div class="slot"><div class="t"><b>'+esc(name)+'</b><span>'+esc(time||"")+'</span></div><div class="castline">'+lines+'</div></div>';
-  }
-  for(const s of generalShows){
-    html+='<div class="slot"><div class="t"><b>'+esc(s.공연명)+'</b><span>'+esc(s.공연시간||"")+'</span></div><div class="castline" style="color:var(--muted)">'
-      +esc(s.공연장||"")+(s.티켓가격?(' · '+esc(s.티켓가격)):"")+'</div></div>';
-  }
+
   for(const e of dayEvents){
     html+='<div class="slot"><div class="t"><b style="color:var(--gold)">'+esc(e.title)+'</b>'+(e.disc?'<span>'+e.disc+'%</span>':"")+'</div><div class="castline">'+esc(e.show||"")+(e.link?' · <a href="'+esc(e.link)+'" target="_blank" rel="noopener">공지 보기</a>':"")+'</div></div>';
   }
@@ -350,8 +373,10 @@ function renderActorChips(){
   const count={};
   for(const c of casts){ if(selShow&&c.공연명!==selShow)continue; if(c.배우)count[c.배우]=(count[c.배우]||0)+1 }
   const actors=Object.keys(count).sort((a,b)=>count[b]-count[a]).slice(0,40);
-  const box=$("actorChips");box.innerHTML="";
-  if(!actors.length){box.innerHTML='<span class="stat">casts.json을 불러오면 배우별 스포트라이트를 켤 수 있어요</span>';return}
+  const box=$("actorChips");
+  box.innerHTML="";
+  box.style.display = actors.length ? "flex" : "none";   // 캐스트 없으면 영역 자체를 숨김
+  if(!actors.length) return;
   for(const a of actors){
     const b=document.createElement("button");
     b.className="chip"+(a===selActor?" on":"");b.textContent=a;
@@ -377,13 +402,12 @@ function renderShows(){
   }
   list.innerHTML=items.slice(0,200).map(s=>{
     const img=s.포스터?'<img class="poster" src="'+esc(s.포스터)+'" alt="" loading="lazy">':'<div class="poster"></div>';
-    const link=(s.예매처||"").split("|")[0].trim();
-    const url=link.includes("http")?link.slice(link.indexOf("http")):"";
+    const links=linksHtml(s.예매처);
     return '<div class="m-item">'+img+'<div class="m-info"><div class="name">'+esc(s.공연명)
       +(s.상태==="공연중"?'<span class="badge">공연중</span>':"")+'</div><div class="meta">'
       +esc(s.시작일)+' ~ '+esc(s.종료일)+'<br>'+esc(s.공연장||"")
       +(s.출연진?'<br>'+esc(s.출연진):"")
-      +(url?'<br><a href="'+esc(url)+'" target="_blank" rel="noopener">예매처 열기</a>':"")+'</div></div></div>';
+      +(links?'<br>'+links:"")+'</div></div></div>';
   }).join("");
   if(items.length>200)list.innerHTML+='<div class="empty">'+items.length+'건 중 200건 표시 — 검색으로 좁혀보세요</div>';
 }
@@ -409,7 +433,7 @@ function renderEvents(){
 
 /* ─────────── 데이터 탭 ─────────── */
 function stats(){
-  $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b> · 캐스트 <b>'+casts.length+'</b>';
+  $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
   $("muStat").textContent=musicals.length?musicals.length+"건 저장됨":"";
   $("caStat").textContent=casts.length?casts.length+"건 저장됨":"";
 }
