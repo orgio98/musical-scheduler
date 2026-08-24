@@ -160,13 +160,6 @@
     <button data-tab="shows">공연</button>
   </nav>
 
-  <div class="filters">
-    <label class="tgl"><input type="checkbox" id="fVenue" checked><span>비전문 공연장 제외</span></label>
-    <label class="tgl"><input type="checkbox" id="fLocal" checked><span>지방 소극장 제외</span></label>
-    <label class="tgl"><input type="checkbox" id="fSmall"><span>수도권 소극장 제외</span></label>
-    <span class="stat" id="filterStat"></span>
-  </div>
-
   <!-- ═══ 달력 ═══ -->
   <section id="tab-cal" class="on">
     <div class="show-filter">
@@ -206,9 +199,6 @@ let view = new Date(); view.setDate(1);
 let selDate = fmt(new Date());
 let selActor = null;
 let selShow  = "";
-let fVenue = true;   // 박물관·과학관 등 비전문 공연장 제외
-let fLocal = true;   // 지방 소극장 제외
-let fSmall = false;  // 수도권 소극장 제외 (기본 꺼짐)
 
 const $ = id => document.getElementById(id);
 function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -244,115 +234,67 @@ function isKids(s){
   return mx > 0 && mx <= 20000;
 }
 
-// 지역 판별은 공연장명과 공연명의 [대괄호] 표기만 사용한다.
-// (공연명 전체를 쓰면 "백설공주"의 '공주'가 충남 공주시로 오인된다)
-function regionText(s){
-  const brackets = (s.공연명||"").match(/\[([^\]]+)\]/g) || [];
-  return (s.공연장||"") + " " + brackets.join(" ");
-}
-
-// 수도권에서 남길 지역: 서울 전역 + 인구 100만급 특례시
-// (그 외 경기·인천 중소도시는 아래 SMALL_CITY로 이동해 제외 대상)
-const METRO = ["서울","대학로","수원","고양","용인","성남","부천","안양"];
-// 광역시 + 인구 100만 이상 특례시 (규모 있는 공연장이면 남기는 지역)
-// 수원·고양·용인·성남은 아래 METRO(수도권)에 포함되어 이미 제외 대상이 아님
-const BIG_CITY = ["부산","대구","광주","대전","울산","세종","창원"];
-// 광역시·특별시가 아닌 지방 도시·군 — 규모와 무관하게 제외
-const SMALL_CITY = [
-  "강원","충남","충북","전남","전북","경남","경북","제주",
-  "강원도","충청남도","충청북도","전라남도","전라북도","경상남도","경상북도","제주도",
-  // 경기·인천 중소도시 (서울 근교지만 지역 공연장 성격)
-  "의정부","광명","과천","안산","시흥","화성","남양주","하남","구리","김포","파주","군포","의왕",
-  "평택","오산","이천","안성","여주","양평","가평","연천","포천","동두천","광주시","양주",
-  "강화","옹진",
-  // 강원
-  "춘천","원주","강릉","속초","동해","삼척","태백","홍천","횡성","영월","평창","정선","철원",
-  "화천","양구","인제","고성","양양",
-  // 충청
-  "청주","충주","제천","보은","옥천","영동","증평","진천","괴산","음성","단양",
-  "천안","공주","보령","아산","서산","논산","계룡","당진","금산","부여","서천","청양","홍성",
-  "예산","태안",
-  // 전라
-  "전주","군산","익산","정읍","남원","김제","완주","진안","무주","장수","임실","순창","고창","부안",
-  "목포","여수","순천","나주","광양","담양","곡성","구례","고흥","보성","화순","장흥","강진",
-  "해남","영암","무안","함평","영광","장성","완도","진도","신안",
-  // 경상
-  "포항","경주","김천","안동","구미","영주","영천","상주","문경","경산","군위","의성","청송",
-  "영양","영덕","청도","고령","성주","칠곡","예천","봉화","울진","울릉",
-  "진주","통영","사천","김해","밀양","거제","양산","의령","함안","창녕","남해","하동",
-  "산청","함양","거창","합천",
-  // 제주
-  "서귀포"];
-const NON_METRO = BIG_CITY.concat(SMALL_CITY);
-// 지역명이 이름에 드러나지 않는 지방 공연장 (개별 지정)
-const LOCAL_HALLS = ["덕진예술회관","3.15아트센터","김해문화의전당",
-  "봉산문화회관","아람누리","반석아트홀","백령아트센터","해운대문화회관"];
-// 광역시 자치구·군 단위 시설 — 규모가 작아 제외
-const DISTRICT_HALL = ["구문화회관","구문화예술회관","구민회관","군민회관","구청","군청",
-  "북구","남구","동구","서구","중구","수영구","해운대구","사하구","금정구","연제구","부평구",
-  "계양구","미추홀구","달서구","수성구","광산구","유성구","대덕구"];
-// 이름만으로 소규모가 확실한 곳 — 가격과 무관하게 소극장으로 판정
-const SMALL_SURE = ["소극장","소공연장","작은극장","블랙박스","스튜디오","연습장","라이브홀"];
-// 소규모 가능성이 있는 곳 — 가격과 함께 판단
-const SMALL_HALL = ["카페","복지회관","문화의집","아트홀","씨어터","시어터","홀 "];
-// 전문 공연장이 아닌 시설 — 지역과 무관하게 별도 토글로 제외
-const NON_VENUE = ["학습센터","평생학습","공예관","과학관","박물관","미술관","도서관","기념관",
-  "문화원","수련관","청소년관","주민센터","구민회관","시민회관","동사무소","체육관","교육원",
-  "연수원","복지관","센터몰","전시관","홍보관","식물원","수목원","캠핑","놀이터","키즈",
-  "대공원","유원지","랜드","테마파크","동물원","아쿠아리움","체험관","광장","야외무대"];
-
-// 티켓 가격이 이 값을 넘으면 대극장으로 보고 소극장 판정에서 제외
-const BIG_PRICE = 70000;
+// 티켓 최고가 (숫자만 추출)
 function maxPrice(s){
   const prices = (s.티켓가격||"").match(/[\d,]+\s*원/g);
   if(!prices) return 0;
   return Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
 }
-
-// 전문 공연장이 아닌 시설에서 하는 공연
+// 이 금액을 넘으면 대형 라이선스 공연으로 간주 (동화 제목 예외 처리에 사용)
+const BIG_PRICE = 70000;
+// 전문 공연장이 아닌 시설 (박물관·과학관·학습센터 등)
+const NON_VENUE = ["학습센터","평생학습","공예관","과학관","박물관","미술관","도서관","기념관",
+  "문화원","수련관","청소년관","주민센터","구민회관","시민회관","동사무소","체육관","교육원",
+  "연수원","복지관","센터몰","전시관","홍보관","식물원","수목원","캠핑","놀이터","키즈",
+  "대공원","유원지","랜드","테마파크","동물원","아쿠아리움","체험관","광장","야외무대"];
 function isNonVenue(s){
   return NON_VENUE.some(w => (s.공연장||"").includes(w));
 }
 
-// 지방(비수도권) 소규모 공연
-function isLocalSmall(s){
-  const place = regionText(s);
-  const hall0 = s.공연장 || "";
-  // 지역명이 안 드러나는 지방 공연장 / 광역시 구·군 단위 시설은 먼저 제외
-  if (LOCAL_HALLS.some(w => hall0.includes(w))) return true;
-  if (DISTRICT_HALL.some(w => hall0.includes(w))) return true;
-  if (METRO.some(w => place.includes(w))) return false;       // 수도권이면 남김
-  // 광역시·특별시가 아닌 지방 도시·군은 규모와 무관하게 제외
-  if (SMALL_CITY.some(w => place.includes(w))) return true;
-  if (!BIG_CITY.some(w => place.includes(w))) return false;   // 지역을 알 수 없으면 남김
-  // 광역시인 경우: 소극장이거나 저가일 때만 제외
+// 달력에 표시할 기준 티켓가 (VIP 기준)
+const CAL_MIN_PRICE = 160000;
+// 대학로 300석 이상 중·대극장 (그 외 대학로 소극장은 제외)
+const DAEHAKRO_BIG = ["홍익대 대학로","홍익대학교 대학로","대학로아트센터","링크아트센터",
+  "유니플렉스 1관","예스24스테이지 1관","동양예술극장 1관","TOM 1관","티오엠 1관",
+  "아트원씨어터 1관","드림아트센터 1관","콘텐츠그라운드","플러스씨어터","쇼노트"];
+
+// 서울 주요 대극장 — 티켓 가격과 무관하게 달력에 표시
+const SEOUL_BIG = ["예술의전당","세종문화회관","국립극장","LG아트센터","블루스퀘어",
+  "샤롯데씨어터","충무아트센터","디큐브","세종S씨어터","국립정동극장","명동예술극장",
+  "홍익대 대학로","서울시립","universal","유니버설아트센터","올림픽공원","KSPO",
+  "잠실실내체육관","고척","코엑스","한전아트센터","광림아트센터","BBCH","성남아트센터",
+  "예스24 라이브홀","백암아트홀","우리금융아트홀","마포아트센터","구로아트밸리"];
+
+// 지방 도시명이 앞에 붙은 동명 공연장(대전예술의전당 등)은 제외
+const LOCAL_PREFIX = ["대전","대구","부산","광주","울산","세종","제주","전주","청주","천안",
+  "창원","김해","안산","고양","성남","수원","용인","의정부","부천","춘천","강릉","포항","경주",
+  "여수","순천","목포","익산","군산","진주","통영","경기","인천","충남","충북","전남","전북",
+  "경남","경북","강원"];
+
+// 지방 도시명으로 시작하지만 실제로는 서울 공연장인 예외
+const SEOUL_EXCEPTION = ["세종문화회관","세종S씨어터","세종대","경기필","인천공항"];
+
+function isSeoulBig(s){
   const hall = s.공연장 || "";
-  if (SMALL_SURE.some(w => hall.includes(w))) return true;
-  const mx = maxPrice(s);
-  if (mx >= BIG_PRICE) return false;
-  if (SMALL_HALL.some(w => hall.includes(w))) return true;
-  return mx > 0 && mx <= 50000;
+  const isException = SEOUL_EXCEPTION.some(w => hall.includes(w));
+  if (!isException && LOCAL_PREFIX.some(w => hall.startsWith(w))) return false;
+  return SEOUL_BIG.some(w => hall.includes(w));
 }
 
-// 수도권 소극장
-function isMetroSmall(s){
-  const place = regionText(s);
-  if (NON_METRO.some(w => place.includes(w)) && !METRO.some(w => place.includes(w))) return false;
+function isDaehakroBig(s){
   const hall = s.공연장 || "";
-  if (SMALL_SURE.some(w => hall.includes(w))) return true;    // 이름이 확실하면 가격 무관
-  const mx = maxPrice(s);
-  if (mx >= BIG_PRICE) return false;
-  if (SMALL_HALL.some(w => hall.includes(w))) return true;
-  return mx > 0 && mx <= 50000;
+  return DAEHAKRO_BIG.some(w => hall.includes(w));
 }
 
+// 달력에 보여줄 공연: 어린이·비전문 공연장을 걸러낸 뒤
+// (VIP 16만원 이상) 또는 (대학로 300석 이상 공연장) 인 것만
 function visibleMusicals(){
   return musicals.filter(s => {
-    if (isKids(s)) return false;          // 어린이용은 항상 제외
-    if (fVenue && isNonVenue(s)) return false;
-    if (fLocal && isLocalSmall(s)) return false;
-    if (fSmall && isMetroSmall(s)) return false;
-    return true;
+    if (isKids(s)) return false;
+    if (isNonVenue(s)) return false;
+    if (isSeoulBig(s)) return true;        // 서울 주요 대극장은 가격 무관
+    if (isDaehakroBig(s)) return true;     // 대학로 300석 이상 공연장
+    return maxPrice(s) >= CAL_MIN_PRICE;   // 그 외는 VIP 16만원 이상만
   });
 }
 
@@ -487,7 +429,7 @@ function renderShowFilter(){
 function renderShows(){
   const q=$("showSearch").value.trim();
   const list=$("showList");
-  let items=visibleMusicals();
+  let items=musicals;   // 공연 탭은 필터 미적용 — 검색으로 모든 공연 조회 가능
   if(q)items=items.filter(s=>(s.공연명||"").includes(q)||(s.공연장||"").includes(q));
   if(!items.length){
     list.innerHTML='<div class="empty"><b>공연 데이터 없음</b>데이터 탭에서 musicals.json을 불러오세요.</div>';return;
@@ -506,9 +448,8 @@ function renderShows(){
 
 /* ─────────── 상태 표시 ─────────── */
 function stats(){
-  const vis=visibleMusicals().length, all=musicals.length;
-  $("dataStat").innerHTML='공연 <b>'+vis+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
-  $("filterStat").textContent = (all-vis>0) ? (all-vis)+"건 숨김" : "";
+  const vis=visibleMusicals().length;
+  $("dataStat").innerHTML='달력 <b>'+vis+'</b> · 전체 <b>'+musicals.length+'</b>';
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows()}
@@ -524,21 +465,6 @@ $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
 
-$("fVenue").addEventListener("change",async e=>{
-  fVenue=e.target.checked;
-  await save("cc:fVenue",fVenue);
-  selShow="";refreshAll();
-});
-$("fLocal").addEventListener("change",async e=>{
-  fLocal=e.target.checked;
-  await save("cc:fLocal",fLocal);
-  selShow="";refreshAll();
-});
-$("fSmall").addEventListener("change",async e=>{
-  fSmall=e.target.checked;
-  await save("cc:fSmall",fSmall);
-  selShow="";refreshAll();
-});
 
 /* ─────────── 서버 자동 동기화 ─────────── */
 async function syncFromServer(silent){
@@ -571,10 +497,6 @@ if ("serviceWorker" in navigator){
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
-  const v=await load("cc:fVenue"), l=await load("cc:fLocal"), sm=await load("cc:fSmall");
-  if(v!==null){fVenue=v;$("fVenue").checked=v}
-  if(l!==null){fLocal=l;$("fLocal").checked=l}
-  if(sm!==null){fSmall=sm;$("fSmall").checked=sm}
   refreshAll();
   syncFromServer(true);
 })();
