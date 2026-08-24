@@ -183,22 +183,8 @@
   <section id="tab-events">
     <div id="evList"></div>
     <div class="card">
-      <div class="h">이벤트 추가</div>
-      <label for="evShow">공연명</label>
-      <input type="text" id="evShow" placeholder="예: 위키드">
-      <label for="evTitle">이벤트 제목</label>
-      <input type="text" id="evTitle" placeholder="예: 커튼콜 데이 · MD 증정">
-      <label>기간</label>
-      <div style="display:flex;gap:8px">
-        <input type="date" id="evFrom" aria-label="시작일">
-        <input type="date" id="evTo" aria-label="종료일">
-      </div>
-      <label for="evDisc">할인율 % (없으면 비워두기)</label>
-      <input type="number" id="evDisc" min="0" max="100" placeholder="예: 20">
-      <label for="evLink">출처 링크 (SNS 공지 등)</label>
-      <input type="text" id="evLink" placeholder="https://">
+      <p class="sub">예매처와 플레이DB에서 자동으로 수집된 할인·이벤트 정보입니다.</p>
       <div class="file-row">
-        <button class="btn" id="evAdd">이벤트 저장</button>
         <button class="btn ghost" id="evExport">내보내기</button>
         <button class="btn ghost" id="evImportBtn">가져오기</button>
         <input type="file" id="evImport" accept=".json" hidden>
@@ -380,7 +366,7 @@ function renderShows(){
 /* ─────────── 이벤트 ─────────── */
 function renderEvents(){
   const box=$("evList");
-  if(!events.length){box.innerHTML='<div class="card"><div class="empty"><b>이벤트 없음</b>커튼콜 데이, 할인, MD 이벤트를 아래에서 직접 기록해 두세요.</div></div>';return}
+  if(!events.length){box.innerHTML='<div class="card"><div class="empty"><b>이벤트 없음</b>아직 수집된 할인·이벤트 정보가 없습니다.</div></div>';return}
   const today=fmt(new Date());
   const sorted=[...events].sort((a,b)=>(a.from||"").localeCompare(b.from||""));
   box.innerHTML=sorted.map((e,i)=>{
@@ -421,15 +407,6 @@ $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
 
-$("evAdd").addEventListener("click",async ()=>{
-  const title=$("evTitle").value.trim();
-  if(!title)return toast("이벤트 제목을 입력하세요");
-  events.push({show:$("evShow").value.trim(),title,from:$("evFrom").value,to:$("evTo").value,
-    disc:$("evDisc").value,link:$("evLink").value.trim()});
-  await save("cc:events",events);
-  ["evShow","evTitle","evFrom","evTo","evDisc","evLink"].forEach(id=>$(id).value="");
-  renderEvents();renderCal();toast("이벤트 저장");
-});
 $("evExport").addEventListener("click",()=>{
   const blob=new Blob([JSON.stringify(events,null,2)],{type:"application/json"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="events.json";a.click();
