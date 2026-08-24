@@ -53,6 +53,8 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
             "service": SERVICE_KEY, "stdate": stdate, "eddate": eddate,
             "cpage": page, "rows": 100, "shcate": GENRE_CODE,
         }, timeout=15)
+        if r.status_code == 400:
+            break  # KOPIS는 페이지 범위를 넘어서면 빈 목록 대신 400을 준다 → 더 가져올 게 없다는 뜻
         r.raise_for_status()
         items = ET.fromstring(r.content).findall("db")
         if not items:
