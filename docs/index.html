@@ -110,6 +110,17 @@
   .badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:999px;
     background:var(--gold-soft);color:var(--gold);margin-left:6px;vertical-align:1px}
 
+  /* ── 필터 토글 ── */
+  .filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .tgl{display:inline-flex;align-items:center;gap:6px;background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:12.5px;
+    color:var(--muted);cursor:pointer;user-select:none}
+  .tgl:has(input:checked){background:var(--curtain);border-color:var(--curtain);color:#fff;font-weight:600}
+  .tgl input{appearance:none;width:14px;height:14px;border:1.5px solid currentColor;border-radius:4px;
+    margin:0;position:relative;cursor:pointer;flex:0 0 14px}
+  .tgl input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;font-size:11px;line-height:1;color:#fff}
+
   .empty{text-align:center;color:var(--muted);font-size:13px;padding:26px 8px;line-height:1.7}
   .empty b{font-family:var(--serif);color:var(--ink);font-size:15px;display:block;margin-bottom:5px}
 
@@ -141,6 +152,12 @@
     <button class="on" data-tab="cal">달력</button>
     <button data-tab="shows">공연</button>
   </nav>
+
+  <div class="filters">
+    <label class="tgl"><input type="checkbox" id="fKids" checked><span>어린이용 제외</span></label>
+    <label class="tgl"><input type="checkbox" id="fLocal" checked><span>지방 소극장 제외</span></label>
+    <span class="stat" id="filterStat"></span>
+  </div>
 
   <!-- ═══ 달력 ═══ -->
   <section id="tab-cal" class="on">
@@ -181,6 +198,8 @@ let view = new Date(); view.setDate(1);
 let selDate = fmt(new Date());
 let selActor = null;
 let selShow  = "";
+let fKids = true;    // 어린이용 제외
+let fLocal = true;   // 지방 소극장 제외
 
 const $ = id => document.getElementById(id);
 function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -191,6 +210,60 @@ async function load(key){ try{const r=await window.storage.get(key);return r?JSO
 async function save(key,val){ try{await window.storage.set(key,JSON.stringify(val))}catch(e){ toast("저장 실패 — 이번 세션만 유지됩니다") } }
 
 /* ─────────── 달력 ─────────── */
+/* ─────────── 공연 필터 ─────────── */
+// 어린이용: 동화·캐릭터 제목이거나 '어린이/키즈' 표기가 있는 경우
+const KIDS_TITLES = ["인어공주","백설공주","신데렐라","피노키오","잠자는 숲속","브레멘","헨젤","그레텔",
+  "미녀와 야수","알라딘 [","피터팬","흥부","놀부","콩쥐","팥쥐","금도끼","은도끼","해님","달님",
+  "아기","공룡","티라노","뽀로로","타요","핑크퐁","아기상어","코코몽","폴리","시크릿쥬쥬","비바",
+  "구름빵","엄마 까투리","방귀","똥","도깨비 [","호랑이 형님"];
+const KIDS_WORDS = ["어린이","키즈","유아","아동","가족뮤지컬","패밀리뮤지컬","인형극","교육뮤지컬"];
+
+function isKids(s){
+  const n = s.공연명 || "";
+  if (KIDS_WORDS.some(w => n.includes(w))) return true;
+  if (KIDS_TITLES.some(t => n.includes(t))) return true;
+  // 티켓 최고가가 2만원 이하면 어린이/소품 공연일 가능성이 높음
+  const prices = (s.티켓가격||"").match(/[\d,]+\s*원/g);
+  if (prices){
+    const max = Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
+    if (max > 0 && max <= 20000) return true;
+  }
+  return false;
+}
+
+// 수도권 판별: 공연장명에 지역 표기가 없거나 서울/경기/인천이면 수도권으로 간주
+const METRO = ["서울","경기","인천","성남","고양","수원","용인","부천","안양","의정부","광명",
+  "과천","안산","시흥","화성","남양주","하남","구리","김포","파주","군포","의왕"];
+const NON_METRO = ["부산","대구","광주","대전","울산","세종","강원","춘천","원주","강릉",
+  "청주","충주","천안","아산","전주","익산","군산","여수","순천","목포","포항","경주","창원",
+  "김해","진주","제주","안동","구미","거제","양산","충남","충북","전남","전북","경남","경북"];
+// 소극장 신호: 이름에 아래 단어가 들어가면 소규모로 간주
+const SMALL_HALL = ["소극장","아트홀","소공연장","블랙박스","스튜디오","연습장","카페","라이브홀",
+  "복지회관","문화의집","작은","씨어터","시어터"];
+
+function isLocalSmall(s){
+  const place = (s.공연장||"") + " " + (s.공연명||"");
+  const isMetro = METRO.some(w => place.includes(w));
+  const isNonMetro = NON_METRO.some(w => place.includes(w));
+  if (isMetro || !isNonMetro) return false;   // 수도권이거나 지역을 알 수 없으면 남김
+  // 지방인 경우: 소극장 신호가 있거나 티켓 최고가가 5만원 이하면 제외
+  if (SMALL_HALL.some(w => (s.공연장||"").includes(w))) return true;
+  const prices = (s.티켓가격||"").match(/[\d,]+\s*원/g);
+  if (prices){
+    const max = Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
+    if (max > 0 && max <= 50000) return true;
+  }
+  return false;
+}
+
+function visibleMusicals(){
+  return musicals.filter(s => {
+    if (fKids && isKids(s)) return false;
+    if (fLocal && isLocalSmall(s)) return false;
+    return true;
+  });
+}
+
 const castByDate = () => {
   const m = {};
   for(const c of casts){
@@ -199,7 +272,7 @@ const castByDate = () => {
   }
   return m;
 };
-const showsOnDate = d => musicals.filter(m => m.시작일 && m.종료일 && m.시작일<=d && d<=m.종료일 && (!selShow||m.공연명===selShow));
+const showsOnDate = d => visibleMusicals().filter(m => m.시작일 && m.종료일 && m.시작일<=d && d<=m.종료일 && (!selShow||m.공연명===selShow));
 
 function renderCal(){
   $("calMonth").textContent = view.getFullYear()+". "+String(view.getMonth()+1).padStart(2,"0");
@@ -308,7 +381,7 @@ function renderActorChips(){
 }
 
 function renderShowFilter(){
-  const names=[...new Set([...casts.map(c=>c.공연명), ...musicals.map(m=>m.공연명)])].sort();
+  const names=[...new Set([...casts.map(c=>c.공연명), ...visibleMusicals().map(m=>m.공연명)])].sort();
   const sel=$("showFilter");
   sel.innerHTML='<option value="">전체 공연</option>'+names.map(n=>'<option'+(n===selShow?" selected":"")+'>'+esc(n)+'</option>').join("");
 }
@@ -317,7 +390,7 @@ function renderShowFilter(){
 function renderShows(){
   const q=$("showSearch").value.trim();
   const list=$("showList");
-  let items=musicals;
+  let items=visibleMusicals();
   if(q)items=items.filter(s=>(s.공연명||"").includes(q)||(s.공연장||"").includes(q));
   if(!items.length){
     list.innerHTML='<div class="empty"><b>공연 데이터 없음</b>데이터 탭에서 musicals.json을 불러오세요.</div>';return;
@@ -336,7 +409,9 @@ function renderShows(){
 
 /* ─────────── 상태 표시 ─────────── */
 function stats(){
-  $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
+  const vis=visibleMusicals().length, all=musicals.length;
+  $("dataStat").innerHTML='공연 <b>'+vis+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
+  $("filterStat").textContent = (all-vis>0) ? (all-vis)+"건 숨김" : "";
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows()}
@@ -351,6 +426,17 @@ $("prevM").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render
 $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCal()});
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
+
+$("fKids").addEventListener("change",async e=>{
+  fKids=e.target.checked;
+  await save("cc:fKids",fKids);
+  selShow="";refreshAll();
+});
+$("fLocal").addEventListener("change",async e=>{
+  fLocal=e.target.checked;
+  await save("cc:fLocal",fLocal);
+  selShow="";refreshAll();
+});
 
 /* ─────────── 서버 자동 동기화 ─────────── */
 async function syncFromServer(silent){
@@ -383,6 +469,9 @@ if ("serviceWorker" in navigator){
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
+  const k=await load("cc:fKids"), l=await load("cc:fLocal");
+  if(k!==null){fKids=k;$("fKids").checked=k}
+  if(l!==null){fLocal=l;$("fLocal").checked=l}
   refreshAll();
   syncFromServer(true);
 })();
