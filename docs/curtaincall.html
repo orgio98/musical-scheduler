@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>커튼콜 — 뮤지컬 스케줄러</title>
+<style>
+  :root{
+    --bg:#1B0F14;          /* 암전된 객석 */
+    --surface:#2A1A21;     /* 무대 아래 */
+    --surface2:#332028;
+    --curtain:#A03448;     /* 커튼 레드 */
+    --gold:#E9B44C;        /* 스포트라이트 */
+    --gold-soft:rgba(233,180,76,.16);
+    --ink:#F5ECE6;
+    --muted:#B39AA2;
+    --line:rgba(233,180,76,.14);
+    --serif:"AppleMyungjo","Nanum Myeongjo","Noto Serif KR",Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100vh}
+  .wrap{max-width:520px;margin:0 auto;padding:0 14px calc(24px + env(safe-area-inset-bottom))}
+
+  /* ── 헤더 ── */
+  header{padding:22px 2px 14px;display:flex;align-items:baseline;justify-content:space-between}
+  .brand{font-family:var(--serif);font-size:26px;letter-spacing:.02em}
+  .brand em{font-style:normal;color:var(--gold)}
+  .brand-sub{font-size:10.5px;letter-spacing:.32em;color:var(--muted);text-transform:uppercase}
+
+  /* ── 탭 ── */
+  nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
+  nav button{background:var(--surface);border:1px solid var(--line);color:var(--muted);
+    padding:10px 0;border-radius:10px;font-size:13.5px;font-family:var(--sans);cursor:pointer}
+  nav button.on{background:var(--curtain);border-color:var(--curtain);color:#fff;font-weight:600}
+  nav button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{
+    outline:2px solid var(--gold);outline-offset:2px}
+
+  section{display:none}
+  section.on{display:block;animation:rise .28s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){section.on{animation:none}}
+
+  /* ── 공통 부품 ── */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .h{font-family:var(--serif);font-size:17px;margin-bottom:10px;color:var(--ink)}
+  .sub{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .btn{background:var(--curtain);color:#fff;border:none;border-radius:10px;padding:11px 14px;
+    font-size:14px;font-family:var(--sans);cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:400}
+  .btn.gold{background:var(--gold);color:#2A1208}
+  input[type=text],input[type=date],input[type=number],select{
+    width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:10px;
+    color:var(--ink);padding:11px 12px;font-size:14px;font-family:var(--sans)}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
+  a{color:var(--gold)}
+
+  /* ── 달력 ── */
+  .cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cal-month{font-family:var(--serif);font-size:20px;letter-spacing:.04em}
+  .cal-nav{display:flex;gap:6px}
+  .cal-nav button{background:var(--surface);border:1px solid var(--line);color:var(--ink);
+    width:36px;height:36px;border-radius:9px;font-size:15px;cursor:pointer}
+  .show-filter{margin-bottom:10px}
+
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);color:var(--muted);
+    border-radius:999px;padding:7px 13px;font-size:12.5px;cursor:pointer;white-space:nowrap}
+  .chip.on{background:var(--gold);border-color:var(--gold);color:#2A1208;font-weight:700}
+
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .dow{text-align:center;font-size:11px;color:var(--muted);padding:4px 0 7px}
+  .dow.sun{color:#D97A8A}
+  .cell{aspect-ratio:1/1.06;background:var(--surface);border:1px solid transparent;border-radius:10px;
+    padding:5px 4px;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center}
+  .cell.out{opacity:.28;cursor:default}
+  .cell .d{font-family:var(--serif);font-size:14px;line-height:1.2}
+  .cell.sun .d{color:#D97A8A}
+  .cell .dots{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:3px}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--curtain)}
+  .dot.ev{background:var(--gold);border-radius:1px}
+  .cell.today{border-color:var(--muted)}
+  .cell.sel{border-color:var(--curtain)}
+  /* 시그니처: 스포트라이트 — 선택 배우 출연일 */
+  .stage-dim .cell:not(.spot):not(.out){opacity:.34}
+  .cell.spot{background:radial-gradient(circle at 50% 32%,var(--gold-soft),var(--surface) 78%);
+    border-color:var(--gold);box-shadow:0 0 14px rgba(233,180,76,.22)}
+  .cell.spot .d{color:var(--gold);font-weight:700}
+
+  .day-detail{margin-top:12px}
+  .slot{border-top:1px solid var(--line);padding:10px 2px}
+  .slot:first-of-type{border-top:none}
+  .slot .t{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+  .slot .t b{font-size:14.5px}
+  .slot .t span{font-family:var(--serif);color:var(--gold);font-size:13px}
+  .castline{font-size:13px;color:var(--muted);line-height:1.6}
+  .castline i{font-style:normal;color:var(--ink)}
+  .castline i.hl{color:var(--gold);font-weight:700}
+
+  /* ── 공연 목록 ── */
+  .m-item{display:flex;gap:12px;padding:12px 2px;border-top:1px solid var(--line)}
+  .m-item:first-of-type{border-top:none}
+  .poster{width:56px;height:76px;flex:0 0 56px;border-radius:7px;object-fit:cover;
+    background:var(--surface2);border:1px solid var(--line)}
+  .m-info{min-width:0;flex:1}
+  .m-info .name{font-size:14.5px;font-weight:700;margin-bottom:3px}
+  .m-info .meta{font-size:12px;color:var(--muted);line-height:1.55;overflow-wrap:anywhere}
+  .badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:999px;
+    background:var(--gold-soft);color:var(--gold);margin-left:6px;vertical-align:1px}
+
+  /* ── 이벤트 ── */
+  .ev-card{border-left:3px solid var(--gold);background:var(--surface);border-radius:0 12px 12px 0;
+    padding:12px 12px 12px 14px;margin-bottom:10px}
+  .ev-card .name{font-size:12px;color:var(--muted);margin-bottom:2px}
+  .ev-card .title{font-size:15px;font-weight:700}
+  .ev-card .period{font-family:var(--serif);font-size:12.5px;color:var(--gold);margin-top:3px}
+  .ev-card .row{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+  .ev-card .del{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline}
+  .empty{text-align:center;color:var(--muted);font-size:13px;padding:26px 8px;line-height:1.7}
+  .empty b{font-family:var(--serif);color:var(--ink);font-size:15px;display:block;margin-bottom:5px}
+
+  .file-row{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+  .stat{font-size:12px;color:var(--muted)}
+  .stat b{color:var(--gold)}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--gold);
+    color:#2A1208;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;
+    opacity:0;pointer-events:none;transition:opacity .25s;z-index:9}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="brand">커튼<em>콜</em></div>
+      <div class="brand-sub">Musical Scheduler</div>
+    </div>
+    <div style="text-align:right">
+      <div class="stat" id="dataStat"></div>
+      <button class="btn ghost" id="syncBtn" style="margin-top:6px;padding:6px 10px;font-size:12px" aria-label="새로고침">↻ 새로고침</button>
+    </div>
+  </header>
+
+  <nav>
+    <button class="on" data-tab="cal">달력</button>
+    <button data-tab="shows">공연</button>
+    <button data-tab="events">이벤트</button>
+    <button data-tab="data">데이터</button>
+  </nav>
+
+  <!-- ═══ 달력 ═══ -->
+  <section id="tab-cal" class="on">
+    <div class="show-filter">
+      <select id="showFilter" aria-label="공연 필터"></select>
+    </div>
+    <div class="chips" id="actorChips" aria-label="배우 선택"></div>
+    <div class="card">
+      <div class="cal-top">
+        <div class="cal-month" id="calMonth"></div>
+        <div class="cal-nav">
+          <button id="prevM" aria-label="이전 달">◀</button>
+          <button id="nextM" aria-label="다음 달">▶</button>
+        </div>
+      </div>
+      <div class="grid" id="calHead"></div>
+      <div class="grid" id="calGrid"></div>
+    </div>
+    <div class="card day-detail" id="dayDetail"></div>
+  </section>
+
+  <!-- ═══ 공연 ═══ -->
+  <section id="tab-shows">
+    <div class="card">
+      <input type="text" id="showSearch" placeholder="공연명·극장 검색">
+    </div>
+    <div class="card" id="showList"></div>
+  </section>
+
+  <!-- ═══ 이벤트 ═══ -->
+  <section id="tab-events">
+    <div id="evList"></div>
+    <div class="card">
+      <div class="h">이벤트 추가</div>
+      <label for="evShow">공연명</label>
+      <input type="text" id="evShow" placeholder="예: 위키드">
+      <label for="evTitle">이벤트 제목</label>
+      <input type="text" id="evTitle" placeholder="예: 커튼콜 데이 · MD 증정">
+      <label>기간</label>
+      <div style="display:flex;gap:8px">
+        <input type="date" id="evFrom" aria-label="시작일">
+        <input type="date" id="evTo" aria-label="종료일">
+      </div>
+      <label for="evDisc">할인율 % (없으면 비워두기)</label>
+      <input type="number" id="evDisc" min="0" max="100" placeholder="예: 20">
+      <label for="evLink">출처 링크 (SNS 공지 등)</label>
+      <input type="text" id="evLink" placeholder="https://">
+      <div class="file-row">
+        <button class="btn" id="evAdd">이벤트 저장</button>
+        <button class="btn ghost" id="evExport">내보내기</button>
+        <button class="btn ghost" id="evImportBtn">가져오기</button>
+        <input type="file" id="evImport" accept=".json" hidden>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 데이터 ═══ -->
+  <section id="tab-data">
+    <div class="card">
+      <div class="h">자동 갱신</div>
+      <p class="sub">이 페이지를 열 때마다 서버의 최신 데이터를 자동으로 가져옵니다. GitHub Actions가 매일 크롤링해 갱신해 둔 결과입니다.</p>
+      <p class="stat" id="syncStat">동기화 대기 중…</p>
+    </div>
+    <div class="card">
+      <div class="h">공연 일정 데이터 <span style="color:var(--muted);font-weight:400">(수동 백업용)</span></div>
+      <p class="sub">자동 갱신이 안 될 때만 사용하세요. 직접 만든 <b>musicals.json</b>을 불러옵니다.</p>
+      <div class="file-row">
+        <button class="btn ghost" id="muBtn">musicals.json 불러오기</button>
+        <input type="file" id="muFile" accept=".json" hidden>
+        <span class="stat" id="muStat"></span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="h">회차별 캐스트 데이터 <span style="color:var(--muted);font-weight:400">(수동 백업용)</span></div>
+      <p class="sub">자동 갱신이 안 될 때만 사용하세요. 이미지 판독까지 끝난 <b>casts.json</b>을 불러옵니다.</p>
+      <div class="file-row">
+        <button class="btn ghost" id="caBtn">casts.json 불러오기</button>
+        <input type="file" id="caFile" accept=".json" hidden>
+        <span class="stat" id="caStat"></span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="h">체험용 샘플</div>
+      <p class="sub">데이터를 아직 안 만들었어도 앱 동작을 미리 볼 수 있습니다. (가상의 공연·배우)</p>
+      <div class="file-row">
+        <button class="btn gold" id="sampleBtn">샘플 데이터 넣기</button>
+        <button class="btn ghost" id="resetBtn">모든 데이터 지우기</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ─────────── 상태 (DB 모델: Musicals / Schedules / Events, Actors는 파생) ─────────── */
+let musicals = [];   // {공연명,시작일,종료일,공연장,출연진,티켓가격,공연시간,예매처,포스터,상태}
+let casts    = [];   // {공연명,날짜,회차,배역,배우}
+let events   = [];   // {show,title,from,to,disc,link}
+let view = new Date(); view.setDate(1);
+let selDate = fmt(new Date());
+let selActor = null;
+let selShow  = "";
+
+const $ = id => document.getElementById(id);
+function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+
+/* ─────────── 저장/불러오기 (기기 저장 — 다시 열어도 유지) ─────────── */
+async function load(key){ try{const r=await window.storage.get(key);return r?JSON.parse(r.value):null}catch(e){return null} }
+async function save(key,val){ try{await window.storage.set(key,JSON.stringify(val))}catch(e){ toast("저장 실패 — 이번 세션만 유지됩니다") } }
+
+/* ─────────── 달력 ─────────── */
+const castByDate = () => {
+  const m = {};
+  for(const c of casts){
+    if(selShow && c.공연명!==selShow) continue;
+    (m[c.날짜] = m[c.날짜]||[]).push(c);
+  }
+  return m;
+};
+const eventDates = d => events.filter(e => (!e.from||e.from<=d) && (!e.to||d<=e.to) && (!selShow||e.show===selShow));
+
+function renderCal(){
+  $("calMonth").textContent = view.getFullYear()+". "+String(view.getMonth()+1).padStart(2,"0");
+  const head=$("calHead"); head.innerHTML="";
+  ["일","월","화","수","목","금","토"].forEach((w,i)=>{
+    const el=document.createElement("div");el.className="dow"+(i===0?" sun":"");el.textContent=w;head.appendChild(el);
+  });
+
+  const map = castByDate();
+  const grid=$("calGrid"); grid.innerHTML="";
+  grid.parentElement.classList.toggle("stage-dim", !!selActor);
+  const first=new Date(view), start=first.getDay(), days=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+  const today=fmt(new Date());
+
+  for(let i=0;i<start;i++){const c=document.createElement("div");c.className="cell out";grid.appendChild(c)}
+  for(let d=1;d<=days;d++){
+    const date=fmt(new Date(view.getFullYear(),view.getMonth(),d));
+    const cell=document.createElement("div");
+    cell.className="cell"+(new Date(view.getFullYear(),view.getMonth(),d).getDay()===0?" sun":"");
+    if(date===today)cell.classList.add("today");
+    if(date===selDate)cell.classList.add("sel");
+    const dayCasts=map[date]||[];
+    if(selActor && dayCasts.some(c=>c.배우===selActor)) cell.classList.add("spot");
+    cell.innerHTML='<span class="d">'+d+'</span>';
+    const dots=document.createElement("div");dots.className="dots";
+    [...new Set(dayCasts.map(c=>c.공연명))].slice(0,3).forEach(()=>{const s=document.createElement("span");s.className="dot";dots.appendChild(s)});
+    if(eventDates(date).length){const s=document.createElement("span");s.className="dot ev";dots.appendChild(s)}
+    cell.appendChild(dots);
+    cell.addEventListener("click",()=>{selDate=date;renderCal();renderDay()});
+    grid.appendChild(cell);
+  }
+  renderDay();
+}
+
+function renderDay(){
+  const box=$("dayDetail");
+  const map=castByDate();
+  const dayCasts=map[selDate]||[];
+  const dayEvents=eventDates(selDate);
+  const [y,m,d]=selDate.split("-");
+  let html='<div class="h">'+Number(m)+'월 '+Number(d)+'일</div>';
+
+  if(!dayCasts.length && !dayEvents.length){
+    html+='<div class="empty"><b>비어 있는 날</b>캐스트·이벤트 정보가 없습니다.<br>데이터 탭에서 casts.json을 불러오거나 이벤트를 추가해 보세요.</div>';
+    box.innerHTML=html; return;
+  }
+  // 공연+회차별 그룹
+  const groups={};
+  for(const c of dayCasts){
+    const k=c.공연명+"|"+(c.회차||"");
+    (groups[k]=groups[k]||[]).push(c);
+  }
+  for(const k of Object.keys(groups).sort()){
+    const [name,time]=k.split("|");
+    const lines=groups[k].map(c=>{
+      const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
+      return c.배역?esc(c.배역)+" "+actor:actor;
+    }).join(" · ");
+    html+='<div class="slot"><div class="t"><b>'+esc(name)+'</b><span>'+esc(time||"")+'</span></div><div class="castline">'+lines+'</div></div>';
+  }
+  for(const e of dayEvents){
+    html+='<div class="slot"><div class="t"><b style="color:var(--gold)">'+esc(e.title)+'</b>'+(e.disc?'<span>'+e.disc+'%</span>':"")+'</div><div class="castline">'+esc(e.show||"")+(e.link?' · <a href="'+esc(e.link)+'" target="_blank" rel="noopener">공지 보기</a>':"")+'</div></div>';
+  }
+  box.innerHTML=html;
+}
+
+function renderActorChips(){
+  const count={};
+  for(const c of casts){ if(selShow&&c.공연명!==selShow)continue; if(c.배우)count[c.배우]=(count[c.배우]||0)+1 }
+  const actors=Object.keys(count).sort((a,b)=>count[b]-count[a]).slice(0,40);
+  const box=$("actorChips");box.innerHTML="";
+  if(!actors.length){box.innerHTML='<span class="stat">casts.json을 불러오면 배우별 스포트라이트를 켤 수 있어요</span>';return}
+  for(const a of actors){
+    const b=document.createElement("button");
+    b.className="chip"+(a===selActor?" on":"");b.textContent=a;
+    b.addEventListener("click",()=>{selActor=(selActor===a?null:a);renderActorChips();renderCal()});
+    box.appendChild(b);
+  }
+}
+
+function renderShowFilter(){
+  const names=[...new Set(casts.map(c=>c.공연명))].sort();
+  const sel=$("showFilter");
+  sel.innerHTML='<option value="">전체 공연</option>'+names.map(n=>'<option'+(n===selShow?" selected":"")+'>'+esc(n)+'</option>').join("");
+}
+
+/* ─────────── 공연 목록 ─────────── */
+function renderShows(){
+  const q=$("showSearch").value.trim();
+  const list=$("showList");
+  let items=musicals;
+  if(q)items=items.filter(s=>(s.공연명||"").includes(q)||(s.공연장||"").includes(q));
+  if(!items.length){
+    list.innerHTML='<div class="empty"><b>공연 데이터 없음</b>데이터 탭에서 musicals.json을 불러오세요.</div>';return;
+  }
+  list.innerHTML=items.slice(0,200).map(s=>{
+    const img=s.포스터?'<img class="poster" src="'+esc(s.포스터)+'" alt="" loading="lazy">':'<div class="poster"></div>';
+    const link=(s.예매처||"").split("|")[0].trim();
+    const url=link.includes("http")?link.slice(link.indexOf("http")):"";
+    return '<div class="m-item">'+img+'<div class="m-info"><div class="name">'+esc(s.공연명)
+      +(s.상태==="공연중"?'<span class="badge">공연중</span>':"")+'</div><div class="meta">'
+      +esc(s.시작일)+' ~ '+esc(s.종료일)+'<br>'+esc(s.공연장||"")
+      +(s.출연진?'<br>'+esc(s.출연진):"")
+      +(url?'<br><a href="'+esc(url)+'" target="_blank" rel="noopener">예매처 열기</a>':"")+'</div></div></div>';
+  }).join("");
+  if(items.length>200)list.innerHTML+='<div class="empty">'+items.length+'건 중 200건 표시 — 검색으로 좁혀보세요</div>';
+}
+
+/* ─────────── 이벤트 ─────────── */
+function renderEvents(){
+  const box=$("evList");
+  if(!events.length){box.innerHTML='<div class="card"><div class="empty"><b>이벤트 없음</b>커튼콜 데이, 할인, MD 이벤트를 아래에서 직접 기록해 두세요.</div></div>';return}
+  const today=fmt(new Date());
+  const sorted=[...events].sort((a,b)=>(a.from||"").localeCompare(b.from||""));
+  box.innerHTML=sorted.map((e,i)=>{
+    const live=(!e.from||e.from<=today)&&(!e.to||today<=e.to);
+    return '<div class="ev-card"><div class="name">'+esc(e.show||"")+(live?'<span class="badge">진행중</span>':"")
+      +'</div><div class="title">'+esc(e.title)+(e.disc?' <span style="color:var(--gold)">'+e.disc+'%</span>':"")
+      +'</div><div class="period">'+esc(e.from||"?")+' ~ '+esc(e.to||"?")+'</div><div class="row">'
+      +(e.link?'<a href="'+esc(e.link)+'" target="_blank" rel="noopener" style="font-size:12.5px">공지 링크</a>':'<span></span>')
+      +'<button class="del" data-i="'+events.indexOf(e)+'">삭제</button></div></div>';
+  }).join("");
+  box.querySelectorAll(".del").forEach(b=>b.addEventListener("click",async ()=>{
+    events.splice(Number(b.dataset.i),1);await save("cc:events",events);renderEvents();renderCal();
+  }));
+}
+
+/* ─────────── 데이터 탭 ─────────── */
+function stats(){
+  $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b> · 캐스트 <b>'+casts.length+'</b>';
+  $("muStat").textContent=musicals.length?musicals.length+"건 저장됨":"";
+  $("caStat").textContent=casts.length?casts.length+"건 저장됨":"";
+}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows();renderEvents()}
+
+function readJsonFile(input,cb){
+  const f=input.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{ try{cb(JSON.parse(r.result))}catch(e){toast("JSON 형식이 아닙니다")} input.value=""; };
+  r.readAsText(f,"utf-8");
+}
+
+/* ─────────── 샘플 데이터 (가상) ─────────── */
+function sampleData(){
+  const y=new Date().getFullYear(), m=String(new Date().getMonth()+1).padStart(2,"0");
+  const D=n=>y+"-"+m+"-"+String(n).padStart(2,"0");
+  musicals=[
+    {공연명:"샘플: 밤의 아리아",시작일:D(1),종료일:D(28),공연장:"세종문화회관 대극장",상태:"공연중",출연진:"한별, 서도윤, 임유나 등",티켓가격:"VIP 150,000원",예매처:"NOL: https://nol.interpark.com",포스터:""},
+    {공연명:"샘플: 회전목마",시작일:D(5),종료일:D(25),공연장:"블루스퀘어",상태:"공연중",출연진:"정하람, 최이든 등",티켓가격:"R석 120,000원",예매처:"",포스터:""}
+  ];
+  casts=[];
+  const casting={ "샘플: 밤의 아리아":[["한별","서도윤"],["임유나","한별"],["서도윤","임유나"]],
+                  "샘플: 회전목마":[["정하람"],["최이든"]] };
+  for(let d=1;d<=28;d++){
+    for(const [show,rot] of Object.entries(casting)){
+      if(show.includes("회전")&&(d<5||d>25))continue;
+      const pair=rot[d%rot.length];
+      pair.forEach((actor,i)=>casts.push({공연명:show,날짜:D(d),회차:d%7===6?"14:00":"19:30",배역:i===0?"주연":"상대역",배우:actor}));
+    }
+  }
+  events=[
+    {show:"샘플: 밤의 아리아",title:"커튼콜 촬영 데이",from:D(14),to:D(14),disc:"",link:""},
+    {show:"샘플: 회전목마",title:"타임세일",from:D(10),to:D(18),disc:"30",link:""}
+  ];
+}
+
+/* ─────────── 이벤트 핸들러 ─────────── */
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll("section").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");$("tab-"+b.dataset.tab).classList.add("on");
+}));
+$("prevM").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderCal()});
+$("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCal()});
+$("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
+$("showSearch").addEventListener("input",renderShows);
+
+$("muBtn").addEventListener("click",()=>$("muFile").click());
+$("muFile").addEventListener("change",e=>readJsonFile(e.target,async data=>{
+  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
+  musicals=data;await save("cc:musicals",musicals);refreshAll();toast("공연 "+musicals.length+"건 저장");
+}));
+$("caBtn").addEventListener("click",()=>$("caFile").click());
+$("caFile").addEventListener("change",e=>readJsonFile(e.target,async data=>{
+  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
+  casts=data;await save("cc:casts",casts);refreshAll();toast("캐스트 "+casts.length+"건 저장");
+}));
+
+$("sampleBtn").addEventListener("click",async ()=>{
+  sampleData();
+  await save("cc:musicals",musicals);await save("cc:casts",casts);await save("cc:events",events);
+  refreshAll();toast("샘플 데이터를 넣었습니다");
+});
+$("resetBtn").addEventListener("click",async ()=>{
+  musicals=[];casts=[];events=[];selActor=null;selShow="";
+  try{await window.storage.delete("cc:musicals");await window.storage.delete("cc:casts");await window.storage.delete("cc:events")}catch(e){}
+  refreshAll();toast("모두 지웠습니다");
+});
+
+$("evAdd").addEventListener("click",async ()=>{
+  const title=$("evTitle").value.trim();
+  if(!title)return toast("이벤트 제목을 입력하세요");
+  events.push({show:$("evShow").value.trim(),title,from:$("evFrom").value,to:$("evTo").value,
+    disc:$("evDisc").value,link:$("evLink").value.trim()});
+  await save("cc:events",events);
+  ["evShow","evTitle","evFrom","evTo","evDisc","evLink"].forEach(id=>$(id).value="");
+  renderEvents();renderCal();toast("이벤트 저장");
+});
+$("evExport").addEventListener("click",()=>{
+  const blob=new Blob([JSON.stringify(events,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="events.json";a.click();
+});
+$("evImportBtn").addEventListener("click",()=>$("evImport").click());
+$("evImport").addEventListener("change",e=>readJsonFile(e.target,async data=>{
+  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
+  events=data;await save("cc:events",events);renderEvents();renderCal();toast("이벤트 "+events.length+"건 가져옴");
+}));
+
+/* ─────────── 서버 자동 동기화 ─────────── */
+async function syncFromServer(silent){
+  const stat=$("syncStat");
+  if(stat && !silent) stat.textContent="동기화 중…";
+  try{
+    const [m,c,e] = await Promise.all([
+      fetch("data/musicals.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch("data/casts.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch("data/events.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
+    ]);
+    let changed=false;
+    if(Array.isArray(m)){musicals=m;await save("cc:musicals",musicals);changed=true}
+    if(Array.isArray(c)){casts=c;await save("cc:casts",casts);changed=true}
+    if(Array.isArray(e)){
+      const manual=events.filter(x=>!x.auto);   // 직접 추가한 이벤트는 보존
+      events=[...manual, ...e];
+      await save("cc:events",events);
+      changed=true;
+    }
+    if(stat){
+      const now=new Date();
+      const t=now.getFullYear()+"."+String(now.getMonth()+1).padStart(2,"0")+"."+String(now.getDate()).padStart(2,"0")
+        +" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+      stat.innerHTML='마지막 동기화: <b style="color:var(--gold)">'+t+'</b>';
+    }
+    if(changed){refreshAll();if(!silent)toast("최신 데이터로 갱신했습니다")}
+  }catch(err){
+    if(stat) stat.textContent="자동 갱신 실패 — 저장된 데이터로 표시 중 (오프라인이거나 첫 크롤링 전일 수 있음)";
+  }
+}
+$("syncBtn").addEventListener("click",()=>syncFromServer(false));
+
+/* ─────────── 시작 ─────────── */
+(async function init(){
+  musicals=(await load("cc:musicals"))||[];
+  casts=(await load("cc:casts"))||[];
+  events=(await load("cc:events"))||[];
+  refreshAll();
+  syncFromServer(true);
+})();
+</script>
+</body>
+</html>
