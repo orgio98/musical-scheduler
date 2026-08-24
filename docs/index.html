@@ -154,7 +154,6 @@
   </nav>
 
   <div class="filters">
-    <label class="tgl"><input type="checkbox" id="fKids" checked><span>어린이용 제외</span></label>
     <label class="tgl"><input type="checkbox" id="fVenue" checked><span>비전문 공연장 제외</span></label>
     <label class="tgl"><input type="checkbox" id="fLocal" checked><span>지방 소극장 제외</span></label>
     <label class="tgl"><input type="checkbox" id="fSmall"><span>수도권 소극장 제외</span></label>
@@ -200,7 +199,6 @@ let view = new Date(); view.setDate(1);
 let selDate = fmt(new Date());
 let selActor = null;
 let selShow  = "";
-let fKids = true;    // 어린이용 제외
 let fVenue = true;   // 박물관·과학관 등 비전문 공연장 제외
 let fLocal = true;   // 지방 소극장 제외
 let fSmall = false;  // 수도권 소극장 제외 (기본 꺼짐)
@@ -231,7 +229,9 @@ function isKids(s){
   // 공연장 이름에 어린이 관련 표기가 있으면 어린이 공연으로 간주
   if (KIDS_PLACES.some(w => place.includes(w))) return true;
   if (KIDS_WORDS.some(w => n.includes(w))) return true;
-  if (KIDS_TITLES.some(t => n.includes(t))) return true;
+  // 동화 제목이어도 티켓 최고가가 높으면 대형 라이선스 공연으로 보고 남긴다
+  // (예: 미녀와 야수, 알라딘 — 디즈니 라이선스 뮤지컬)
+  if (KIDS_TITLES.some(t => n.includes(t))) return maxPrice(s) < BIG_PRICE;
   // 티켓 최고가가 2만원 이하면 어린이/소품 공연일 가능성이 높음
   const mx = maxPrice(s);
   return mx > 0 && mx <= 20000;
@@ -341,7 +341,7 @@ function isMetroSmall(s){
 
 function visibleMusicals(){
   return musicals.filter(s => {
-    if (fKids && isKids(s)) return false;
+    if (isKids(s)) return false;          // 어린이용은 항상 제외
     if (fVenue && isNonVenue(s)) return false;
     if (fLocal && isLocalSmall(s)) return false;
     if (fSmall && isMetroSmall(s)) return false;
@@ -512,11 +512,6 @@ $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
 
-$("fKids").addEventListener("change",async e=>{
-  fKids=e.target.checked;
-  await save("cc:fKids",fKids);
-  selShow="";refreshAll();
-});
 $("fVenue").addEventListener("change",async e=>{
   fVenue=e.target.checked;
   await save("cc:fVenue",fVenue);
@@ -564,9 +559,7 @@ if ("serviceWorker" in navigator){
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
-  const k=await load("cc:fKids"), v=await load("cc:fVenue"),
-        l=await load("cc:fLocal"), sm=await load("cc:fSmall");
-  if(k!==null){fKids=k;$("fKids").checked=k}
+  const v=await load("cc:fVenue"), l=await load("cc:fLocal"), sm=await load("cc:fSmall");
   if(v!==null){fVenue=v;$("fVenue").checked=v}
   if(l!==null){fLocal=l;$("fLocal").checked=l}
   if(sm!==null){fSmall=sm;$("fSmall").checked=sm}
