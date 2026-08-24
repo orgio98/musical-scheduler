@@ -140,15 +140,15 @@
     </div>
     <div style="text-align:right">
       <div class="stat" id="dataStat"></div>
+      <div class="stat" id="syncStat" style="font-size:11px;margin-top:3px"></div>
       <button class="btn ghost" id="syncBtn" style="margin-top:6px;padding:6px 10px;font-size:12px" aria-label="새로고침">↻ 새로고침</button>
     </div>
   </header>
 
-  <nav>
+  <nav style="grid-template-columns:repeat(3,1fr)">
     <button class="on" data-tab="cal">달력</button>
     <button data-tab="shows">공연</button>
     <button data-tab="events">이벤트</button>
-    <button data-tab="data">데이터</button>
   </nav>
 
   <!-- ═══ 달력 ═══ -->
@@ -202,41 +202,6 @@
         <button class="btn ghost" id="evExport">내보내기</button>
         <button class="btn ghost" id="evImportBtn">가져오기</button>
         <input type="file" id="evImport" accept=".json" hidden>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ 데이터 ═══ -->
-  <section id="tab-data">
-    <div class="card">
-      <div class="h">자동 갱신</div>
-      <p class="sub">이 페이지를 열 때마다 서버의 최신 데이터를 자동으로 가져옵니다. GitHub Actions가 매일 크롤링해 갱신해 둔 결과입니다.</p>
-      <p class="stat" id="syncStat">동기화 대기 중…</p>
-    </div>
-    <div class="card">
-      <div class="h">공연 일정 데이터 <span style="color:var(--muted);font-weight:400">(수동 백업용)</span></div>
-      <p class="sub">자동 갱신이 안 될 때만 사용하세요. 직접 만든 <b>musicals.json</b>을 불러옵니다.</p>
-      <div class="file-row">
-        <button class="btn ghost" id="muBtn">musicals.json 불러오기</button>
-        <input type="file" id="muFile" accept=".json" hidden>
-        <span class="stat" id="muStat"></span>
-      </div>
-    </div>
-    <div class="card">
-      <div class="h">회차별 캐스트 데이터 <span style="color:var(--muted);font-weight:400">(수동 백업용)</span></div>
-      <p class="sub">자동 갱신이 안 될 때만 사용하세요. 이미지 판독까지 끝난 <b>casts.json</b>을 불러옵니다.</p>
-      <div class="file-row">
-        <button class="btn ghost" id="caBtn">casts.json 불러오기</button>
-        <input type="file" id="caFile" accept=".json" hidden>
-        <span class="stat" id="caStat"></span>
-      </div>
-    </div>
-    <div class="card">
-      <div class="h">체험용 샘플</div>
-      <p class="sub">데이터를 아직 안 만들었어도 앱 동작을 미리 볼 수 있습니다. (가상의 공연·배우)</p>
-      <div class="file-row">
-        <button class="btn gold" id="sampleBtn">샘플 데이터 넣기</button>
-        <button class="btn ghost" id="resetBtn">모든 데이터 지우기</button>
       </div>
     </div>
   </section>
@@ -434,8 +399,6 @@ function renderEvents(){
 /* ─────────── 데이터 탭 ─────────── */
 function stats(){
   $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
-  $("muStat").textContent=musicals.length?musicals.length+"건 저장됨":"";
-  $("caStat").textContent=casts.length?casts.length+"건 저장됨":"";
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows();renderEvents()}
@@ -445,30 +408,6 @@ function readJsonFile(input,cb){
   const r=new FileReader();
   r.onload=()=>{ try{cb(JSON.parse(r.result))}catch(e){toast("JSON 형식이 아닙니다")} input.value=""; };
   r.readAsText(f,"utf-8");
-}
-
-/* ─────────── 샘플 데이터 (가상) ─────────── */
-function sampleData(){
-  const y=new Date().getFullYear(), m=String(new Date().getMonth()+1).padStart(2,"0");
-  const D=n=>y+"-"+m+"-"+String(n).padStart(2,"0");
-  musicals=[
-    {공연명:"샘플: 밤의 아리아",시작일:D(1),종료일:D(28),공연장:"세종문화회관 대극장",상태:"공연중",출연진:"한별, 서도윤, 임유나 등",티켓가격:"VIP 150,000원",예매처:"NOL: https://nol.interpark.com",포스터:""},
-    {공연명:"샘플: 회전목마",시작일:D(5),종료일:D(25),공연장:"블루스퀘어",상태:"공연중",출연진:"정하람, 최이든 등",티켓가격:"R석 120,000원",예매처:"",포스터:""}
-  ];
-  casts=[];
-  const casting={ "샘플: 밤의 아리아":[["한별","서도윤"],["임유나","한별"],["서도윤","임유나"]],
-                  "샘플: 회전목마":[["정하람"],["최이든"]] };
-  for(let d=1;d<=28;d++){
-    for(const [show,rot] of Object.entries(casting)){
-      if(show.includes("회전")&&(d<5||d>25))continue;
-      const pair=rot[d%rot.length];
-      pair.forEach((actor,i)=>casts.push({공연명:show,날짜:D(d),회차:d%7===6?"14:00":"19:30",배역:i===0?"주연":"상대역",배우:actor}));
-    }
-  }
-  events=[
-    {show:"샘플: 밤의 아리아",title:"커튼콜 촬영 데이",from:D(14),to:D(14),disc:"",link:""},
-    {show:"샘플: 회전목마",title:"타임세일",from:D(10),to:D(18),disc:"30",link:""}
-  ];
 }
 
 /* ─────────── 이벤트 핸들러 ─────────── */
@@ -481,28 +420,6 @@ $("prevM").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);render
 $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCal()});
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
-
-$("muBtn").addEventListener("click",()=>$("muFile").click());
-$("muFile").addEventListener("change",e=>readJsonFile(e.target,async data=>{
-  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
-  musicals=data;await save("cc:musicals",musicals);refreshAll();toast("공연 "+musicals.length+"건 저장");
-}));
-$("caBtn").addEventListener("click",()=>$("caFile").click());
-$("caFile").addEventListener("change",e=>readJsonFile(e.target,async data=>{
-  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
-  casts=data;await save("cc:casts",casts);refreshAll();toast("캐스트 "+casts.length+"건 저장");
-}));
-
-$("sampleBtn").addEventListener("click",async ()=>{
-  sampleData();
-  await save("cc:musicals",musicals);await save("cc:casts",casts);await save("cc:events",events);
-  refreshAll();toast("샘플 데이터를 넣었습니다");
-});
-$("resetBtn").addEventListener("click",async ()=>{
-  musicals=[];casts=[];events=[];selActor=null;selShow="";
-  try{await window.storage.delete("cc:musicals");await window.storage.delete("cc:casts");await window.storage.delete("cc:events")}catch(e){}
-  refreshAll();toast("모두 지웠습니다");
-});
 
 $("evAdd").addEventListener("click",async ()=>{
   const title=$("evTitle").value.trim();
@@ -544,13 +461,12 @@ async function syncFromServer(silent){
     }
     if(stat){
       const now=new Date();
-      const t=now.getFullYear()+"."+String(now.getMonth()+1).padStart(2,"0")+"."+String(now.getDate()).padStart(2,"0")
-        +" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
-      stat.innerHTML='마지막 동기화: <b style="color:var(--gold)">'+t+'</b>';
+      const t=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+      stat.innerHTML='동기화 '+t;
     }
     if(changed){refreshAll();if(!silent)toast("최신 데이터로 갱신했습니다")}
   }catch(err){
-    if(stat) stat.textContent="자동 갱신 실패 — 저장된 데이터로 표시 중 (오프라인이거나 첫 크롤링 전일 수 있음)";
+    if(stat) stat.textContent="갱신 실패 (오프라인?)";
   }
 }
 $("syncBtn").addEventListener("click",()=>syncFromServer(false));
