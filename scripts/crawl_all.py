@@ -143,7 +143,14 @@ def build_auto_shows(shows: list[dict]) -> dict:
 # ═════════════════════════════════════════════
 IMG_URL_PATTERN = re.compile(r"https?:\\?/\\?/[^\s\"'<>\\]+?\.(?:jpg|jpeg|png|webp|gif)", re.I)
 IMG_KEYWORDS = ["ticketimage", "detail", "notice", "cast", "info", "goods", "upload"]
-DISCOUNT_KEYWORDS = ["할인", "조기예매", "타임세일", "재관람", "특가", "프로모션"]
+DISCOUNT_KEYWORDS = [
+    # 할인 혜택
+    "할인", "조기예매", "얼리버드", "재관람", "마티네", "청소년", "학생",
+    "특가", "타임세일", "프로모션", "기획전", "패키지", "단체",
+    # 현장 이벤트
+    "커튼콜", "포토타임", "폴라로이드", "포토카드", "엽서", "증정", "굿즈", "MD",
+    "관객과의 대화", "관크", "무대인사", "싸인회", "사인회", "팬미팅", "이벤트",
+]
 DISC_RATE = re.compile(r"(\d{1,2})\s*%")
 
 
@@ -179,7 +186,10 @@ def step2(targets: dict) -> list[dict]:
     for name, url in targets.items():
         print(f"  ▶ {name}")
         try:
-            html = sess.get(url, timeout=20).text
+            r = sess.get(url, timeout=20)
+            if not r.encoding or r.encoding.lower() in ("iso-8859-1", "ascii"):
+                r.encoding = r.apparent_encoding   # 한글 깨짐 방지
+            html = r.text
         except Exception as e:
             print(f"    !! 접속 실패: {e}")
             continue
@@ -206,6 +216,50 @@ def step2(targets: dict) -> list[dict]:
         print(f"    이미지 {saved}장")
 
     return all_events
+
+
+PLAYDB_URLS = [
+    "http://www.playdb.co.kr/Event/Event_Main.asp",
+    "http://www.playdb.co.kr/community/Community_Notice.asp?bbsno=25",
+]
+BRACKET_TITLE = re.compile(r"[\[<]([^\]>]{2,40})[\]>]")
+
+
+def step2b_playdb() -> list[dict]:
+    """플레이DB 이벤트/당첨자발표 게시판에서 공연 관련 이벤트를 수집.
+    이 사이트는 EUC-KR 인코딩이라 명시적으로 지정해야 한글이 깨지지 않는다."""
+    print("2-b단계: 플레이DB 이벤트 수집")
+    sess = requests.Session()
+    sess.headers["User-Agent"] = MOBILE_UA
+    found, seen = [], set()
+
+    for url in PLAYDB_URLS:
+        try:
+            r = sess.get(url, timeout=20)
+            r.encoding = "euc-kr"          # 핵심: 지정 안 하면 한글이 전부 깨짐
+            html = r.text
+        except Exception as e:
+            print(f"  !! 접속 실패 {url}: {e}")
+            continue
+
+        for ln in html_to_text(html):
+            if not any(k in ln for k in DISCOUNT_KEYWORDS):
+                continue
+            if ln in seen or len(ln) < 6:
+                continue
+            seen.add(ln)
+            m = DISC_RATE.search(ln)
+            # [초대이벤트] <공연명> ... 형태에서 공연명 추출 시도
+            titles = BRACKET_TITLE.findall(ln)
+            show = titles[-1] if titles else ""
+            found.append({
+                "show": show, "title": ln[:80], "from": "", "to": "",
+                "disc": m.group(1) if m else "", "link": url, "auto": True,
+            })
+        time.sleep(0.3)
+
+    print(f"  → 플레이DB 이벤트 {len(found)}건")
+    return found[:60]
 
 
 # ═════════════════════════════════════════════
@@ -271,7 +325,9 @@ def main():
 
     shows = step1()
     targets = build_auto_shows(shows)
-    auto_events = step2(targets)
+    ticket_events = step2(targets)          # 예매처 페이지에서 수집
+    playdb_events = step2b_playdb()         # 플레이DB에서 수집
+    auto_events = ticket_events + playdb_events
     casts = step3() if ANTHROPIC_KEY else []  # 키가 없으면 캐스트는 비워둠 (일정 정보로 충분)
 
     (OUT_DIR / "casts.json").write_text(
