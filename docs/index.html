@@ -155,7 +155,9 @@
 
   <div class="filters">
     <label class="tgl"><input type="checkbox" id="fKids" checked><span>어린이용 제외</span></label>
+    <label class="tgl"><input type="checkbox" id="fVenue" checked><span>비전문 공연장 제외</span></label>
     <label class="tgl"><input type="checkbox" id="fLocal" checked><span>지방 소극장 제외</span></label>
+    <label class="tgl"><input type="checkbox" id="fSmall"><span>수도권 소극장 제외</span></label>
     <span class="stat" id="filterStat"></span>
   </div>
 
@@ -199,7 +201,9 @@ let selDate = fmt(new Date());
 let selActor = null;
 let selShow  = "";
 let fKids = true;    // 어린이용 제외
+let fVenue = true;   // 박물관·과학관 등 비전문 공연장 제외
 let fLocal = true;   // 지방 소극장 제외
+let fSmall = false;  // 수도권 소극장 제외 (기본 꺼짐)
 
 const $ = id => document.getElementById(id);
 function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -223,43 +227,79 @@ function isKids(s){
   if (KIDS_WORDS.some(w => n.includes(w))) return true;
   if (KIDS_TITLES.some(t => n.includes(t))) return true;
   // 티켓 최고가가 2만원 이하면 어린이/소품 공연일 가능성이 높음
-  const prices = (s.티켓가격||"").match(/[\d,]+\s*원/g);
-  if (prices){
-    const max = Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
-    if (max > 0 && max <= 20000) return true;
-  }
-  return false;
+  const mx = maxPrice(s);
+  return mx > 0 && mx <= 20000;
 }
 
-// 수도권 판별: 공연장명에 지역 표기가 없거나 서울/경기/인천이면 수도권으로 간주
-const METRO = ["서울","경기","인천","성남","고양","수원","용인","부천","안양","의정부","광명",
-  "과천","안산","시흥","화성","남양주","하남","구리","김포","파주","군포","의왕"];
-const NON_METRO = ["부산","대구","광주","대전","울산","세종","강원","춘천","원주","강릉",
-  "청주","충주","천안","아산","전주","익산","군산","여수","순천","목포","포항","경주","창원",
-  "김해","진주","제주","안동","구미","거제","양산","충남","충북","전남","전북","경남","경북"];
-// 소극장 신호: 이름에 아래 단어가 들어가면 소규모로 간주
-const SMALL_HALL = ["소극장","아트홀","소공연장","블랙박스","스튜디오","연습장","카페","라이브홀",
-  "복지회관","문화의집","작은","씨어터","시어터"];
+// 지역 판별은 공연장명과 공연명의 [대괄호] 표기만 사용한다.
+// (공연명 전체를 쓰면 "백설공주"의 '공주'가 충남 공주시로 오인된다)
+function regionText(s){
+  const brackets = (s.공연명||"").match(/\[([^\]]+)\]/g) || [];
+  return (s.공연장||"") + " " + brackets.join(" ");
+}
 
-function isLocalSmall(s){
-  const place = (s.공연장||"") + " " + (s.공연명||"");
-  const isMetro = METRO.some(w => place.includes(w));
-  const isNonMetro = NON_METRO.some(w => place.includes(w));
-  if (isMetro || !isNonMetro) return false;   // 수도권이거나 지역을 알 수 없으면 남김
-  // 지방인 경우: 소극장 신호가 있거나 티켓 최고가가 5만원 이하면 제외
-  if (SMALL_HALL.some(w => (s.공연장||"").includes(w))) return true;
+const METRO = ["서울","경기","인천","성남","고양","수원","용인","부천","안양","의정부","광명",
+  "과천","안산","시흥","화성","남양주","하남","구리","김포","파주","군포","의왕","대학로"];
+// 특별시·광역시가 아닌 지역 (광역시 + 도 단위 + 시·군)
+const NON_METRO = [
+  "부산","대구","광주","대전","울산","세종",
+  "강원","충남","충북","전남","전북","경남","경북","제주",
+  "춘천","원주","강릉","속초","동해","삼척","태백","홍천","평창","정선","양양","철원","영월",
+  "청주","충주","제천","천안","아산","서산","당진","논산","공주","보령","태안","홍성","예산",
+  "음성","진천","옥천","영동","단양","계룡","서천","금산",
+  "전주","익산","군산","정읍","남원","김제","완주","부안","고창","순창","임실","무주","진안",
+  "여수","순천","목포","나주","광양","담양","보성","해남","영광","무안","화순","강진","장흥",
+  "포항","경주","김천","안동","구미","영주","영천","상주","문경","경산","칠곡","의성","청도",
+  "창원","진주","통영","사천","김해","밀양","거제","양산","함안","거창","합천","남해","하동",
+  "서귀포","울릉"];
+// 소극장 신호 (규모가 작은 전용 공연장)
+const SMALL_HALL = ["소극장","소공연장","블랙박스","스튜디오","연습장","카페","라이브홀",
+  "복지회관","문화의집","작은극장"];
+// 전문 공연장이 아닌 시설 — 지역과 무관하게 별도 토글로 제외
+const NON_VENUE = ["학습센터","평생학습","공예관","과학관","박물관","미술관","도서관","기념관",
+  "문화원","수련관","청소년관","주민센터","구민회관","시민회관","동사무소","체육관","교육원",
+  "연수원","복지관","센터몰","전시관","홍보관","식물원","수목원","캠핑","놀이터","키즈"];
+
+// 티켓 가격이 이 값을 넘으면 대극장으로 보고 소극장 판정에서 제외
+const BIG_PRICE = 70000;
+function maxPrice(s){
   const prices = (s.티켓가격||"").match(/[\d,]+\s*원/g);
-  if (prices){
-    const max = Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
-    if (max > 0 && max <= 50000) return true;
-  }
-  return false;
+  if(!prices) return 0;
+  return Math.max(...prices.map(p => Number(p.replace(/[^\d]/g,""))));
+}
+
+// 전문 공연장이 아닌 시설에서 하는 공연
+function isNonVenue(s){
+  return NON_VENUE.some(w => (s.공연장||"").includes(w));
+}
+
+// 지방(비수도권) 소규모 공연
+function isLocalSmall(s){
+  const place = regionText(s);
+  if (METRO.some(w => place.includes(w))) return false;
+  if (!NON_METRO.some(w => place.includes(w))) return false;  // 지역을 알 수 없으면 남김
+  const mx = maxPrice(s);
+  if (mx >= BIG_PRICE) return false;          // 고가 = 대극장으로 간주해 남김
+  if (SMALL_HALL.some(w => (s.공연장||"").includes(w))) return true;
+  return mx > 0 && mx <= 50000;
+}
+
+// 수도권 소극장
+function isMetroSmall(s){
+  const place = regionText(s);
+  if (NON_METRO.some(w => place.includes(w)) && !METRO.some(w => place.includes(w))) return false;
+  const mx = maxPrice(s);
+  if (mx >= BIG_PRICE) return false;
+  if (SMALL_HALL.some(w => (s.공연장||"").includes(w))) return true;
+  return mx > 0 && mx <= 50000;
 }
 
 function visibleMusicals(){
   return musicals.filter(s => {
     if (fKids && isKids(s)) return false;
+    if (fVenue && isNonVenue(s)) return false;
     if (fLocal && isLocalSmall(s)) return false;
+    if (fSmall && isMetroSmall(s)) return false;
     return true;
   });
 }
@@ -432,9 +472,19 @@ $("fKids").addEventListener("change",async e=>{
   await save("cc:fKids",fKids);
   selShow="";refreshAll();
 });
+$("fVenue").addEventListener("change",async e=>{
+  fVenue=e.target.checked;
+  await save("cc:fVenue",fVenue);
+  selShow="";refreshAll();
+});
 $("fLocal").addEventListener("change",async e=>{
   fLocal=e.target.checked;
   await save("cc:fLocal",fLocal);
+  selShow="";refreshAll();
+});
+$("fSmall").addEventListener("change",async e=>{
+  fSmall=e.target.checked;
+  await save("cc:fSmall",fSmall);
   selShow="";refreshAll();
 });
 
@@ -469,9 +519,12 @@ if ("serviceWorker" in navigator){
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
-  const k=await load("cc:fKids"), l=await load("cc:fLocal");
+  const k=await load("cc:fKids"), v=await load("cc:fVenue"),
+        l=await load("cc:fLocal"), sm=await load("cc:fSmall");
   if(k!==null){fKids=k;$("fKids").checked=k}
+  if(v!==null){fVenue=v;$("fVenue").checked=v}
   if(l!==null){fLocal=l;$("fLocal").checked=l}
+  if(sm!==null){fSmall=sm;$("fSmall").checked=sm}
   refreshAll();
   syncFromServer(true);
 })();
