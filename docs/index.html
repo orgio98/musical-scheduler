@@ -308,13 +308,6 @@ function renderCal(){
   renderDay();
 }
 
-function ticketLink(name){
-  const s = musicals.find(m=>m.공연명===name);
-  if(!s) return "";
-  const link=(s.예매처||"").split("|")[0].trim();
-  return link.includes("http")?link.slice(link.indexOf("http")):"";
-}
-
 function renderDay(){
   const box=$("dayDetail");
   const map=castByDate();
@@ -341,15 +334,11 @@ function renderDay(){
       const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
       return c.배역?esc(c.배역)+" "+actor:actor;
     }).join(" · ");
-    const url=ticketLink(name);
-    html+='<div class="slot"><div class="t"><b>'+esc(name)+'</b><span>'+esc(time||"")+'</span></div><div class="castline">'+lines
-      +(url?' · <a href="'+esc(url)+'" target="_blank" rel="noopener">예매처 열기</a>':"")+'</div></div>';
+    html+='<div class="slot"><div class="t"><b>'+esc(name)+'</b><span>'+esc(time||"")+'</span></div><div class="castline">'+lines+'</div></div>';
   }
   for(const s of generalShows){
-    const url=ticketLink(s.공연명);
     html+='<div class="slot"><div class="t"><b>'+esc(s.공연명)+'</b><span>'+esc(s.공연시간||"")+'</span></div><div class="castline" style="color:var(--muted)">'
-      +esc(s.공연장||"")+(s.티켓가격?(' · '+esc(s.티켓가격)):"")
-      +(url?' · <a href="'+esc(url)+'" target="_blank" rel="noopener">예매처 열기</a>':"")+'</div></div>';
+      +esc(s.공연장||"")+(s.티켓가격?(' · '+esc(s.티켓가격)):"")+'</div></div>';
   }
   for(const e of dayEvents){
     html+='<div class="slot"><div class="t"><b style="color:var(--gold)">'+esc(e.title)+'</b>'+(e.disc?'<span>'+e.disc+'%</span>':"")+'</div><div class="castline">'+esc(e.show||"")+(e.link?' · <a href="'+esc(e.link)+'" target="_blank" rel="noopener">공지 보기</a>':"")+'</div></div>';
