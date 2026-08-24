@@ -98,6 +98,13 @@
   .castline{font-size:13px;color:var(--muted);line-height:1.6}
   .castline i{font-style:normal;color:var(--ink)}
   .castline i.hl{color:var(--gold);font-weight:700}
+  .round{display:flex;gap:8px;margin-top:7px;font-size:13px;line-height:1.65}
+  .round .rt{flex:0 0 auto;font-family:var(--serif);color:var(--gold);font-size:12.5px;
+    background:var(--gold-soft);border-radius:6px;padding:1px 7px;height:fit-content;margin-top:1px}
+  .round .rc{color:var(--muted);overflow-wrap:anywhere}
+  .round .rc i{font-style:normal;color:var(--ink)}
+  .round .rc i.hl{color:var(--gold);font-weight:700}
+  .round .rc u{text-decoration:none;color:var(--muted);font-size:11.5px;opacity:.8}
 
   /* ── 공연 목록 ── */
   .m-item{display:flex;gap:12px;padding:12px 2px;border-top:1px solid var(--line)}
@@ -435,13 +442,18 @@ function renderDay(){
     if(show&&show.티켓가격) info.push(esc(show.티켓가격));
     if(links) info.push(links);
     if(info.length) html+='<div class="castline" style="color:var(--muted)">'+info.join(' · ')+'</div>';
-    // 캐스트 (있을 때만)
+    // 캐스트 — 회차(시간)별로 나눠서 표시
     if(casts_.length){
-      const lines=casts_.map(c=>{
-        const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
-        return c.배역?esc(c.배역)+" "+actor:actor;
-      }).join(" · ");
-      html+='<div class="castline">'+lines+'</div>';
+      const byTime={};
+      for(const c of casts_){ (byTime[c.회차||""]=byTime[c.회차||""]||[]).push(c) }
+      for(const t of Object.keys(byTime).sort()){
+        const lines=byTime[t].map(c=>{
+          const actor='<i class="'+(c.배우===selActor?"hl":"")+'">'+esc(c.배우)+'</i>';
+          return c.배역?'<u>'+esc(c.배역)+'</u> '+actor:actor;
+        }).join(" · ");
+        html+='<div class="round">'+(t?'<span class="rt">'+esc(t)+'</span>':"")
+             +'<span class="rc">'+lines+'</span></div>';
+      }
     }
     html+='</div>';
   }
