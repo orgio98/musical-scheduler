@@ -532,6 +532,9 @@ async function syncFromServer(silent){
 $("syncBtn").addEventListener("click",()=>syncFromServer(false));
 
 /* ─────────── 시작 ─────────── */
+if ("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
