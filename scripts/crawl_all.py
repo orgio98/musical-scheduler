@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-GitHub Actions 자동 실행용 통합 크롤러
-========================================
-매일 스케줄에 따라 자동으로 실행되어
-  1) KOPIS 뮤지컬 일정 수집
-  2) 공연중인 공연의 캐스팅 이미지 + 할인 문구 수집
-  3) 캐스팅 이미지를 Claude API로 판독해 날짜별 캐스트로 변환
-을 순서대로 처리하고, 결과를 docs/data/*.json 으로 저장합니다.
-GitHub Pages가 docs/ 를 그대로 서빙하므로, 커밋되는 순간 웹앱에 반영됩니다.
+GitHub Actions 자동 실행용 뮤지컬 일정 크롤러
+==============================================
+매일 스케줄에 따라 자동 실행되어 KOPIS(공연예술통합전산망)에서
+전국 뮤지컬 일정·공연장·공연시간·티켓가격·예매처 링크를 수집하고
+docs/data/musicals.json 으로 저장합니다.
+GitHub Pages가 docs/ 를 서빙하므로, 커밋되는 순간 웹앱에 반영됩니다.
 
 필요한 저장소 시크릿(Settings > Secrets and variables > Actions):
-  - KOPIS_SERVICE_KEY   (필수) kopis.or.kr 발급 인증키
-  - ANTHROPIC_API_KEY   (선택) console.anthropic.com 발급 키.
-                        없으면 캐스팅 이미지 판독 단계만 건너뜁니다.
+  - KOPIS_SERVICE_KEY   kopis.or.kr 에서 발급한 오픈API 인증키
 """
 
-import base64
 import json
 import os
 import re
@@ -27,26 +22,18 @@ from pathlib import Path
 import requests
 
 SERVICE_KEY = os.environ.get("KOPIS_SERVICE_KEY", "")
-ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 
-DAYS_AHEAD = 90
-GENRE_CODE = "GGGA"
-MAX_SHOWS = 30  # 캐스팅 이미지·할인정보를 수집할 공연 수 상한 (부하 방지)
+DAYS_AHEAD = 90          # 오늘부터 며칠 후까지 수집할지
+GENRE_CODE = "GGGA"      # KOPIS 뮤지컬 장르코드
 
 BASE_URL = "http://www.kopis.or.kr/openApi/restful/pblprfr"
-MOBILE_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
-             "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile Safari/604.1")
 
 OUT_DIR = Path("docs/data")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-IMG_DIR = Path("_tmp_casting_images")
-IMG_DIR.mkdir(exist_ok=True)
 
 
-# ═════════════════════════════════════════════
-# 1단계: KOPIS 뮤지컬 일정
-# ═════════════════════════════════════════════
 def fetch_list(stdate: str, eddate: str) -> list[dict]:
+    """지정 기간의 뮤지컬 목록을 전 페이지 수집."""
     shows, page = [], 1
     while True:
         r = requests.get(BASE_URL, params={
@@ -54,7 +41,7 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
             "cpage": page, "rows": 100, "shcate": GENRE_CODE,
         }, timeout=15)
         if r.status_code == 400:
-            break  # KOPIS는 페이지 범위를 넘어서면 빈 목록 대신 400을 준다 → 더 가져올 게 없다는 뜻
+            break  # KOPIS는 페이지 범위를 넘어서면 빈 목록 대신 400을 준다 → 더 없다는 뜻
         r.raise_for_status()
         items = ET.fromstring(r.content).findall("db")
         if not items:
@@ -63,6 +50,7 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
             shows.append({
                 "id": db.findtext("mt20id", ""),
                 "공연명": db.findtext("prfnm", ""),
+                # KOPIS는 2026.08.01 형식으로 주는데, 웹앱은 2026-08-01 로 비교하므로 변환
                 "시작일": db.findtext("prfpdfrom", "").replace(".", "-"),
                 "종료일": db.findtext("prfpdto", "").replace(".", "-"),
                 "공연장": db.findtext("fcltynm", ""),
@@ -75,6 +63,7 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
 
 
 def fetch_detail(show_id: str) -> dict:
+    """공연 상세: 출연진·런타임·가격·공연시간·제작사·예매처 링크."""
     r = requests.get(f"{BASE_URL}/{show_id}", params={"service": SERVICE_KEY}, timeout=15)
     r.raise_for_status()
     db = ET.fromstring(r.content).find("db")
@@ -97,9 +86,14 @@ def fetch_detail(show_id: str) -> dict:
     }
 
 
-def step1() -> list[dict]:
-    print("1단계: KOPIS 일정 수집")
+def main():
+    if not SERVICE_KEY:
+        raise SystemExit("!! KOPIS_SERVICE_KEY 시크릿이 설정되지 않았습니다.")
+
+    print("KOPIS 뮤지컬 일정 수집")
     today, end = date.today(), date.today() + timedelta(days=DAYS_AHEAD)
+
+    # 목록 API는 조회기간 제한이 있어 31일 단위로 나눠 조회 후 id 기준 중복 제거
     all_shows: dict[str, dict] = {}
     cursor = today
     while cursor <= end:
@@ -108,233 +102,21 @@ def step1() -> list[dict]:
             all_shows[s["id"]] = s
         cursor = chunk_end + timedelta(days=1)
     shows = list(all_shows.values())
+    print(f"  목록 {len(shows)}건")
 
+    print("  상세정보 수집 중...")
     for i, s in enumerate(shows, 1):
         try:
             s.update(fetch_detail(s["id"]))
         except Exception:
             pass
+        if i % 100 == 0:
+            print(f"    {i}/{len(shows)}")
         time.sleep(0.2)
 
     (OUT_DIR / "musicals.json").write_text(
         json.dumps(shows, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  → 뮤지컬 {len(shows)}건 저장")
-    return shows
-
-
-def extract_url(예매처: str) -> str:
-    m = re.search(r"https?://[^\s|]+", 예매처 or "")
-    return m.group(0) if m else ""
-
-
-def build_auto_shows(shows: list[dict]) -> dict:
-    auto = {}
-    for s in shows:
-        if s.get("상태") != "공연중":
-            continue
-        url = extract_url(s.get("예매처", ""))
-        if url:
-            auto[s["공연명"]] = url
-    return dict(list(auto.items())[:MAX_SHOWS])
-
-
-# ═════════════════════════════════════════════
-# 2단계: 캐스팅 이미지 + 할인 정보
-# ═════════════════════════════════════════════
-IMG_URL_PATTERN = re.compile(r"https?:\\?/\\?/[^\s\"'<>\\]+?\.(?:jpg|jpeg|png|webp|gif)", re.I)
-IMG_KEYWORDS = ["ticketimage", "detail", "notice", "cast", "info", "goods", "upload"]
-DISCOUNT_KEYWORDS = [
-    # 할인 혜택
-    "할인", "조기예매", "얼리버드", "재관람", "마티네", "청소년", "학생",
-    "특가", "타임세일", "프로모션", "기획전", "패키지", "단체",
-    # 현장 이벤트
-    "커튼콜", "포토타임", "폴라로이드", "포토카드", "엽서", "증정", "굿즈", "MD",
-    "관객과의 대화", "관크", "무대인사", "싸인회", "사인회", "팬미팅", "이벤트",
-]
-DISC_RATE = re.compile(r"(\d{1,2})\s*%")
-
-
-def html_to_text(html: str) -> list[str]:
-    html = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", html, flags=re.S | re.I)
-    text = re.sub(r"<[^>]+>", "\n", html)
-    lines = [re.sub(r"\s+", " ", ln).strip() for ln in text.splitlines()]
-    return [ln for ln in lines if 4 <= len(ln) <= 120]
-
-
-def extract_discounts(html: str, show: str, url: str) -> list[dict]:
-    found, seen = [], set()
-    for ln in html_to_text(html):
-        if any(k in ln for k in DISCOUNT_KEYWORDS):
-            if ln in seen:
-                continue
-            seen.add(ln)
-            m = DISC_RATE.search(ln)
-            found.append({
-                "show": show, "title": ln[:80], "from": "", "to": "",
-                "disc": m.group(1) if m else "", "link": url,
-                "auto": True,  # 웹앱에서 자동/수동 이벤트를 구분하는 표시
-            })
-    return found[:15]
-
-
-def step2(targets: dict) -> list[dict]:
-    print(f"2단계: 캐스팅 이미지 + 할인정보 수집 (대상 {len(targets)}개 공연)")
-    sess = requests.Session()
-    sess.headers["User-Agent"] = MOBILE_UA
-    all_events = []
-
-    for name, url in targets.items():
-        print(f"  ▶ {name}")
-        try:
-            r = sess.get(url, timeout=20)
-            if not r.encoding or r.encoding.lower() in ("iso-8859-1", "ascii"):
-                r.encoding = r.apparent_encoding   # 한글 깨짐 방지
-            html = r.text
-        except Exception as e:
-            print(f"    !! 접속 실패: {e}")
-            continue
-
-        evs = extract_discounts(html, name, url)
-        all_events.extend(evs)
-
-        raw_urls = [u.replace("\\/", "/") for u in IMG_URL_PATTERN.findall(html)]
-        urls = [u for u in dict.fromkeys(raw_urls) if any(k in u.lower() for k in IMG_KEYWORDS)]
-        if not urls:
-            continue
-        show_dir = IMG_DIR / name
-        show_dir.mkdir(parents=True, exist_ok=True)
-        saved = 0
-        for i, u in enumerate(urls, 1):
-            try:
-                data = sess.get(u, timeout=15).content
-                ext = u.rsplit(".", 1)[-1][:4]
-                (show_dir / f"{i:03d}.{ext}").write_bytes(data)
-                saved += 1
-            except Exception:
-                continue
-            time.sleep(0.15)
-        print(f"    이미지 {saved}장")
-
-    return all_events
-
-
-PLAYDB_URLS = [
-    "http://www.playdb.co.kr/Event/Event_Main.asp",
-    "http://www.playdb.co.kr/community/Community_Notice.asp?bbsno=25",
-]
-BRACKET_TITLE = re.compile(r"[\[<]([^\]>]{2,40})[\]>]")
-
-
-def step2b_playdb() -> list[dict]:
-    """플레이DB 이벤트/당첨자발표 게시판에서 공연 관련 이벤트를 수집.
-    이 사이트는 EUC-KR 인코딩이라 명시적으로 지정해야 한글이 깨지지 않는다."""
-    print("2-b단계: 플레이DB 이벤트 수집")
-    sess = requests.Session()
-    sess.headers["User-Agent"] = MOBILE_UA
-    found, seen = [], set()
-
-    for url in PLAYDB_URLS:
-        try:
-            r = sess.get(url, timeout=20)
-            r.encoding = "euc-kr"          # 핵심: 지정 안 하면 한글이 전부 깨짐
-            html = r.text
-        except Exception as e:
-            print(f"  !! 접속 실패 {url}: {e}")
-            continue
-
-        for ln in html_to_text(html):
-            if not any(k in ln for k in DISCOUNT_KEYWORDS):
-                continue
-            if ln in seen or len(ln) < 6:
-                continue
-            seen.add(ln)
-            m = DISC_RATE.search(ln)
-            # [초대이벤트] <공연명> ... 형태에서 공연명 추출 시도
-            titles = BRACKET_TITLE.findall(ln)
-            show = titles[-1] if titles else ""
-            found.append({
-                "show": show, "title": ln[:80], "from": "", "to": "",
-                "disc": m.group(1) if m else "", "link": url, "auto": True,
-            })
-        time.sleep(0.3)
-
-    print(f"  → 플레이DB 이벤트 {len(found)}건")
-    return found[:60]
-
-
-# ═════════════════════════════════════════════
-# 3단계: 캐스팅 이미지 AI 판독 (Claude API)
-# ═════════════════════════════════════════════
-CAST_PROMPT = """이 이미지는 뮤지컬 캐스팅 일정표일 수 있습니다.
-날짜별 캐스팅 정보가 있다면 아래 JSON 배열 형식으로만 답하세요. 설명·마크다운 없이 JSON만 출력하세요.
-[{"날짜": "2026-08-20", "회차": "19:30", "배역": "지킬", "배우": "홍길동"}]
-연도가 이미지에 없으면 가장 그럴듯한 연도로 추정. 회차·배역 구분이 없으면 빈 문자열.
-캐스팅 일정표가 아닌 이미지라면 빈 배열 [] 만 출력."""
-
-
-def step3() -> list[dict]:
-    if not ANTHROPIC_KEY:
-        print("3단계 건너뜀: ANTHROPIC_API_KEY 시크릿이 없습니다.")
-        return []
-    if not IMG_DIR.exists() or not any(IMG_DIR.iterdir()):
-        print("3단계 건너뜀: 판독할 이미지가 없습니다.")
-        return []
-
-    import anthropic
-    client = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
-    rows, seen = [], set()
-    print("3단계: 캐스팅 이미지 AI 판독")
-
-    for show_dir in sorted(IMG_DIR.iterdir()):
-        if not show_dir.is_dir():
-            continue
-        for img in sorted(show_dir.iterdir()):
-            ext = img.suffix.lower().lstrip(".")
-            media = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
-                     "gif": "image/gif", "webp": "image/webp"}.get(ext)
-            if not media:
-                continue
-            try:
-                data = base64.standard_b64encode(img.read_bytes()).decode()
-                msg = client.messages.create(
-                    model="claude-sonnet-4-6",
-                    max_tokens=4000,
-                    messages=[{"role": "user", "content": [
-                        {"type": "image", "source": {"type": "base64", "media_type": media, "data": data}},
-                        {"type": "text", "text": CAST_PROMPT},
-                    ]}],
-                )
-                text = "".join(b.text for b in msg.content if b.type == "text")
-                text = re.sub(r"```json|```", "", text).strip()
-                for row in json.loads(text or "[]"):
-                    row["공연명"] = show_dir.name
-                    key = (show_dir.name, row.get("날짜"), row.get("회차"), row.get("배역"), row.get("배우"))
-                    if key not in seen:
-                        seen.add(key)
-                        rows.append(row)
-            except Exception as e:
-                print(f"  ! 판독 실패 {img}: {e}")
-    print(f"  → 캐스트 {len(rows)}건")
-    return rows
-
-
-# ═════════════════════════════════════════════
-def main():
-    if not SERVICE_KEY:
-        raise SystemExit("!! KOPIS_SERVICE_KEY 시크릿이 설정되지 않았습니다.")
-
-    shows = step1()
-    targets = build_auto_shows(shows)
-    ticket_events = step2(targets)          # 예매처 페이지에서 수집
-    playdb_events = step2b_playdb()         # 플레이DB에서 수집
-    auto_events = ticket_events + playdb_events
-    casts = step3() if ANTHROPIC_KEY else []  # 키가 없으면 캐스트는 비워둠 (일정 정보로 충분)
-
-    (OUT_DIR / "casts.json").write_text(
-        json.dumps(casts, ensure_ascii=False, indent=2), encoding="utf-8")
-    (OUT_DIR / "events.json").write_text(
-        json.dumps(auto_events, ensure_ascii=False, indent=2), encoding="utf-8")
-    print("저장 완료: docs/data/musicals.json, casts.json, events.json")
+    print(f"저장 완료: docs/data/musicals.json ({len(shows)}건)")
 
 
 if __name__ == "__main__":
