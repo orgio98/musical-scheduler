@@ -1,36 +1,23 @@
 name: 뮤지컬 데이터 자동 수집
-
 on:
-  schedule:
-    - cron: '0 21 * * *'   # UTC 21:00 = 한국시간(KST) 오전 6시
-  workflow_dispatch: {}     # Actions 탭에서 수동으로도 실행 가능
-
+  schedule: [{cron: '0 21 * * *'}]
+  workflow_dispatch: {}
 permissions:
   contents: write
-
 jobs:
   crawl:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        with: {python-version: '3.11'}
+      - name: OCR 엔진 설치
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr tesseract-ocr-kor
 
       - name: 라이브러리 설치
-        run: pip install requests anthropic
-
-      - name: 크롤링 + AI 판독 실행
-        env:
-          KOPIS_SERVICE_KEY: ${{ secrets.KOPIS_SERVICE_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: pip install requests anthropic pytesseract pillow
+      - name: 크롤링 실행
+        env: {KOPIS_SERVICE_KEY: '${{ secrets.KOPIS_SERVICE_KEY }}', ANTHROPIC_API_KEY: '${{ secrets.ANTHROPIC_API_KEY }}'}
         run: python scripts/crawl_all.py
-
-      - name: 결과 커밋 및 푸시
-        run: |
-          git config user.name "musical-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add docs/data/*.json
-          git diff --cached --quiet || git commit -m "데이터 자동 갱신 $(date -u +%Y-%m-%d)"
-          git push
+      - name: 결과 커밋
+        run: git config user.name "musical-bot" && git config user.email "bot@users.noreply.github.com" && git add docs/data/*.json && (git diff --cached --quiet || git commit -m "auto update") && git push
