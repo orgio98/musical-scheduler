@@ -396,13 +396,7 @@
     "종료일": "2026-09-19",
     "공연장": "순천문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298690_260819_133244.jpg",
-    "출연진": "서수현, 박광재, 노광흔, 이성호, 배준수, 최보희, 정회성 등",
-    "런타임": "1시간",
-    "티켓가격": "전석 6,000원",
-    "공연시간": "토요일(11:00,14:00)",
-    "제작사": "순천시(순천시청)",
-    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64913 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1716130"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298690_260819_133244.jpg"
   },
   {
     "id": "PF298673",
@@ -4011,13 +4005,7 @@
     "종료일": "2026-11-01",
     "공연장": "충무아트센터",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF292306_260527_110648.gif",
-    "출연진": "박강현, 임규형, 나현우, 김선영, 신영숙, 조민호, 김수호 등",
-    "런타임": "2시간 40분",
-    "티켓가격": "VIP석 160,000원, R석 130,000원, S석 100,000원, A석 70,000원",
-    "공연시간": "화요일 ~ 목요일(19:30), 금요일(14:30,19:30), 토요일(14:00,19:00), 일요일(15:00)",
-    "제작사": "에스앤코(S&CO), 클립서비스",
-    "예매처": "29CM: https://ticket.29cm.co.kr/catalog/4104896 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1659791 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26007442 | 예스24: https://ticket.yes24.com/Perf/58543 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79229"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF292306_260527_110648.gif"
   },
   {
     "id": "PF292160",
@@ -4398,7 +4386,7 @@
     "id": "PF286497",
     "공연명": "김종욱 찾기 [대학로]",
     "시작일": "2026-03-07",
-    "종료일": "2026-08-31",
+    "종료일": "2026-09-27",
     "공연장": "틴틴홀",
     "상태": "공연중",
     "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF286497_260306_173930.gif",
@@ -7071,13 +7059,7 @@
     "종료일": "2026-11-14",
     "공연장": "전북예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297072_260727_162435.jpg",
-    "출연진": " ",
-    "런타임": "1시간",
-    "티켓가격": "전석 20,000원",
-    "공연시간": "목요일 ~ 금요일(10:30), 토요일(11:00,14:00)",
-    "제작사": "(재) 전북특별자치도 문화관광재단, 할리퀸크리에이션즈(주)",
-    "예매처": "나루컬쳐: https://naruculture.co.kr/sub1_detail.html?concertid=tfts0138740 | 놀유니버스: https://tickets.interpark.com/goods/26010773"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297072_260727_162435.jpg"
   },
   {
     "id": "PF297041",
