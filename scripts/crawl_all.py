@@ -61,8 +61,8 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
             shows.append({
                 "id": db.findtext("mt20id", ""),
                 "공연명": db.findtext("prfnm", ""),
-                "시작일": db.findtext("prfpdfrom", ""),
-                "종료일": db.findtext("prfpdto", ""),
+                "시작일": db.findtext("prfpdfrom", "").replace(".", "-"),
+                "종료일": db.findtext("prfpdto", "").replace(".", "-"),
                 "공연장": db.findtext("fcltynm", ""),
                 "상태": db.findtext("prfstate", ""),
                 "포스터": db.findtext("poster", ""),
