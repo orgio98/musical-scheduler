@@ -170,53 +170,11 @@ def extract_discounts(html: str, show: str, url: str) -> list[dict]:
     return found[:15]
 
 
-DATE_LINE_PATTERN = re.compile(r"(\d{1,2})[./월\s]\s*(\d{1,2})[일]?")
-CAST_LINE_KEYWORDS = ["캐스팅", "캐스트", "cast"]
-NAME_LIKE_PATTERN = re.compile(r"[가-힣A-Za-z]{2,}")
-
-
-def looks_like_name(s: str) -> bool:
-    """'19:30' 같은 시간·숫자 문자열은 배우 이름이 아니라고 판단."""
-    if re.fullmatch(r"[\d:./~\-\s]+", s):
-        return False
-    return bool(NAME_LIKE_PATTERN.search(s))
-
-
-def parse_cast_lines(lines, show: str, source: str) -> list[dict]:
-    """텍스트 줄 목록에서 '날짜 다음에 오는 이름들'을 캐스트로 추정.
-    source: 'text'(페이지 텍스트, 비교적 신뢰) 또는 'ocr'(이미지 OCR, 오류 가능성 높음)."""
-    year = date.today().year
-    results, current_date = [], None
-    for raw in lines:
-        t = re.sub(r"\s+", " ", str(raw)).strip()
-        if not t:
-            continue
-        m = DATE_LINE_PATTERN.search(t)
-        if m:
-            mm, dd = int(m.group(1)), int(m.group(2))
-            if 1 <= mm <= 12 and 1 <= dd <= 31:
-                current_date = f"{year}-{mm:02d}-{dd:02d}"
-                rest = DATE_LINE_PATTERN.sub("", t).strip(" -:|,·")
-                if rest and 2 <= len(rest) <= 40 and looks_like_name(rest) and not any(k in rest for k in CAST_LINE_KEYWORDS):
-                    results.append({"공연명": show, "날짜": current_date, "회차": "", "배역": "", "배우": rest, "출처": source})
-        elif current_date and 2 <= len(t) <= 40 and looks_like_name(t) and not any(k in t for k in CAST_LINE_KEYWORDS):
-            results.append({"공연명": show, "날짜": current_date, "회차": "", "배역": "", "배우": t, "출처": source})
-
-    seen, dedup = set(), []
-    for r in results:
-        key = (r["공연명"], r["날짜"], r["배우"])
-        if key not in seen:
-            seen.add(key)
-            dedup.append(r)
-    return dedup[:100]
-
-
-def step2(targets: dict) -> tuple[list[dict], list[dict]]:
+def step2(targets: dict) -> list[dict]:
     print(f"2단계: 캐스팅 이미지 + 할인정보 수집 (대상 {len(targets)}개 공연)")
     sess = requests.Session()
     sess.headers["User-Agent"] = MOBILE_UA
     all_events = []
-    all_text_casts = []
 
     for name, url in targets.items():
         print(f"  ▶ {name}")
@@ -228,11 +186,6 @@ def step2(targets: dict) -> tuple[list[dict], list[dict]]:
 
         evs = extract_discounts(html, name, url)
         all_events.extend(evs)
-
-        text_casts = parse_cast_lines(html_to_text(html), name, "text")
-        all_text_casts.extend(text_casts)
-        if text_casts:
-            print(f"    텍스트 캐스팅 {len(text_casts)}건 (무료, 비교적 신뢰)")
 
         raw_urls = [u.replace("\\/", "/") for u in IMG_URL_PATTERN.findall(html)]
         urls = [u for u in dict.fromkeys(raw_urls) if any(k in u.lower() for k in IMG_KEYWORDS)]
@@ -252,7 +205,7 @@ def step2(targets: dict) -> tuple[list[dict], list[dict]]:
             time.sleep(0.15)
         print(f"    이미지 {saved}장")
 
-    return all_events, all_text_casts
+    return all_events
 
 
 # ═════════════════════════════════════════════
@@ -311,33 +264,6 @@ def step3() -> list[dict]:
     return rows
 
 
-def step3_ocr() -> list[dict]:
-    """ANTHROPIC_API_KEY가 없을 때의 무료 대안. Tesseract OCR로 이미지 속 글자를 읽는다.
-    비용은 없지만 캐스팅표 이미지 특성상(색상·달력형 레이아웃) 정확도가 낮아,
-    결과에 "출처": "ocr" 표시를 남겨 신뢰도가 낮음을 구분할 수 있게 한다."""
-    if not IMG_DIR.exists() or not any(IMG_DIR.iterdir()):
-        print("3단계(OCR) 건너뜀: 이미지가 없습니다.")
-        return []
-
-    import pytesseract
-    from PIL import Image
-
-    rows = []
-    print("3단계: 캐스팅 이미지 무료 OCR 판독 (참고용 — 오탈자/오류 섞일 수 있음)")
-    for show_dir in sorted(IMG_DIR.iterdir()):
-        if not show_dir.is_dir():
-            continue
-        for img_path in sorted(show_dir.iterdir()):
-            try:
-                img = Image.open(img_path)
-                text = pytesseract.image_to_string(img, lang="kor+eng")
-                rows.extend(parse_cast_lines(text.splitlines(), show_dir.name, "ocr"))
-            except Exception as e:
-                print(f"  ! OCR 실패 {img_path}: {e}")
-    print(f"  → OCR 캐스트 {len(rows)}건 (참고용)")
-    return rows
-
-
 # ═════════════════════════════════════════════
 def main():
     if not SERVICE_KEY:
@@ -345,16 +271,8 @@ def main():
 
     shows = step1()
     targets = build_auto_shows(shows)
-    auto_events, text_casts = step2(targets)
-
-    if ANTHROPIC_KEY:
-        image_casts = step3()       # 유료: Claude로 이미지 판독 (정확도 높음)
-    else:
-        image_casts = step3_ocr()   # 무료: Tesseract OCR (정확도 낮음, 참고용)
-
-    # 텍스트 기반(신뢰도 높음)을 우선하고, 같은 날짜·배우가 이미 있으면 중복 제외
-    seen = {(c["공연명"], c["날짜"], c["배우"]) for c in text_casts}
-    casts = text_casts + [c for c in image_casts if (c["공연명"], c["날짜"], c["배우"]) not in seen]
+    auto_events = step2(targets)
+    casts = step3() if ANTHROPIC_KEY else []  # 키가 없으면 캐스트는 비워둠 (일정 정보로 충분)
 
     (OUT_DIR / "casts.json").write_text(
         json.dumps(casts, ensure_ascii=False, indent=2), encoding="utf-8")
