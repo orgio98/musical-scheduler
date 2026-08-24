@@ -1326,7 +1326,13 @@
     "종료일": "2026.09.20",
     "공연장": "한국공예관 문화제조창",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297365_260731_110836.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297365_260731_110836.png",
+    "출연진": "박설하, 이서진, 이서윤, 변혜인, 최다예, 최연우, 서유현 등",
+    "런타임": " ",
+    "티켓가격": "전석무료 ",
+    "공연시간": "토요일 ~ 일요일(11:30,14:00,16:30)",
+    "제작사": "올뮤지컬",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1703507"
   },
   {
     "id": "PF297362",
@@ -3225,7 +3231,13 @@
     "종료일": "2026.10.11",
     "공연장": "디너씨어터",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294696_260626_131834.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294696_260626_131834.png",
+    "출연진": "한새봄, 이도나, 유주화, 윤희상, 김례욱, 박승현, 박남건",
+    "런타임": "1시간 15분",
+    "티켓가격": "주말 30,000원, 평일 25,000원",
+    "공연시간": "목요일 ~ 금요일(20:00), 토요일(18:00), 일요일(17:00)",
+    "제작사": "(주)스테이지랩코리아",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1429108"
   },
   {
     "id": "PF294630",
@@ -4134,7 +4146,13 @@
     "종료일": "2026.09.13",
     "공연장": "예스24아트원(구.대학로아트원씨어터)",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF291333_260722_144354.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF291333_260722_144354.gif",
+    "출연진": "성태준, 문경초, 임준혁, 박선영, 양지원, 서영택, 박선영 등",
+    "런타임": "1시간 30분",
+    "티켓가격": "R석 66,000원, S석 44,000원",
+    "공연시간": "화요일(20:00), 수요일(16:00,20:00), 목요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)쇼플레이, (주)쇼플레이",
+    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/64225 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1653473 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009480 | 예스24: https://ticket.yes24.com/Perf/58401 | 타임티켓: https://timeticket.co.kr/product/7193"
   },
   {
     "id": "PF291272",
@@ -4458,13 +4476,7 @@
     "종료일": "2026.08.30",
     "공연장": "서울어린이대공원",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF284594_260206_110407.gif",
-    "출연진": " ",
-    "런타임": "1시간",
-    "티켓가격": "전석 66,000원",
-    "공연시간": "토요일 ~ 일요일(11:00,14:00), HOL(11:00,14:00)",
-    "제작사": "할리퀸크리에이션즈(주), 할리퀸크리에이션즈(주)",
-    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/62378 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1623044 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26001516 | 카카오톡예약하기: https://booking.kakao.com/detail/ticket/649120 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79040 | 타임티켓: https://timeticket.co.kr/product/6904"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF284594_260206_110407.gif"
   },
   {
     "id": "PF276055",
@@ -4824,7 +4836,7 @@
     "티켓가격": "전석 50,000원",
     "공연시간": "수요일 ~ 금요일(19:30), 토요일 ~ 일요일(13:00,14:00,15:00,16:00,16:30,17:00,19:00,20:00), HOL(13:00,14:00,15:00,16:30,17:00,18:00,20:00), 수요일(14:00,16:00,19:00,19:30), 목요일(16:00,17:30,19:00,19:30), 금요일(14:00,16:00,19:30), 월요일(13:30,14:00,16:00,19:00,19:30), 화요일(16:00,17:00,19:00,19:30)",
     "제작사": "(주)극단가게",
-    "예매처": "11번가: https://ticket.11st.co.kr/Product/Detail?id=265154 | 네이버N예약: https://booking.naver.com/booking/12/bizes/348118 | 네이버N예약: https://booking.naver.com/booking/12/bizes/348118/items/3888901 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=21003285 | 대학로티켓닷컴: http://www.maketicket.co.kr/ticket/GD19338 | 예스24: http://ticket.yes24.com/Pages/Perf/Detail/Detail.aspx?IdPerf=38930 | 옥션: http://ticket1.auction.co.kr/VIP/Item?IdPerf=38798 | 위메프: https://ticket.wemakeprice.com/product/3000007147 | 쿠팡: https://trip.coupang.com/tp/products/30000000421596 | 타임티켓: https://www.timeticket.co.kr/index.php?number=4352 | 티몬: www.tmon.co.kr/deal/27073776634"
+    "예매처": "11번가: https://ticket.11st.co.kr/Product/Detail?id=265154 | 네이버N예약: https://booking.naver.com/booking/12/bizes/348118/items/3888901 | 네이버N예약: https://booking.naver.com/booking/12/bizes/348118 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=21003285 | 대학로티켓닷컴: http://www.maketicket.co.kr/ticket/GD19338 | 예스24: http://ticket.yes24.com/Pages/Perf/Detail/Detail.aspx?IdPerf=38930 | 옥션: http://ticket1.auction.co.kr/VIP/Item?IdPerf=38798 | 위메프: https://ticket.wemakeprice.com/product/3000007147 | 쿠팡: https://trip.coupang.com/tp/products/30000000421596 | 타임티켓: https://www.timeticket.co.kr/index.php?number=4352 | 티몬: www.tmon.co.kr/deal/27073776634"
   },
   {
     "id": "PF172547",
@@ -4869,7 +4881,7 @@
     "티켓가격": "전석 35,000원",
     "공연시간": "토요일(11:00,14:00,16:00)",
     "제작사": "나눔",
-    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012096"
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1717026 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012096"
   },
   {
     "id": "PF299059",
