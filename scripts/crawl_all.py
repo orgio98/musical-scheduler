@@ -172,6 +172,14 @@ def extract_discounts(html: str, show: str, url: str) -> list[dict]:
 
 DATE_LINE_PATTERN = re.compile(r"(\d{1,2})[./월\s]\s*(\d{1,2})[일]?")
 CAST_LINE_KEYWORDS = ["캐스팅", "캐스트", "cast"]
+NAME_LIKE_PATTERN = re.compile(r"[가-힣A-Za-z]{2,}")
+
+
+def looks_like_name(s: str) -> bool:
+    """'19:30' 같은 시간·숫자 문자열은 배우 이름이 아니라고 판단."""
+    if re.fullmatch(r"[\d:./~\-\s]+", s):
+        return False
+    return bool(NAME_LIKE_PATTERN.search(s))
 
 
 def parse_cast_lines(lines, show: str, source: str) -> list[dict]:
@@ -189,9 +197,9 @@ def parse_cast_lines(lines, show: str, source: str) -> list[dict]:
             if 1 <= mm <= 12 and 1 <= dd <= 31:
                 current_date = f"{year}-{mm:02d}-{dd:02d}"
                 rest = DATE_LINE_PATTERN.sub("", t).strip(" -:|,·")
-                if rest and 2 <= len(rest) <= 40 and not any(k in rest for k in CAST_LINE_KEYWORDS):
+                if rest and 2 <= len(rest) <= 40 and looks_like_name(rest) and not any(k in rest for k in CAST_LINE_KEYWORDS):
                     results.append({"공연명": show, "날짜": current_date, "회차": "", "배역": "", "배우": rest, "출처": source})
-        elif current_date and 2 <= len(t) <= 40 and not any(k in t for k in CAST_LINE_KEYWORDS):
+        elif current_date and 2 <= len(t) <= 40 and looks_like_name(t) and not any(k in t for k in CAST_LINE_KEYWORDS):
             results.append({"공연명": show, "날짜": current_date, "회차": "", "배역": "", "배우": t, "출처": source})
 
     seen, dedup = set(), []
