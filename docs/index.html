@@ -110,14 +110,6 @@
   .badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:999px;
     background:var(--gold-soft);color:var(--gold);margin-left:6px;vertical-align:1px}
 
-  /* ── 이벤트 ── */
-  .ev-card{border-left:3px solid var(--gold);background:var(--surface);border-radius:0 12px 12px 0;
-    padding:12px 12px 12px 14px;margin-bottom:10px}
-  .ev-card .name{font-size:12px;color:var(--muted);margin-bottom:2px}
-  .ev-card .title{font-size:15px;font-weight:700}
-  .ev-card .period{font-family:var(--serif);font-size:12.5px;color:var(--gold);margin-top:3px}
-  .ev-card .row{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
-  .ev-card .del{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline}
   .empty{text-align:center;color:var(--muted);font-size:13px;padding:26px 8px;line-height:1.7}
   .empty b{font-family:var(--serif);color:var(--ink);font-size:15px;display:block;margin-bottom:5px}
 
@@ -145,10 +137,9 @@
     </div>
   </header>
 
-  <nav style="grid-template-columns:repeat(3,1fr)">
+  <nav style="grid-template-columns:repeat(2,1fr)">
     <button class="on" data-tab="cal">달력</button>
     <button data-tab="shows">공연</button>
-    <button data-tab="events">이벤트</button>
   </nav>
 
   <!-- ═══ 달력 ═══ -->
@@ -179,19 +170,6 @@
     <div class="card" id="showList"></div>
   </section>
 
-  <!-- ═══ 이벤트 ═══ -->
-  <section id="tab-events">
-    <div id="evList"></div>
-    <div class="card">
-      <p class="sub">예매처와 플레이DB에서 자동으로 수집된 할인·이벤트 정보입니다.</p>
-      <div class="file-row">
-        <button class="btn ghost" id="evExport">내보내기</button>
-        <button class="btn ghost" id="evImportBtn">가져오기</button>
-        <input type="file" id="evImport" accept=".json" hidden>
-      </div>
-    </div>
-  </section>
-
 </div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -199,7 +177,6 @@
 /* ─────────── 상태 (DB 모델: Musicals / Schedules / Events, Actors는 파생) ─────────── */
 let musicals = [];   // {공연명,시작일,종료일,공연장,출연진,티켓가격,공연시간,예매처,포스터,상태}
 let casts    = [];   // {공연명,날짜,회차,배역,배우}
-let events   = [];   // {show,title,from,to,disc,link}
 let view = new Date(); view.setDate(1);
 let selDate = fmt(new Date());
 let selActor = null;
@@ -223,7 +200,6 @@ const castByDate = () => {
   return m;
 };
 const showsOnDate = d => musicals.filter(m => m.시작일 && m.종료일 && m.시작일<=d && d<=m.종료일 && (!selShow||m.공연명===selShow));
-const eventDates = d => events.filter(e => (e.from||e.to) && (!e.from||e.from<=d) && (!e.to||d<=e.to) && (!selShow||e.show===selShow));
 
 function renderCal(){
   $("calMonth").textContent = view.getFullYear()+". "+String(view.getMonth()+1).padStart(2,"0");
@@ -251,7 +227,6 @@ function renderCal(){
     const dots=document.createElement("div");dots.className="dots";
     const showNames=[...new Set([...dayCasts.map(c=>c.공연명), ...showsOnDate(date).map(s=>s.공연명)])];
     showNames.slice(0,3).forEach(()=>{const s=document.createElement("span");s.className="dot";dots.appendChild(s)});
-    if(eventDates(date).length){const s=document.createElement("span");s.className="dot ev";dots.appendChild(s)}
     cell.appendChild(dots);
     cell.addEventListener("click",()=>{selDate=date;renderCal();renderDay()});
     grid.appendChild(cell);
@@ -278,7 +253,6 @@ function renderDay(){
   const box=$("dayDetail");
   const map=castByDate();
   const dayCasts=map[selDate]||[];
-  const dayEvents=eventDates(selDate);
   const dayShows=showsOnDate(selDate);
   const [y,m,d]=selDate.split("-");
   let html='<div class="h">'+Number(m)+'월 '+Number(d)+'일</div>';
@@ -286,7 +260,7 @@ function renderDay(){
   // 이 날짜에 관련된 공연명 = 진행중인 공연 + 캐스트 데이터가 있는 공연
   const names=[...new Set([...dayShows.map(s=>s.공연명), ...dayCasts.map(c=>c.공연명)])].sort();
 
-  if(!names.length && !dayEvents.length){
+  if(!names.length){
     html+='<div class="empty"><b>비어 있는 날</b>이 날짜에 진행 중인 공연 정보가 없습니다.</div>';
     box.innerHTML=html; return;
   }
@@ -314,9 +288,6 @@ function renderDay(){
     html+='</div>';
   }
 
-  for(const e of dayEvents){
-    html+='<div class="slot"><div class="t"><b style="color:var(--gold)">'+esc(e.title)+'</b>'+(e.disc?'<span>'+e.disc+'%</span>':"")+'</div><div class="castline">'+esc(e.show||"")+(e.link?' · <a href="'+esc(e.link)+'" target="_blank" rel="noopener">공지 보기</a>':"")+'</div></div>';
-  }
   box.innerHTML=html;
 }
 
@@ -363,38 +334,12 @@ function renderShows(){
   if(items.length>200)list.innerHTML+='<div class="empty">'+items.length+'건 중 200건 표시 — 검색으로 좁혀보세요</div>';
 }
 
-/* ─────────── 이벤트 ─────────── */
-function renderEvents(){
-  const box=$("evList");
-  if(!events.length){box.innerHTML='<div class="card"><div class="empty"><b>이벤트 없음</b>아직 수집된 할인·이벤트 정보가 없습니다.</div></div>';return}
-  const today=fmt(new Date());
-  const sorted=[...events].sort((a,b)=>(a.from||"").localeCompare(b.from||""));
-  box.innerHTML=sorted.map((e,i)=>{
-    const live=(!e.from||e.from<=today)&&(!e.to||today<=e.to);
-    return '<div class="ev-card"><div class="name">'+esc(e.show||"")+(live?'<span class="badge">진행중</span>':"")
-      +'</div><div class="title">'+esc(e.title)+(e.disc?' <span style="color:var(--gold)">'+e.disc+'%</span>':"")
-      +'</div><div class="period">'+esc(e.from||"?")+' ~ '+esc(e.to||"?")+'</div><div class="row">'
-      +(e.link?'<a href="'+esc(e.link)+'" target="_blank" rel="noopener" style="font-size:12.5px">공지 링크</a>':'<span></span>')
-      +'<button class="del" data-i="'+events.indexOf(e)+'">삭제</button></div></div>';
-  }).join("");
-  box.querySelectorAll(".del").forEach(b=>b.addEventListener("click",async ()=>{
-    events.splice(Number(b.dataset.i),1);await save("cc:events",events);renderEvents();renderCal();
-  }));
-}
-
-/* ─────────── 데이터 탭 ─────────── */
+/* ─────────── 상태 표시 ─────────── */
 function stats(){
   $("dataStat").innerHTML='공연 <b>'+musicals.length+'</b>'+(casts.length?' · 캐스트 <b>'+casts.length+'</b>':"");
 }
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows();renderEvents()}
-
-function readJsonFile(input,cb){
-  const f=input.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=()=>{ try{cb(JSON.parse(r.result))}catch(e){toast("JSON 형식이 아닙니다")} input.value=""; };
-  r.readAsText(f,"utf-8");
-}
+function refreshAll(){stats();renderShowFilter();renderActorChips();renderCal();renderShows()}
 
 /* ─────────── 이벤트 핸들러 ─────────── */
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
@@ -407,35 +352,18 @@ $("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);render
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
 
-$("evExport").addEventListener("click",()=>{
-  const blob=new Blob([JSON.stringify(events,null,2)],{type:"application/json"});
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="events.json";a.click();
-});
-$("evImportBtn").addEventListener("click",()=>$("evImport").click());
-$("evImport").addEventListener("change",e=>readJsonFile(e.target,async data=>{
-  if(!Array.isArray(data))return toast("배열 형식이 아닙니다");
-  events=data;await save("cc:events",events);renderEvents();renderCal();toast("이벤트 "+events.length+"건 가져옴");
-}));
-
 /* ─────────── 서버 자동 동기화 ─────────── */
 async function syncFromServer(silent){
   const stat=$("syncStat");
   if(stat && !silent) stat.textContent="동기화 중…";
   try{
-    const [m,c,e] = await Promise.all([
+    const [m,c] = await Promise.all([
       fetch("data/musicals.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
       fetch("data/casts.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
-      fetch("data/events.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
     ]);
     let changed=false;
     if(Array.isArray(m)){musicals=m;await save("cc:musicals",musicals);changed=true}
     if(Array.isArray(c)){casts=c;await save("cc:casts",casts);changed=true}
-    if(Array.isArray(e)){
-      const manual=events.filter(x=>!x.auto);   // 직접 추가한 이벤트는 보존
-      events=[...manual, ...e];
-      await save("cc:events",events);
-      changed=true;
-    }
     if(stat){
       const now=new Date();
       const t=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
@@ -455,7 +383,6 @@ if ("serviceWorker" in navigator){
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
   casts=(await load("cc:casts"))||[];
-  events=(await load("cc:events"))||[];
   refreshAll();
   syncFromServer(true);
 })();
