@@ -271,7 +271,7 @@ const castByDate = () => {
   }
   return m;
 };
-const eventDates = d => events.filter(e => (!e.from||e.from<=d) && (!e.to||d<=e.to) && (!selShow||e.show===selShow));
+const eventDates = d => events.filter(e => (e.from||e.to) && (!e.from||e.from<=d) && (!e.to||d<=e.to) && (!selShow||e.show===selShow));
 
 function renderCal(){
   $("calMonth").textContent = view.getFullYear()+". "+String(view.getMonth()+1).padStart(2,"0");
