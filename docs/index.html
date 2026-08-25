@@ -114,6 +114,8 @@
   .m-info{min-width:0;flex:1}
   .m-info .name{font-size:14.5px;font-weight:700;margin-bottom:3px}
   .m-info .meta{font-size:12px;color:var(--muted);line-height:1.55;overflow-wrap:anywhere}
+  .m-info .mt{color:var(--gold);font-family:var(--serif);font-size:12.5px}
+  .m-info .mp{color:var(--ink)}
   .badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:999px;
     background:var(--gold-soft);color:var(--gold);margin-left:6px;vertical-align:1px}
 
@@ -404,8 +406,15 @@ function renderDay(){
 }
 
 function renderActorChips(){
+  // 현재 보고 있는 달에 출연하는 배우만 칩으로 표시
+  const y=view.getFullYear(), mo=view.getMonth();
+  const first=fmt(new Date(y,mo,1)), last=fmt(new Date(y,mo+1,0));
   const count={};
-  for(const c of casts){ if(selShow&&c.공연명!==selShow)continue; if(c.배우)count[c.배우]=(count[c.배우]||0)+1 }
+  for(const c of casts){
+    if(selShow&&c.공연명!==selShow)continue;
+    if(c.날짜<first||c.날짜>last)continue;
+    if(c.배우)count[c.배우]=(count[c.배우]||0)+1;
+  }
   const actors=Object.keys(count).sort((a,b)=>count[b]-count[a]).slice(0,40);
   const box=$("actorChips");
   box.innerHTML="";
@@ -420,9 +429,23 @@ function renderActorChips(){
 }
 
 function renderShowFilter(){
-  const names=[...new Set([...casts.map(c=>c.공연명), ...visibleMusicals().map(m=>m.공연명)])].sort();
+  // 현재 보고 있는 달에 실제로 공연이 있는 작품만 목록에 넣는다
+  const y=view.getFullYear(), mo=view.getMonth();
+  const first=fmt(new Date(y,mo,1));
+  const last=fmt(new Date(y,mo+1,0));
+  const inMonth = m => m.시작일 && m.종료일 && m.시작일<=last && m.종료일>=first;
+
+  const names=[...new Set([
+    ...visibleMusicals().filter(inMonth).map(m=>m.공연명),
+    ...casts.filter(c=>c.날짜>=first && c.날짜<=last).map(c=>c.공연명),
+  ])].sort();
+
+  // 선택 중이던 공연이 이 달에 없으면 전체로 되돌린다
+  if(selShow && !names.includes(selShow)) selShow="";
+
   const sel=$("showFilter");
-  sel.innerHTML='<option value="">전체 공연</option>'+names.map(n=>'<option'+(n===selShow?" selected":"")+'>'+esc(n)+'</option>').join("");
+  sel.innerHTML='<option value="">전체 공연</option>'
+    +names.map(n=>'<option'+(n===selShow?" selected":"")+'>'+esc(n)+'</option>').join("");
 }
 
 /* ─────────── 공연 목록 ─────────── */
@@ -440,6 +463,8 @@ function renderShows(){
     return '<div class="m-item">'+img+'<div class="m-info"><div class="name">'+esc(s.공연명)
       +(s.상태==="공연중"?'<span class="badge">공연중</span>':"")+'</div><div class="meta">'
       +esc(s.시작일)+' ~ '+esc(s.종료일)+'<br>'+esc(s.공연장||"")
+      +(s.공연시간?'<br><span class="mt">'+esc(s.공연시간)+'</span>':"")
+      +(s.티켓가격?'<br><span class="mp">'+esc(s.티켓가격)+'</span>':"")
       +(s.출연진?'<br>'+esc(s.출연진):"")
       +(links?'<br>'+links:"")+'</div></div></div>';
   }).join("");
@@ -460,8 +485,8 @@ document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()
   document.querySelectorAll("section").forEach(x=>x.classList.remove("on"));
   b.classList.add("on");$("tab-"+b.dataset.tab).classList.add("on");
 }));
-$("prevM").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderCal()});
-$("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderCal()});
+$("prevM").addEventListener("click",()=>{view.setMonth(view.getMonth()-1);renderShowFilter();renderActorChips();renderCal()});
+$("nextM").addEventListener("click",()=>{view.setMonth(view.getMonth()+1);renderShowFilter();renderActorChips();renderCal()});
 $("showFilter").addEventListener("change",e=>{selShow=e.target.value;selActor=null;renderActorChips();renderCal()});
 $("showSearch").addEventListener("input",renderShows);
 
@@ -491,8 +516,35 @@ async function syncFromServer(silent){
 $("syncBtn").addEventListener("click",()=>syncFromServer(false));
 
 /* ─────────── 시작 ─────────── */
+// 앱 코드가 새 버전으로 바뀌면 자동으로 화면을 갱신한다
 if ("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  let refreshing=false;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{
+    if(refreshing) return;
+    refreshing=true;
+    location.reload();          // 새 워커가 제어권을 잡으면 즉시 새 코드로 재시작
+  });
+  navigator.serviceWorker.register("sw.js").then(reg=>{
+    // 새 버전이 대기 중이면 곧바로 활성화시킨다
+    if(reg.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"});
+    reg.addEventListener("updatefound",()=>{
+      const nw=reg.installing;
+      if(!nw) return;
+      nw.addEventListener("statechange",()=>{
+        if(nw.state==="installed" && navigator.serviceWorker.controller){
+          nw.postMessage({type:"SKIP_WAITING"});
+        }
+      });
+    });
+    reg.update();               // 열 때마다 새 버전이 있는지 확인
+  }).catch(()=>{});
+  // 앱으로 돌아왔을 때도 새 버전 확인
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"){
+      navigator.serviceWorker.getRegistration().then(r=>r&&r.update()).catch(()=>{});
+      syncFromServer(true);
+    }
+  });
 }
 (async function init(){
   musicals=(await load("cc:musicals"))||[];
