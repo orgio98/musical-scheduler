@@ -185,7 +185,7 @@
   <!-- ═══ 공연 ═══ -->
   <section id="tab-shows">
     <div class="card">
-      <input type="text" id="showSearch" placeholder="공연명·극장 검색">
+      <input type="text" id="showSearch" placeholder="공연명·극장 검색 (전체 공연에서 찾기)">
     </div>
     <div class="card" id="showList"></div>
   </section>
@@ -452,10 +452,13 @@ function renderShowFilter(){
 function renderShows(){
   const q=$("showSearch").value.trim();
   const list=$("showList");
-  let items=musicals;   // 공연 탭은 필터 미적용 — 검색으로 모든 공연 조회 가능
-  if(q)items=items.filter(s=>(s.공연명||"").includes(q)||(s.공연장||"").includes(q));
+  // 기본 목록은 달력과 같은 기준으로 걸러서 보여주고,
+  // 검색할 때만 전체 공연에서 찾는다 (숨겨진 공연도 검색으로 조회 가능)
+  let items = q ? musicals.filter(s=>(s.공연명||"").includes(q)||(s.공연장||"").includes(q))
+                : visibleMusicals();
   if(!items.length){
-    list.innerHTML='<div class="empty"><b>공연 데이터 없음</b>데이터 탭에서 musicals.json을 불러오세요.</div>';return;
+    list.innerHTML='<div class="empty"><b>'+(q?'검색 결과 없음':'공연 없음')+'</b>'
+      +(q?'다른 검색어로 찾아보세요.':'표시할 공연이 없습니다.')+'</div>';return;
   }
   list.innerHTML=items.slice(0,200).map(s=>{
     const img=s.포스터?'<img class="poster" src="'+esc(s.포스터)+'" alt="" loading="lazy">':'<div class="poster"></div>';
