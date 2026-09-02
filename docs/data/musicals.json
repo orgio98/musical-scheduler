@@ -1,5 +1,110 @@
 [
   {
+    "id": "PF299949",
+    "공연명": "미운오리새끼 [순천]",
+    "시작일": "2026-09-14",
+    "종료일": "2026-09-18",
+    "공연장": "순천문화예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299949_260902_154954.jpg",
+    "출연진": "서수현, 박광재, 노광흔, 배준수, 이성호, 최보희, 정회성 등",
+    "런타임": "1시간",
+    "티켓가격": "전석 6,000원",
+    "공연시간": "월요일 ~ 금요일(11:00)",
+    "제작사": "순천시립극단",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64843"
+  },
+  {
+    "id": "PF299923",
+    "공연명": "피리부는 사나이 [태백]",
+    "시작일": "2026-09-18",
+    "종료일": "2026-09-18",
+    "공연장": "태백문화예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299923_260902_145623.gif",
+    "출연진": "조성태, 이태은, 박좌헌, 윤석현, 전재현, 김태문, 윤단우 등",
+    "런타임": "1시간 55분",
+    "티켓가격": "전석 10,000원",
+    "공연시간": "금요일(19:00)",
+    "제작사": "태백문화예술회관, 태백시청",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012556"
+  },
+  {
+    "id": "PF299918",
+    "공연명": "흥부와 놀부 [울산 울주]",
+    "시작일": "2026-09-30",
+    "종료일": "2026-09-30",
+    "공연장": "온양문화복지센터",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299918_260902_144325.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 4,000원",
+    "공연시간": "수요일(19:00)",
+    "제작사": "극단 지니, 온양문화복지센터",
+    "예매처": "온양문화복지센터(울주문화재단): https://www.ucf.or.kr:478/culturearts/pe_detail.html?pfmIng=1&p_idx=1619"
+  },
+  {
+    "id": "PF299882",
+    "공연명": "가요톱텐 [서산]",
+    "시작일": "2026-09-11",
+    "종료일": "2026-09-11",
+    "공연장": "서산시문화회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299882_260902_123930.jpg",
+    "출연진": "고유진, 박규리, 이영호, 홍순목, 문준혁, 이소희, 박시원 등",
+    "런타임": "2시간",
+    "티켓가격": "S석 30,000원, A석 20,000원",
+    "공연시간": "금요일(19:30)",
+    "제작사": "(주)이엘프러스, 서산시청",
+    "예매처": "서산시문화회관: http://seosan.moonhwain.kr/rsvc/rsv_pm.html?b_id=seosan&p_idx=270"
+  },
+  {
+    "id": "PF299865",
+    "공연명": "제11회 청소년을 위한 공연예술축제: The Hook",
+    "시작일": "2026-09-03",
+    "종료일": "2026-09-03",
+    "공연장": "아르코 꿈밭극장",
+    "상태": "공연중",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299865_260902_105143.jpg",
+    "출연진": "윤풀호, 김상두, 김가슬, 장담, 오정석",
+    "런타임": "1시간 20분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "목요일(19:00)",
+    "제작사": "고집센아이컴퍼니",
+    "예매처": "아르코대학로예술극장(한국문화예술위원회): https://theater.arko.or.kr/product/ko/performance/259546"
+  },
+  {
+    "id": "PF299856",
+    "공연명": "똥볶이 할멈: 정의의 맛 [거제]",
+    "시작일": "2026-09-30",
+    "종료일": "2026-09-30",
+    "공연장": "거제문화예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299856_260902_101245.jpg",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석무료 ",
+    "공연시간": "수요일(18:30)",
+    "제작사": "거제시청",
+    "예매처": "예스24: https://ticket.yes24.com/Perf/59872"
+  },
+  {
+    "id": "PF299855",
+    "공연명": "이끼숲",
+    "시작일": "2026-10-01",
+    "종료일": "2026-12-13",
+    "공연장": "백암아트홀",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299855_260902_100757.png",
+    "출연진": "송유택, 현석준, 홍승안, 강연정, 강혜인, 전혜주, 정욱진 등",
+    "런타임": "1시간 40분",
+    "티켓가격": "R석 77,000원, S석 66,000원",
+    "공연시간": "화요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(14:00,18:00), HOL(15:00,19:00)",
+    "제작사": "주식회사 라이브커넥션, 주식회사 라이브커넥션",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65293 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1728923"
+  },
+  {
     "id": "PF299802",
     "공연명": "6시 퇴근 [무안]",
     "시작일": "2026-09-12",
@@ -65,7 +170,7 @@
     "시작일": "2026-09-03",
     "종료일": "2026-09-04",
     "공연장": "양주문화예술회관",
-    "상태": "공연예정",
+    "상태": "공연중",
     "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299698_260831_124029.jpg",
     "출연진": "강민지, 손동진, 김신영, 심아영, 윤휘영",
     "런타임": "1시간 20분",
@@ -350,7 +455,7 @@
     "시작일": "2026-09-03",
     "종료일": "2026-09-06",
     "공연장": "나온씨어터",
-    "상태": "공연예정",
+    "상태": "공연중",
     "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298991_260820_143826.gif",
     "출연진": "배형빈, 김혜빈, 백두진, 이민희, 윤여은, 윤승준",
     "런타임": "1시간 40분",
@@ -507,7 +612,7 @@
     "티켓가격": "전석 77,000원",
     "공연시간": "화요일 ~ 목요일(19:30), 금요일(15:00,19:30), 토요일(14:00,18:00), 일요일(14:00), HOL(14:00,18:00)",
     "제작사": "(재)국립정동극장, 라이브러리컴퍼니, 라이브러리컴퍼니",
-    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011828"
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011828 | 코스타(Coaster): https://ticket.co-star.kr/shop/item.php?it_id=1787718617"
   },
   {
     "id": "PF298784",
@@ -651,7 +756,13 @@
     "종료일": "2026-09-19",
     "공연장": "군포시평생학습원",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298643_260818_112603.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298643_260818_112603.gif",
+    "출연진": "박진성, 안현주",
+    "런타임": "50분",
+    "티켓가격": "전석 10,000원",
+    "공연시간": "목요일(11:00), 금요일(11:00,19:30), 토요일(11:00)",
+    "제작사": "(재)군포문화재단 (군포시평생학습원)",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011911"
   },
   {
     "id": "PF298632",
@@ -675,7 +786,13 @@
     "종료일": "2026-09-20",
     "공연장": "현대백화점 문화홀 [중동]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298601_260814_171333.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298601_260814_171333.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 35,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
+    "제작사": "(주)조이컬처",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1716234 | 예스24: https://ticket.yes24.com/Perf/59692"
   },
   {
     "id": "PF298596",
@@ -684,7 +801,13 @@
     "종료일": "2026-10-18",
     "공연장": "링크아트센터드림",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298596_260814_163742.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298596_260814_163742.jpg",
+    "출연진": "이회택, 윤서빈, 이동욱, 황두현, 최민우",
+    "런타임": "1시간 35분",
+    "티켓가격": "전석 66,000원",
+    "공연시간": "화요일 ~ 금요일(20:00), 토요일 ~ 일요일(15:00,19:00), HOL(15:00,19:00)",
+    "제작사": "(주)씨일공일, (주)씨일공일",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64946"
   },
   {
     "id": "PF298593",
@@ -708,7 +831,13 @@
     "종료일": "2026-09-05",
     "공연장": "군포문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298570_260814_144138.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298570_260814_144138.gif",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "토요일(11:00)",
+    "제작사": "(재) 군포문화재단(군포문화예술회관), 군포문화재단 무대기술팀",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011896"
   },
   {
     "id": "PF298567",
@@ -717,7 +846,13 @@
     "종료일": "2026-09-27",
     "공연장": "현대백화점 문화홀 [중동]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298567_260814_143429.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298567_260814_143429.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 35,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1715289 | 예스24: https://ticket.yes24.com/Perf/59680"
   },
   {
     "id": "PF298538",
@@ -741,7 +876,13 @@
     "종료일": "2026-09-19",
     "공연장": "봉산문화회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298499_260814_101448.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298499_260814_101448.jpg",
+    "출연진": "오서은, 김정건, 최용욱, 최은해, 박정민, 황현아, 이동훈 등",
+    "런타임": "1시간 30분",
+    "티켓가격": "전석 11,000원",
+    "공연시간": "금요일(19:30), 토요일(17:00)",
+    "제작사": "봉산문화회관",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64927 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1716135"
   },
   {
     "id": "PF298497",
@@ -750,7 +891,13 @@
     "종료일": "2026-10-25",
     "공연장": "링크아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298497_260814_100958.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298497_260814_100958.jpg",
+    "출연진": "김종구, 주민진, 홍승안, 최수진, 김려원, 이정화, 최재웅 등",
+    "런타임": "1시간 50분",
+    "티켓가격": "R석 77,000원, S석 66,000원, A석 55,000원",
+    "공연시간": "화요일(20:00), 수요일(16:00,20:00), 목요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)네오프로덕션, (주)네오프로덕션",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64914 | 예스24: https://ticket.yes24.com/Perf/59718 | 코스타(Coaster): https://ticket.co-star.kr/shop/item.php?it_id=1787287315"
   },
   {
     "id": "PF298468",
@@ -774,7 +921,13 @@
     "종료일": "2026-10-11",
     "공연장": "북아현아트홀",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298451_260813_142449.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298451_260813_142449.gif",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 60,000원",
+    "공연시간": "수요일 ~ 금요일(11:00,14:00), 토요일(11:00,14:00,16:00), 일요일(11:00,14:00), HOL(11:00,14:00)",
+    "제작사": "별의 별",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1183574 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011712"
   },
   {
     "id": "PF298442",
@@ -783,7 +936,13 @@
     "종료일": "2026-09-12",
     "공연장": "군산예술의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298442_260813_140847.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298442_260813_140847.jpg",
+    "출연진": "안재영, 김바다, 김서환, 박주혁, 임태현",
+    "런타임": "1시간 40분",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "토요일(15:00)",
+    "제작사": "군산예술의전당",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64920 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1716279"
   },
   {
     "id": "PF298437",
@@ -822,7 +981,13 @@
     "종료일": "2026-09-19",
     "공연장": "군포문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298357_260812_144454.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298357_260812_144454.gif",
+    "출연진": "김하준, 조성태, 도율희, 이현재, 안리나, 이홍섭 등",
+    "런타임": "1시간 20분",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일(18:00)",
+    "제작사": "(재) 군포문화재단(군포문화예술회관), (재) 군포문화재단(군포문화예술회관)",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010905"
   },
   {
     "id": "PF298356",
@@ -861,7 +1026,13 @@
     "종료일": "2026-09-04",
     "공연장": "제천예술의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298344_260812_135327.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298344_260812_135327.png",
+    "출연진": "김문정, 이제우, 김하람, 김준기, 이다경, 조윤혜, 박하은 등",
+    "런타임": "2시간",
+    "티켓가격": "R석 50,000원, S석 40,000원, A석 30,000원",
+    "공연시간": "금요일(15:00)",
+    "제작사": "제천국제음악영화제",
+    "예매처": "멜론티켓: https://ticket.melon.com/performance/index.htm?prodId=213709"
   },
   {
     "id": "PF298319",
@@ -884,8 +1055,14 @@
     "시작일": "2026-09-03",
     "종료일": "2026-09-04",
     "공연장": "모두예술극장",
-    "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298313_260812_112444.png"
+    "상태": "공연중",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298313_260902_125027.png",
+    "출연진": "남우현, 박새별, 현석원, 변수진, 황소희, 오재석, 최다정 등",
+    "런타임": "1시간 30분",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "목요일(19:30), 금요일(15:00,19:30)",
+    "제작사": " ",
+    "예매처": "모두예술극장: https://www.moduarttheater.or.kr/product/performance/253022"
   },
   {
     "id": "PF298277",
@@ -924,7 +1101,13 @@
     "종료일": "2026-09-19",
     "공연장": "아산시 평생학습관(아산아트홀)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298244_260811_140938.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298244_260811_140938.jpg",
+    "출연진": " ",
+    "런타임": "1시간 40분",
+    "티켓가격": "전석 10,000원",
+    "공연시간": "토요일(14:00)",
+    "제작사": "극단 RE(알이)",
+    "예매처": "아산시평생학습관: http://life.moonhwain.net/rsvc/rsv_pm.html?b_id=life&p_idx=170"
   },
   {
     "id": "PF298231",
@@ -933,7 +1116,13 @@
     "종료일": "2026-09-27",
     "공연장": "씨어터 쿰",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298231_260811_133950.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298231_260811_133950.jpg",
+    "출연진": "강성진, 박세웅, 김무호, 이온, 오승준, 손슬기, 정지환 등",
+    "런타임": "1시간 35분",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "월요일(20:00), 수요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(15:00)",
+    "제작사": "어드벤쳐 프로젝트, 어드벤쳐 프로젝트",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64857 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1714718"
   },
   {
     "id": "PF298226",
@@ -957,7 +1146,13 @@
     "종료일": "2026-09-12",
     "공연장": "김천시문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298213_260813_132100.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298213_260813_132100.jpg",
+    "출연진": "구옥분, 정혜은, 송서후, 김서진, 김해나, 이준서, 권수현 등",
+    "런타임": "1시간 15분",
+    "티켓가격": "R석 30,000원, S석 20,000원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": "(주)에이엠컬쳐(AMCULTURE), 김천시(김천시청)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64730 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1711507"
   },
   {
     "id": "PF298211",
@@ -966,7 +1161,13 @@
     "종료일": "2026-09-05",
     "공연장": "김해칠암문화센터 (칠암도서관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298211_260811_124414.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298211_260811_124414.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "토요일(11:00,13:00,15:00)",
+    "제작사": "극단 여기, 극단 해미소",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64829 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1712978"
   },
   {
     "id": "PF298200",
@@ -990,7 +1191,13 @@
     "종료일": "2026-09-13",
     "공연장": "상상플레이스 여순광점(여수 웅천 트리마제벨마레 2305호)",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298188_260811_105904.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298188_260811_105904.png",
+    "출연진": " ",
+    "런타임": "45분",
+    "티켓가격": "전석 15,000원",
+    "공연시간": "토요일 ~ 일요일(14:00), HOL(14:00)",
+    "제작사": "(주)상상플레이스 [여순광점]",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1705469"
   },
   {
     "id": "PF298185",
@@ -1059,7 +1266,13 @@
     "종료일": "2026-09-20",
     "공연장": "비오케이아트센터(BOK아트센터)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298052_260810_115554.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298052_260810_115554.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "현장판매 40,000원, 사전예약 14,900원",
+    "공연시간": "일요일(12:00,14:00,16:00)",
+    "제작사": "극단 아이 (뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64824 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1712912"
   },
   {
     "id": "PF298032",
@@ -1068,7 +1281,13 @@
     "종료일": "2026-11-29",
     "공연장": "NOL 서경스퀘어(구. 서경대학교 공연예술센터)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298032_260810_110532.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298032_260810_110532.gif",
+    "출연진": "조풍래, 손유동, 심수호, 최석진, 박두호, 김기택",
+    "런타임": "1시간 40분",
+    "티켓가격": "R석 66,000원, S석 55,000원",
+    "공연시간": "화요일(20:00), 수요일(16:00,20:00), 목요일 ~ 금요일(20:00), 토요일 ~ 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)콘텐츠플래닝, (주)콘텐츠플래닝",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64831 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011560"
   },
   {
     "id": "PF297974",
@@ -1092,7 +1311,13 @@
     "종료일": "2026-09-19",
     "공연장": "익산예술의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297961_260807_133548.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297961_260807_133548.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "덕지석  20,000원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": "익산예술의전당, 할리퀸크리에이션즈(주)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64775 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1711996"
   },
   {
     "id": "PF297912",
@@ -1101,7 +1326,13 @@
     "종료일": "2026-11-29",
     "공연장": "홍익대 대학로 아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297912_260810_105436.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297912_260810_105436.gif",
+    "출연진": "강필석, 최재웅, 김경수, 송원근, 고훈정, 손동운, 김재범 등",
+    "런타임": "2시간 30분",
+    "티켓가격": "VIP석 130,000원, OP석 130,000원, R석 90,000원, S석 60,000원",
+    "공연시간": "화요일 ~ 금요일(19:30), 토요일(15:00,19:30), 일요일(14:00,18:30), HOL(14:00,18:30)",
+    "제작사": "(주) 페이지원(Page1), (주) 페이지원(Page1)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64817 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1715737 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011520 | 예스24: https://ticket.yes24.com/Perf/59596"
   },
   {
     "id": "PF297898",
@@ -1117,6 +1348,21 @@
     "공연시간": "토요일(14:00,17:00)",
     "제작사": "(재) 공주문화관광재단(공주문예회관)",
     "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1710560 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010751 | 예스24: https://ticket.yes24.com/Perf/59379"
+  },
+  {
+    "id": "PF297882",
+    "공연명": "개구쟁이 특공대: 마녀저택 [세종]",
+    "시작일": "2026-10-02",
+    "종료일": "2026-10-03",
+    "공연장": "세종문화예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297882_260806_141409.jpg",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "금요일(11:00,14:00,16:30), 토요일(11:00,14:00,16:30)",
+    "제작사": "(주)엔투게더, (주)엔투게더",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64768 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1711591 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011435"
   },
   {
     "id": "PF297876",
@@ -1170,7 +1416,13 @@
     "종료일": "2026-12-13",
     "공연장": "예스24 스테이지(구. DCF대명문화공장)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297794_260805_153337.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297794_260805_153337.gif",
+    "출연진": "주민진, 안재영, 유현석, 김바다, 유태율, 홍기범, 장재웅 등",
+    "런타임": "1시간 50분",
+    "티켓가격": "R석 75,000원, S석 55,000원, A석 40,000원",
+    "공연시간": "화요일(20:00), 수요일(16:00,20:00), 목요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)연극열전, (주)연극열전",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1712222 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011453 | 연극열전: https://www.thebestplay.co.kr/program/perf_view.asp?id=280139&pref_state=PLAN | 예스24: https://ticket.yes24.com/Perf/59565"
   },
   {
     "id": "PF297741",
@@ -1194,7 +1446,13 @@
     "종료일": "2026-09-06",
     "공연장": "국립중앙박물관 극장 용",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297723_260805_112736.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297723_260805_112736.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "VIP석 77,000원, R석 55,000원",
+    "공연시간": "금요일(11:00,14:00), 토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)애드칸, (주)애드칸",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64733 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1710950 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011029"
   },
   {
     "id": "PF297714",
@@ -1203,7 +1461,13 @@
     "종료일": "2026-09-12",
     "공연장": "세계유산 영월 장릉 ",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297714_260805_110626.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297714_260805_110626.gif",
+    "출연진": "김늘메, 강미선, 신혜민, 권솔, 문석희, 이석일, 서기만 등",
+    "런타임": "1시간 25분",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "금요일(19:30), 토요일(19:30)",
+    "제작사": "극단 시와별",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64622 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1711973 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011034"
   },
   {
     "id": "PF297713",
@@ -1233,7 +1497,7 @@
     "티켓가격": "R석 70,000원, S석 50,000원",
     "공연시간": "화요일 ~ 목요일(20:00), 금요일(16:00,20:00), 토요일 ~ 일요일(14:00,18:00), HOL(14:00,18:00)",
     "제작사": "(주)뉴프로덕션, (주)뉴프로덕션",
-    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64707 | 예스24: https://ticket.yes24.com/Perf/59488"
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64707 | 예스24: https://ticket.yes24.com/Perf/59488 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79346"
   },
   {
     "id": "PF297707",
@@ -1272,7 +1536,13 @@
     "종료일": "2026-09-19",
     "공연장": "경기섬유종합지원센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297504_260803_132007.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297504_260803_132007.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "전석 35,000원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1697973"
   },
   {
     "id": "PF297465",
@@ -1281,7 +1551,13 @@
     "종료일": "2026-09-20",
     "공연장": "고양어울림누리",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297465_260803_110406.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297465_260803_110406.jpg",
+    "출연진": " ",
+    "런타임": "1시간 20분",
+    "티켓가격": "R석 49,900원, S석 44,900원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)이에스생활문화 (ES생활문화), ㈜뽀로로파크",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64691 | 고양어울림누리(고양문화재단): http://www.artgy.or.kr/PF/PF0201V.aspx?showid=0000008403 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1708775"
   },
   {
     "id": "PF297432",
@@ -1290,7 +1566,13 @@
     "종료일": "2026-09-06",
     "공연장": "스튜디오 블루",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297432_260818_090346.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297432_260818_090346.jpg",
+    "출연진": "이민재, 황선정, 이석원, 이은로, 유무선, 선승수, 윤정훈 등",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "금요일(19:00), 토요일 ~ 일요일(15:00,18:00)",
+    "제작사": "극단 한강아트컴퍼니, 평양검무전승보존회",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011149"
   },
   {
     "id": "PF297427",
@@ -1314,7 +1596,13 @@
     "종료일": "2026-09-20",
     "공연장": "현대백화점 문화홀 [킨텍스]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297373_260731_113432.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297373_260731_113432.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1708001 | 예스24: https://ticket.yes24.com/Perf/59477"
   },
   {
     "id": "PF297365",
@@ -1323,7 +1611,13 @@
     "종료일": "2026-09-20",
     "공연장": "한국공예관 문화제조창",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297365_260731_110836.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297365_260731_110836.png",
+    "출연진": "박설하, 이서진, 이서윤, 변혜인, 최다예, 최연우, 서유현 등",
+    "런타임": " ",
+    "티켓가격": "전석무료 ",
+    "공연시간": "토요일 ~ 일요일(11:30,14:00,16:30)",
+    "제작사": "올뮤지컬",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1703507"
   },
   {
     "id": "PF297362",
@@ -1392,7 +1686,13 @@
     "종료일": "2026-10-31",
     "공연장": "송파어린이문화회관",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297249_260730_100800.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297249_260730_100800.jpg",
+    "출연진": " ",
+    "런타임": "40분",
+    "티켓가격": "전석 16,000원",
+    "공연시간": "화요일 ~ 금요일(10:00,11:30), 토요일(11:40)",
+    "제작사": "상상발전소",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1420589"
   },
   {
     "id": "PF297225",
@@ -1416,7 +1716,13 @@
     "종료일": "2026-09-27",
     "공연장": "롯데마트 어린이소극장 [구미]",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297217_260729_133753.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297217_260729_133753.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "전석 22,000원",
+    "공연시간": "토요일 ~ 일요일(12:00,14:00)",
+    "제작사": "극단 돼지",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1222707"
   },
   {
     "id": "PF297201",
@@ -1425,7 +1731,13 @@
     "종료일": "2026-09-13",
     "공연장": "성남아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297201_260729_130708.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297201_260729_130708.gif",
+    "출연진": "이성준, 김지훈, 김성식 등",
+    "런타임": "1시간 40분",
+    "티켓가격": "R석 119,000원, S석 99,000원, A석 79,000원",
+    "공연시간": "토요일(18:00), 일요일(17:00)",
+    "제작사": "(주)스포이엔티, (주)스프링이엔티, EMK엔터테인먼트",
+    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/64629 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1706898 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010911 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79413"
   },
   {
     "id": "PF297198",
@@ -1590,7 +1902,7 @@
     "티켓가격": "전석 40,000원",
     "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
     "제작사": "극단 이후, 라온",
-    "예매처": "고양어울림누리(고양문화재단): http://www.artgy.or.kr/PF/PF0201V.aspx?showid=0000008381 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1703444 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010930"
+    "예매처": "고양어울림누리(고양문화재단): http://www.artgy.or.kr/PF/PF0201V.aspx?showid=0000008381 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1703444 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010930 | 타임티켓: https://timeticket.co.kr/product/7360"
   },
   {
     "id": "PF296949",
@@ -1719,7 +2031,13 @@
     "종료일": "2026-09-19",
     "공연장": "HD아트센터(구 현대예술관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296713_260723_111357.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296713_260723_111357.jpg",
+    "출연진": "안다니엘, 유창현, 오승희, 김찰리, 김주일, 간미연, 박태성",
+    "런타임": "1시간 50분",
+    "티켓가격": "R석 66,000원, S석 55,000원, A석 40,000원",
+    "공연시간": "금요일(19:30), 토요일(18:00)",
+    "제작사": "(주)웰컴퍼니",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64553 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1709632 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010611 | 현대예술관: https://www.hd-artscenter.co.kr/performance/list.do?keyword=&ticketingitemseq=0000004010&mid=0000&SVC_ID=detail&unicodeseqitemtype=0000000607&now=Y&pageNo=1&returnPage=list"
   },
   {
     "id": "PF296650",
@@ -1728,7 +2046,13 @@
     "종료일": "2026-09-20",
     "공연장": "조이마루아트홀",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296650_260828_165451.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296650_260828_165451.jpg",
+    "출연진": "김예린, 정효원, 홍준기, 이준목, 송영서, 이가헌",
+    "런타임": "1시간",
+    "티켓가격": "전석 14,000원",
+    "공연시간": "월요일 ~ 금요일(10:10,11:15), 토요일 ~ 일요일(12:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/264422"
   },
   {
     "id": "PF296634",
@@ -1752,7 +2076,13 @@
     "종료일": "2026-09-13",
     "공연장": "아산시 평생학습관(아산아트홀)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296628_260722_133233.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296628_260722_133233.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "일요일(11:00,13:00,15:00)",
+    "제작사": "진엔터컴",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64475 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1701348"
   },
   {
     "id": "PF296610",
@@ -1761,7 +2091,13 @@
     "종료일": "2026-09-19",
     "공연장": "노원구민의전당(구. 노원구민회관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296610_260722_125629.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296610_260722_125629.gif",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "토요일(11:00,14:00,16:00)",
+    "제작사": "아리커뮤니케이션즈",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1700036 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010587"
   },
   {
     "id": "PF296609",
@@ -1785,7 +2121,13 @@
     "종료일": "2026-09-13",
     "공연장": "한국만화박물관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296595_260722_113340.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296595_260722_113340.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "전석 35,000원",
+    "공연시간": "금요일(10:10,11:20), 토요일 ~ 일요일(11:00,13:00,15:00)",
+    "제작사": "아폴론art컴퍼니",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1699041 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010433 | 타임티켓: https://timeticket.co.kr/product/7260"
   },
   {
     "id": "PF296594",
@@ -1794,7 +2136,13 @@
     "종료일": "2026-09-13",
     "공연장": "당진문예의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296594_260722_112909.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296594_260722_112909.jpg",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "R석 70,000원, S석 60,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "당진문예의전당",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010961 | 당진문예의전당: http://www.dangjinart.kr/designer/skin/play/01_view.html?p_idx=1470"
   },
   {
     "id": "PF296534",
@@ -1818,7 +2166,13 @@
     "종료일": "2026-09-13",
     "공연장": "청주아트홀 (구. 청주시민회관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296508_260721_105220.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296508_260721_105220.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "R석 15,000원, S석 12,000원",
+    "공연시간": "일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/64466 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1702070"
   },
   {
     "id": "PF296432",
@@ -1827,7 +2181,13 @@
     "종료일": "2026-09-20",
     "공연장": "오정아트홀",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296432_260720_155546.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296432_260720_155546.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "현장판매 35,000원, 사전예약 9,900원",
+    "공연시간": "월요일 ~ 일요일(11:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1697991"
   },
   {
     "id": "PF296409",
@@ -1851,7 +2211,13 @@
     "종료일": "2026-09-12",
     "공연장": "경상대학교 칠암캠퍼스",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296401_260720_145333.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296401_260720_145333.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "현장판매 35,000원, 사전예약 9,900원",
+    "공연시간": "토요일(11:00,13:00,15:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1697957"
   },
   {
     "id": "PF296380",
@@ -1860,7 +2226,13 @@
     "종료일": "2026-09-06",
     "공연장": "낙동아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296380_260720_141241.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296380_260720_141241.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "현장판매 14,900원, 사전예약 9,900원",
+    "공연시간": "일요일(11:00,13:00,15:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1698365"
   },
   {
     "id": "PF296377",
@@ -1914,7 +2286,13 @@
     "종료일": "2026-09-20",
     "공연장": "신세계 문화홀 [센텀시티]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296334_260720_124322.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296334_260720_124322.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1699002 | 예스24: https://ticket.yes24.com/Perf/59286"
   },
   {
     "id": "PF296319",
@@ -1923,7 +2301,13 @@
     "종료일": "2026-11-08",
     "공연장": "링크더스페이스(LINK THE SPACE)",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296319_260720_113054.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296319_260720_113054.jpg",
+    "출연진": "박새힘, 박주혁, 정지우, 반정모, 조영화, 이세헌, 임찬민 등",
+    "런타임": "1시간 50분",
+    "티켓가격": "R석 70,000원, S석 55,000원",
+    "공연시간": "화요일(20:00), 수요일(16:00,20:00), 목요일 ~ 금요일(20:00), 토요일(15:00,19:00), 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)엠비제트컴퍼니, (주)엠비제트컴퍼니",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64426 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1721527 | 대학로티켓닷컴: http://www.maketicket.co.kr/ticket/GD30661 | 예스24: https://ticket.yes24.com/Perf/59300 | 코스타(Coaster): https://ticket.co-star.kr/shop/item.php?it_id=1787016350 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79336"
   },
   {
     "id": "PF296312",
@@ -1947,7 +2331,13 @@
     "종료일": "2026-09-13",
     "공연장": "우송예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296271_260716_141916.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296271_260716_141916.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "(주)마당플레이웍스, (주)마당플레이웍스",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64411 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1699022 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010229"
   },
   {
     "id": "PF296266",
@@ -1956,7 +2346,13 @@
     "종료일": "2026-09-13",
     "공연장": "국립정동극장",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296266_260716_140704.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296266_260716_140704.gif",
+    "출연진": "이기완, 이한수, 김건혜, 고석진, 안재홍, 윤태호, 박재은 등",
+    "런타임": "1시간 50분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "화요일 ~ 금요일(19:30), 토요일(14:00,18:30), 일요일(14:00)",
+    "제작사": "(재)국립정동극장, (재)서울예술단, (재)서울예술단",
+    "예매처": "나눔티켓: https://www.nanumticket.or.kr/pe/detail.html?p_marking=&p_new=&start2=0&page_no2=1&p_idx=13895 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009512 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79366 | 타임티켓: https://timeticket.co.kr/product/7325"
   },
   {
     "id": "PF296265",
@@ -1980,7 +2376,13 @@
     "종료일": "2026-09-12",
     "공연장": "강동문화복지회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296243_260716_131020.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296243_260716_131020.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": "진엔터컴",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64407 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1698863"
   },
   {
     "id": "PF296210",
@@ -1989,7 +2391,13 @@
     "종료일": "2026-09-06",
     "공연장": "대구어린이회관 꾀꼬리극장",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296210_260716_105439.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296210_260716_105439.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "(주)마당플레이웍스, (주)마당플레이웍스",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64403 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1698778 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010210"
   },
   {
     "id": "PF296191",
@@ -2013,7 +2421,13 @@
     "종료일": "2026-09-19",
     "공연장": "동탄복합문화센터 반석아트홀",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296185_260715_150334.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296185_260715_150334.gif",
+    "출연진": "김동현, 전혜선, 오효진, 황미나 등",
+    "런타임": "1시간 20분",
+    "티켓가격": "R석 50,000원, S석 40,000원, A석 30,000원, 잔디석 30,000원",
+    "공연시간": "토요일(18:00)",
+    "제작사": "(재) 화성시문화관광재단",
+    "예매처": "나눔티켓: https://www.nanumticket.or.kr/pe/detail.html?p_marking=&p_new=&start2=0&page_no2=1&p_idx=13838 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009300"
   },
   {
     "id": "PF296148",
@@ -2022,7 +2436,13 @@
     "종료일": "2026-11-29",
     "공연장": "NOL 서경스퀘어(구. 서경대학교 공연예술센터)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296148_260715_132702.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296148_260715_132702.gif",
+    "출연진": "김정민, 김도빈, 조풍래, 문경초, 최호승, 황민수, 이종석 등",
+    "런타임": "1시간 20분",
+    "티켓가격": "R석 77,000원, S석 55,000원, A석 44,000원",
+    "공연시간": "화요일 ~ 금요일(20:00), 토요일 ~ 일요일(14:00,18:00), HOL(14:00,18:00)",
+    "제작사": "(주)에이치제이컬쳐(HJ컬쳐), (주)에이치제이컬쳐(HJ컬쳐)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65266 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1698473 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010086 | 예스24: https://ticket.yes24.com/Perf/59239 | 클립서비스주식회사: https://ticket.clipservice.co.kr/Clipservice/Ticket/ShowDetail?playNum=79412"
   },
   {
     "id": "PF296139",
@@ -2046,7 +2466,13 @@
     "종료일": "2026-09-20",
     "공연장": "기장군청",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296136_260715_125258.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296136_260715_125258.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "네이버 1인권 14,900원, 네이버 특가 9,900원",
+    "공연시간": "일요일(11:30,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1694434"
   },
   {
     "id": "PF296104",
@@ -2055,7 +2481,13 @@
     "종료일": "2027-01-03",
     "공연장": "NOL 씨어터 대학로 (구. 대학로뮤지컬센터)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296104_260715_104510.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF296104_260715_104510.gif",
+    "출연진": "이충주, 김지철, 임준혁, 신은총, 손진욱, 정찬영, 강윤석 등",
+    "런타임": "1시간 40분",
+    "티켓가격": "R석 99,000원, S석 77,000원, A석 66,000원",
+    "공연시간": "화요일 ~ 금요일(20:00), 토요일 ~ 일요일(14:00,18:00)",
+    "제작사": "(주)신시컴퍼니, (주)신시컴퍼니",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009193 | 신시컴퍼니: http://www.iseensee.com/Home/Perf/MakingDetail.aspx?IdPerf=1223"
   },
   {
     "id": "PF296021",
@@ -2139,7 +2571,13 @@
     "종료일": "2026-09-12",
     "공연장": "시흥ABC행복학습센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295888_260713_131341.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295888_260713_131341.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "사전예약 10,000원, 전석 40,000원",
+    "공연시간": "토요일(11:00,13:00,15:00)",
+    "제작사": "i기획, 극단 해미소",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64322 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1695732"
   },
   {
     "id": "PF295860",
@@ -2148,7 +2586,13 @@
     "종료일": "2026-09-06",
     "공연장": "계명아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295860_260713_111337.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295860_260713_111337.gif",
+    "출연진": "엄기준, 어남선, 최진혁, 김정현, 윤시윤, 이정환, 유선호 등",
+    "런타임": "2시간 45분",
+    "티켓가격": "VIP석 160,000원, R석 140,000원, S석 110,000원, A석 80,000원",
+    "공연시간": "금요일(19:30), 토요일(14:00,19:00), 일요일(14:00)",
+    "제작사": "(주) 위즈덤엔터테인먼트, (주)에스피에이 엔터테인먼트(SPA Entertainment), (주)케이티지니뮤직",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1694487 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009910 | 예스24: https://ticket.yes24.com/Perf/59214"
   },
   {
     "id": "PF295858",
@@ -2157,7 +2601,13 @@
     "종료일": "2026-09-06",
     "공연장": "대전평송청소년문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295858_260713_111117.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295858_260713_111117.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "현장판매 40,000원, 사전예약 10,000원",
+    "공연시간": "일요일(12:00,14:00,16:00)",
+    "제작사": "극단 아이 (뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64315 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1695412"
   },
   {
     "id": "PF295815",
@@ -2181,7 +2631,13 @@
     "종료일": "2026-09-06",
     "공연장": "용인시평생학습관 (여성회관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295737_260709_133724.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295737_260709_133724.jpg",
+    "출연진": " ",
+    "런타임": "1시간 20분",
+    "티켓가격": "R석 49,900원, S석 39,900원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)이에스생활문화 (ES생활문화), (주)이에스생활문화 (ES생활문화), 에그박사, 에그박사",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64264 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1693791"
   },
   {
     "id": "PF295720",
@@ -2190,7 +2646,13 @@
     "종료일": "2026-09-27",
     "공연장": "평택시남부문예회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295720_260709_121535.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295720_260709_121535.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 50,000원",
+    "공연시간": "일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1684225 | 놀유니버스: https://tickets.interpark.com/goods/26009253"
   },
   {
     "id": "PF295710",
@@ -2214,7 +2676,13 @@
     "종료일": "2026-09-06",
     "공연장": "안산문화예술의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295704_260709_111212.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295704_260709_111212.gif",
+    "출연진": " ",
+    "런타임": "1시간 5분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "더봄엔터테인먼트 (더봄기획)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64272 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1694335 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009863"
   },
   {
     "id": "PF295702",
@@ -2328,7 +2796,13 @@
     "종료일": "2026-09-06",
     "공연장": "수원문화원 (빛누리아트홀)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295556_260708_104752.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295556_260708_104752.jpg",
+    "출연진": "고예빈, 박채빈, 백나린, 김민지, 최지연 등",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 66,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "엘아트컴퍼니, 엘아트컴퍼니",
+    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/64236 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1692295 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010046"
   },
   {
     "id": "PF295552",
@@ -2337,7 +2811,13 @@
     "종료일": "2026-11-15",
     "공연장": "디큐브링크아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295552_260708_103436.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295552_260708_103436.gif",
+    "출연진": "손준호, 이석훈, 정용훈, 차지연, 서은광, 류승수, 민선예 등",
+    "런타임": "2시간 35분",
+    "티켓가격": "VIP석 160,000원, R석 140,000원, S석 110,000원, A석 80,000원",
+    "공연시간": "화요일 ~ 금요일(19:30), 토요일 ~ 일요일(14:00,18:30), HOL(14:00,18:30)",
+    "제작사": "(주)CJ ENM, 오픈리뷰(주)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64251 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1693563 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009625"
   },
   {
     "id": "PF295513",
@@ -2361,7 +2841,13 @@
     "종료일": "2026-09-13",
     "공연장": "강원대학교 백령아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295500_260707_125029.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295500_260707_125029.gif",
+    "출연진": "공예림, 박선주, 김명현, 조예은, 박주혜, 강태욱, 양인성 등",
+    "런타임": "1시간 10분",
+    "티켓가격": "R석 70,000원, S석 60,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)에스에이엠지엔터테인먼트(SAMG엔터테인먼트), (주)이제이(EJ), (주)이제이(EJ), (주)이지",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64218 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1690325 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009727"
   },
   {
     "id": "PF295485",
@@ -2445,7 +2931,13 @@
     "종료일": "2026-09-13",
     "공연장": "대구어린이회관 꾀꼬리극장",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295409_260706_142939.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295409_260706_142939.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:00), 일요일(11:00,14:00)",
+    "제작사": "(주)조이컬처, 마당세실극장 [대학로]",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1688833 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009531 | 예스24: https://ticket.yes24.com/Perf/59164"
   },
   {
     "id": "PF295408",
@@ -2469,7 +2961,13 @@
     "종료일": "2026-09-19",
     "공연장": "강릉원주대학교 해람문화관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295364_260706_113900.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295364_260706_113900.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원, 사전예약 39,500원",
+    "공연시간": "토요일(11:00,14:00,16:30)",
+    "제작사": "(주)드림엔터테인먼트, (주)마당플레이웍스",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64198 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1688759 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009576"
   },
   {
     "id": "PF295353",
@@ -2478,7 +2976,13 @@
     "종료일": "2026-10-04",
     "공연장": "상상아트홀 [대전]",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295353_260706_110845.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295353_260706_110845.jpg",
+    "출연진": "문혜인, 양하영, 이승준, 박민서, 송혜지, 박수지, 김혁주 등",
+    "런타임": "1시간 30분",
+    "티켓가격": "전석 50,000원",
+    "공연시간": "수요일 ~ 금요일(19:30), 토요일 ~ 일요일(15:00)",
+    "제작사": "라이노컴퍼니(구. 극단 셰익스피어), 라이노컴퍼니(구. 극단 셰익스피어)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64115 | 네이버N예약: https://booking.naver.com/booking/12/bizes/650972 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009297 | 카카오톡예약하기: https://booking.kakao.com/detail/ticket/675370 | 타임티켓: https://timeticket.co.kr/product/7217"
   },
   {
     "id": "PF295346",
@@ -2487,7 +2991,13 @@
     "종료일": "2026-09-13",
     "공연장": "거제시청소년수련관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295346_260706_105103.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295346_260706_105103.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "일요일(11:00,13:00,15:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1687916 | 놀유니버스: https://tickets.interpark.com/goods/26009578"
   },
   {
     "id": "PF295341",
@@ -2511,7 +3021,13 @@
     "종료일": "2026-09-06",
     "공연장": "광주서구문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295339_260706_102738.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295339_260706_102738.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "사전예약 9,900원",
+    "공연시간": "일요일(11:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1686964"
   },
   {
     "id": "PF295261",
@@ -2520,7 +3036,13 @@
     "종료일": "2026-09-12",
     "공연장": "대전평송청소년문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295261_260703_122127.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295261_260703_122127.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일(13:00,15:00,17:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1687898 | 놀유니버스: https://tickets.interpark.com/goods/26009534 | 예스24: https://ticket.yes24.com/Perf/59141"
   },
   {
     "id": "PF295172",
@@ -2529,7 +3051,13 @@
     "종료일": "2026-09-27",
     "공연장": "블랙박스 1357",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295172_260702_145427.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF295172_260702_145427.gif",
+    "출연진": "황호성, 김찬우, 박건우, 강다희, 채태림, 권오현, 이명제",
+    "런타임": "2시간",
+    "티켓가격": "전석 60,000원",
+    "공연시간": "수요일 ~ 금요일(19:00), 토요일 ~ 일요일(14:00), HOL(14:00)",
+    "제작사": "따숲 하우스(HOUSE), 블랙박스 1357, 엠스테이지",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1689436 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009078"
   },
   {
     "id": "PF295148",
@@ -2568,7 +3096,13 @@
     "종료일": "2026-11-29",
     "공연장": "레드루즈씨어터",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294961_260630_134910.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294961_260630_134910.gif",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "로맨틱존 129,000원, 히트존 119,000원, 블랙존 99,000원",
+    "공연시간": "목요일 ~ 금요일(20:00), 토요일(16:00,19:00), 일요일(17:00)",
+    "제작사": "주식회사 유피웍스",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012683"
   },
   {
     "id": "PF294946",
@@ -2577,7 +3111,13 @@
     "종료일": "2026-11-15",
     "공연장": "블루스퀘어",
     "상태": "공연중",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294946_260701_134627.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294946_260701_134627.gif",
+    "출연진": "이지연, 이지혜, 이지수, 정기열, 서경수, 고은성, 박은태 등",
+    "런타임": "2시간 50분",
+    "티켓가격": "VIP석 180,000원, R석 150,000원, S석 120,000원, A석 90,000원",
+    "공연시간": "화요일(19:30), 수요일(14:30,19:30), 목요일(19:30), 금요일(14:30,19:30), 토요일(14:00,19:00), 일요일(15:00), HOL(14:00,19:00)",
+    "제작사": "(주)EMK뮤지컬컴퍼니, (주)EMK뮤지컬컴퍼니, (주)카카오엔터테인먼트 (구. 카카오엠)",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009314 | 멜론티켓: https://ticket.melon.com/performance/index.htm?prodId=213527"
   },
   {
     "id": "PF294945",
@@ -2601,7 +3141,13 @@
     "종료일": "2026-09-05",
     "공연장": "대전평송청소년문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294922_260630_104608.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294922_260630_104608.gif",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "현장판매 40,000원, 사전예약 22,000원",
+    "공연시간": "토요일(13:00,15:00,17:00)",
+    "제작사": "(주)조이컬처",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1684477 | 놀유니버스: https://tickets.interpark.com/goods/26009251 | 예스24: https://ticket.yes24.com/Perf/59097"
   },
   {
     "id": "PF294806",
@@ -2610,7 +3156,13 @@
     "종료일": "2026-09-06",
     "공연장": "울산북구문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294806_260629_135244.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF294806_260629_135244.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:00), 일요일 ~ 월요일(11:00,14:00)",
+    "제작사": "(주)조이컬처, 마당세실극장 [대학로]",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1685363 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26009167 | 예스24: https://ticket.yes24.com/Perf/59105"
   },
   {
     "id": "PF294747",
@@ -3135,7 +3687,7 @@
     "티켓가격": "R석 77,000원, S석 55,000원",
     "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
     "제작사": "(주)피엠씨프러덕션(PMC Production), (주)하늘이엔티",
-    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/63297 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1658457 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26007254 | 카카오톡예약하기: https://booking.kakao.com/detail/ticket/727213"
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/63297 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1658457 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26007254 | 카카오톡예약하기: https://booking.kakao.com/detail/ticket/727213 | 타임티켓: https://timeticket.co.kr/product/7345"
   },
   {
     "id": "PF291533",
@@ -3708,6 +4260,36 @@
     "예매처": "네이버N예약: http://booking.naver.com/booking/12/bizes/379382 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=18000670"
   },
   {
+    "id": "PF299996",
+    "공연명": "리나, 슈퍼히어로 [대구]",
+    "시작일": "2026-10-09",
+    "종료일": "2026-10-10",
+    "공연장": "수성아트피아",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299996_260902_175631.gif",
+    "출연진": "유소연, 천송이, 정상헌, 신태빈, 김명희, 임현빈, 김준호 등",
+    "런타임": "1시간 15분",
+    "티켓가격": "VIP석 99,000원, R석 77,000원, S석 55,000원",
+    "공연시간": "토요일(11:00,14:00), HOL(11:00,14:00,16:30)",
+    "제작사": "(주)두비컴뮤니케이션, (주)예술기획성우",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012709"
+  },
+  {
+    "id": "PF299988",
+    "공연명": "으랏차차 복방귀 [대구]",
+    "시작일": "2026-10-17",
+    "종료일": "2026-10-17",
+    "공연장": "대구어린이회관 꾀꼬리극장",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299988_260902_171944.jpg",
+    "출연진": "정선현, 석민호, 정창윤, 김정현, 김민우, 남준우, 오승이",
+    "런타임": "1시간",
+    "티켓가격": "전석 25,000원",
+    "공연시간": "토요일(11:00,14:00,16:00)",
+    "제작사": "(사)한울림 (극단한울림), 대구어린이세상",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65307 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1728369"
+  },
+  {
     "id": "PF299694",
     "공연명": "피터팬 [평택]",
     "시작일": "2026-11-01",
@@ -3984,7 +4566,13 @@
     "종료일": "2026-10-24",
     "공연장": "대전평송청소년문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299255_260824_151707.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299255_260824_151707.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "토요일(11:00,14:00,16:00)",
+    "제작사": "극단 아이 (뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65081 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1721319"
   },
   {
     "id": "PF299252",
@@ -4008,7 +4596,13 @@
     "종료일": "2026-10-18",
     "공연장": "용인시평생학습관 (여성회관)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299250_260824_150722.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299250_260824_150722.gif",
+    "출연진": "조윤호, 안홍주, 정혜인, 한진만, 성미지, 김시준, 신동해 등",
+    "런타임": "1시간 20분",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "금요일(11:00), 토요일 ~ 일요일(11:00,15:00)",
+    "제작사": "(재)용인문화재단",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012302"
   },
   {
     "id": "PF299248",
@@ -4017,7 +4611,13 @@
     "종료일": "2026-10-10",
     "공연장": "대덕문화전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299248_260824_150721.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299248_260824_150721.gif",
+    "출연진": "김남주, 김서아, 박상홍, 심유정, 안희진, 우이빈, 한희은 등",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": "봉컴퍼니",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012227"
   },
   {
     "id": "PF299239",
@@ -4041,7 +4641,13 @@
     "종료일": "2026-10-10",
     "공연장": "포항시청 대잠홀",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299225_260824_141831.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299225_260824_141831.jpg",
+    "출연진": "한혁수, 이근희, 이희광, 김세준, 신민철, 이형석, 한은선 등",
+    "런타임": "1시간",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "토요일(13:30,15:30)",
+    "제작사": "극단 여기, 극단 해미소",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65086 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1721180"
   },
   {
     "id": "PF299221",
@@ -4050,7 +4656,13 @@
     "종료일": "2026-10-10",
     "공연장": "3.15아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299221_260824_141217.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299221_260824_141217.gif",
+    "출연진": "권정주, 이주희, 장다윤, 김나한, 서정현, 이민지, 이지원 등",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 10,000원",
+    "공연시간": "토요일(19:00)",
+    "제작사": "모글윈드오케스트라, 모글윈드오케스트라",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012378"
   },
   {
     "id": "PF299219",
@@ -4089,7 +4701,13 @@
     "종료일": "2026-10-25",
     "공연장": "화성시어린이문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299217_260824_140325.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299217_260824_140325.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "1인권 판매석(예매가) 14,900원",
+    "공연시간": "일요일(11:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1720807"
   },
   {
     "id": "PF299213",
@@ -4113,7 +4731,13 @@
     "종료일": "2026-10-05",
     "공연장": "시흥ABC행복학습센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299198_260824_132445.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299198_260824_132445.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "사전예약 10,000원, 전석 40,000원",
+    "공연시간": "월요일(11:00,13:00,15:00)",
+    "제작사": "i기획",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65069 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1720698"
   },
   {
     "id": "PF299188",
@@ -4122,7 +4746,13 @@
     "종료일": "2026-11-01",
     "공연장": "광주시문화예술의전당 (구. 남한산성아트홀)",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299188_260824_130247.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299188_260824_130247.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 70,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "(주)밝은누리, (주)초이락컨텐츠팩토리, (주)하쿠나마타타",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1721036 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012167 | 예스24: https://ticket.yes24.com/Perf/59807"
   },
   {
     "id": "PF299169",
@@ -4161,7 +4791,13 @@
     "종료일": "2026-10-10",
     "공연장": "안동문화예술의전당",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299046_260821_122404.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299046_260821_122404.jpg",
+    "출연진": " ",
+    "런타임": "2시간",
+    "티켓가격": "전석 10,000원",
+    "공연시간": "금요일(17:00), 토요일(17:00)",
+    "제작사": "안동문화예술의전당",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65064 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1720836"
   },
   {
     "id": "PF298995",
@@ -4170,7 +4806,13 @@
     "종료일": "2026-10-22",
     "공연장": "예술의전당 [서울]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298995_260820_145005.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298995_260820_145005.gif",
+    "출연진": "임규섭, 최동석, 김진호, 강규안, 송광일, 황윤희",
+    "런타임": "1시간",
+    "티켓가격": "전석 20,000원",
+    "공연시간": "수요일 ~ 목요일(20:00)",
+    "제작사": "극단 현장 [서울], 주식회사 코스타",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011917"
   },
   {
     "id": "PF298993",
@@ -4194,7 +4836,13 @@
     "종료일": "2026-10-11",
     "공연장": "수원SK아트리움",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298938_260820_124549.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298938_260820_124549.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "VIP석 77,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)애드칸, (주)애드칸",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65025 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1720388 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012142"
   },
   {
     "id": "PF298926",
@@ -4203,7 +4851,13 @@
     "종료일": "2026-10-17",
     "공연장": "고양어울림누리",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298926_260820_112522.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298926_260820_112522.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 35,000원",
+    "공연시간": "토요일(11:00,14:00,16:00)",
+    "제작사": "나눔",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1717124 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012113"
   },
   {
     "id": "PF298924",
@@ -4227,7 +4881,13 @@
     "종료일": "2026-10-10",
     "공연장": "부산민주공원 공연장",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298860_260819_140444.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298860_260819_140444.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "사전예약 VIP석  13,500원, 사전예약 R석 9,500원, 전석 35,000원",
+    "공연시간": "토요일(11:00,14:00,16:00)",
+    "제작사": "나눔, 나눔",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1716335 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012074"
   },
   {
     "id": "PF298818",
@@ -4236,7 +4896,13 @@
     "종료일": "2026-10-25",
     "공연장": "신세계 문화홀 [센텀시티]",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298818_260819_113321.png"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298818_260819_113321.png",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1718165"
   },
   {
     "id": "PF298794",
@@ -4260,7 +4926,13 @@
     "종료일": "2026-11-01",
     "공연장": "한전아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298781_260818_180555.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298781_260818_180555.jpg",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "VIP석 44,000원, R석 39,000원, A석 34,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)이에스생활문화 (ES생활문화), (주)이에스생활문화 (ES생활문화)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64967 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1717391"
   },
   {
     "id": "PF298742",
@@ -4269,7 +4941,13 @@
     "종료일": "2026-10-10",
     "공연장": "GS칼텍스 예울마루",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298742_260818_153152.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298742_260818_153152.jpg",
+    "출연진": "서나영, 성열석, 김준현, 강나리, 서인권, 김선제, 엄현수",
+    "런타임": "1시간 35분",
+    "티켓가격": "R석 30,000원, S석 20,000원",
+    "공연시간": "금요일(17:00), 토요일(17:00)",
+    "제작사": "GS칼텍스 예울마루, 극단오징어",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64979 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1717729"
   },
   {
     "id": "PF298703",
@@ -4293,7 +4971,13 @@
     "종료일": "2026-10-03",
     "공연장": "춘천인형극장",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298677_260818_131514.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298677_260818_131514.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 40,000원, 사전예약 19,900원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1715072 | 놀유니버스: https://tickets.interpark.com/goods/26011875"
   },
   {
     "id": "PF298663",
@@ -4302,7 +4986,13 @@
     "종료일": "2026-10-18",
     "공연장": "군포문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298663_260818_124614.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298663_260818_124614.jpg",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "R석 70,000원, S석 60,000원",
+    "공연시간": "토요일(11:00,14:00,16:30), 일요일(11:00,14:00)",
+    "제작사": "(주)밝은누리, (주)초이락컨텐츠컴퍼니, (주)하쿠나마타타",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1716553 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011833 | 예스24: https://ticket.yes24.com/Perf/59719"
   },
   {
     "id": "PF298660",
@@ -4326,7 +5016,13 @@
     "종료일": "2026-10-17",
     "공연장": "충북혁신도시 복합혁신센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298645_260818_113157.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298645_260818_113157.gif",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 50,000원",
+    "공연시간": "토요일(12:00,14:00,16:00)",
+    "제작사": "극단 가람(가람뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64971 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1717600 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011816"
   },
   {
     "id": "PF298634",
@@ -4350,7 +5046,13 @@
     "종료일": "2026-10-11",
     "공연장": "수원청소년문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298624_260818_105112.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298624_260818_105112.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "VIP석 13,500원, R석 9,500원",
+    "공연시간": "일요일(11:00,14:00,16:00)",
+    "제작사": "나눔",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1716254"
   },
   {
     "id": "PF298609",
@@ -4359,7 +5061,13 @@
     "종료일": "2026-11-01",
     "공연장": "제주특별자치도 설문대여성문화센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298609_260818_102458.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298609_260818_102458.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 40,000원",
+    "공연시간": "일요일(11:00,13:00,15:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1717141"
   },
   {
     "id": "PF298590",
@@ -4383,7 +5091,13 @@
     "종료일": "2026-10-04",
     "공연장": "광주디자인센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298589_260814_155426.jpg"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298589_260814_155426.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "일요일(11:00,13:00,15:00)",
+    "제작사": "극단 해미소",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1714736"
   },
   {
     "id": "PF298504",
@@ -4392,7 +5106,13 @@
     "종료일": "2026-10-03",
     "공연장": "마포아트센터",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298504_260814_102756.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298504_260814_102756.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "전석 30,000원",
+    "공연시간": "토요일(17:00)",
+    "제작사": "드림공화국",
+    "예매처": "놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26010679"
   },
   {
     "id": "PF298475",
@@ -4416,7 +5136,13 @@
     "종료일": "2026-10-11",
     "공연장": "울산문화예술회관",
     "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298458_260813_143736.gif"
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF298458_260813_143736.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "VIP석 70,000원, S석 50,000원",
+    "공연시간": "일요일(11:00,14:00,16:30)",
+    "제작사": "(주)DS뮤지컬컴퍼니, (주)DS뮤지컬컴퍼니",
+    "예매처": "NHN티켓링크: https://www.ticketlink.co.kr/product/64917 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1715779 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011582"
   },
   {
     "id": "PF298429",
@@ -4747,21 +5473,6 @@
     "공연시간": "토요일(11:30,14:00,16:00)",
     "제작사": " ",
     "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1711010"
-  },
-  {
-    "id": "PF297882",
-    "공연명": "개구쟁이 특공대: 마녀저택 [세종]",
-    "시작일": "2026-10-02",
-    "종료일": "2026-10-03",
-    "공연장": "세종문화예술회관",
-    "상태": "공연예정",
-    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF297882_260806_141409.jpg",
-    "출연진": " ",
-    "런타임": "1시간 10분",
-    "티켓가격": "전석 70,000원",
-    "공연시간": "금요일(11:00,14:00,16:30), 토요일(11:00,14:00,16:30)",
-    "제작사": "(주)엔투게더, (주)엔투게더",
-    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/64768 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1711591 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26011435"
   },
   {
     "id": "PF297879",
@@ -5797,6 +6508,126 @@
     "공연시간": "토요일(12:00,14:00,16:00)",
     "제작사": "(주)원앤원엔터테인먼트",
     "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/60984 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1576927 | 원주시청: http://wonju.moonhwain.kr/rsvc/rsv_pm.html?b_id=wonju&p_idx=122"
+  },
+  {
+    "id": "PF299990",
+    "공연명": "로봇 특공대 [익산]",
+    "시작일": "2026-11-21",
+    "종료일": "2026-11-21",
+    "공연장": "솜리문화예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299990_260902_172443.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "토요일(14:00,16:00)",
+    "제작사": "극단 아이 (뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65289 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1727366"
+  },
+  {
+    "id": "PF299969",
+    "공연명": "로봇 특공대 [수원]",
+    "시작일": "2026-11-29",
+    "종료일": "2026-11-29",
+    "공연장": "수원문화원 (빛누리아트홀)",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299969_260902_162625.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "일요일(14:00,16:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1727359"
+  },
+  {
+    "id": "PF299967",
+    "공연명": "로봇 특공대 [군산]",
+    "시작일": "2026-11-07",
+    "종료일": "2026-11-07",
+    "공연장": "군산어린이공연장",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299967_260902_162158.jpg",
+    "출연진": " ",
+    "런타임": "55분",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "토요일(11:30,14:00,16:00)",
+    "제작사": "극단 아이 (뮤지컬)",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65291 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1727414"
+  },
+  {
+    "id": "PF299962",
+    "공연명": "팬레터 [안동]",
+    "시작일": "2026-11-13",
+    "종료일": "2026-11-13",
+    "공연장": "안동문화예술의전당",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299962_260902_161253.jpg",
+    "출연진": "이규형, 홍기범, 강혜인, 이형훈, 이한밀, 김태인, 김보현",
+    "런타임": "2시간 40분",
+    "티켓가격": "R석 100,000원, S석 70,000원, A석 50,000원, B석 30,000원",
+    "공연시간": "금요일(19:30)",
+    "제작사": "안동문화예술의전당",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65225 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1726003"
+  },
+  {
+    "id": "PF299939",
+    "공연명": "인싸가족 [대전]",
+    "시작일": "2026-11-21",
+    "종료일": "2026-11-22",
+    "공연장": "우송예술회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299939_260902_152630.gif",
+    "출연진": " ",
+    "런타임": "1시간 10분",
+    "티켓가격": "R석 70,000원, S석 60,000원",
+    "공연시간": "토요일 ~ 일요일(11:00,14:00,16:30)",
+    "제작사": "(주)DS뮤지컬컴퍼니, (주)창라이프",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65320 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1728836 | 놀유니버스: http://ticket.interpark.com/Ticket/Goods/GoodsInfo.asp?GoodsCode=26012407"
+  },
+  {
+    "id": "PF299903",
+    "공연명": "프랑켄슈타인: 더 뮤지컬 콘서트 [부산]",
+    "시작일": "2026-11-29",
+    "종료일": "2026-11-29",
+    "공연장": "부산시민회관",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299903_260902_135824.jpg",
+    "출연진": "이성준, 김지훈, 김성식, 이봄소리, 김지우 등",
+    "런타임": "1시간 40분",
+    "티켓가격": "VIP석 110,000원, R석 90,000원, S석 60,000원, A석 40,000원",
+    "공연시간": "일요일(17:00)",
+    "제작사": "(주)스프링이엔티, EMK엔터테인먼트",
+    "예매처": "부산문화/시민회관((재)부산문화회관): http://www.bscc.or.kr/01_perfor/?mcode=0401010200&mode=2&no=26822"
+  },
+  {
+    "id": "PF299889",
+    "공연명": "미녀와 야수 [광주]",
+    "시작일": "2026-11-07",
+    "종료일": "2026-11-07",
+    "공연장": "광주디자인센터",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299889_260902_132138.jpg",
+    "출연진": " ",
+    "런타임": "50분",
+    "티켓가격": "1인권 판매석(예매가) 14,900원, 특가 판매석(예매가) 9,900원",
+    "공연시간": "토요일(11:00,14:00)",
+    "제작사": " ",
+    "예매처": "네이버N예약: https://booking.naver.com/booking/12/bizes/1721652"
+  },
+  {
+    "id": "PF299861",
+    "공연명": "정글북 [청주]",
+    "시작일": "2026-11-21",
+    "종료일": "2026-11-22",
+    "공연장": "청주예술의전당",
+    "상태": "공연예정",
+    "포스터": "http://www.kopis.or.kr/upload/pfmPoster/PF_PF299861_260902_102229.jpg",
+    "출연진": " ",
+    "런타임": "1시간",
+    "티켓가격": "전석 55,000원",
+    "공연시간": "토요일(14:00,16:00), 일요일(11:00,14:00)",
+    "제작사": "극단 아이 (뮤지컬), 정글랜드, 주주메카",
+    "예매처": "NHN티켓링크: http://www.ticketlink.co.kr/product/65283 | 네이버N예약: https://booking.naver.com/booking/12/bizes/1727335"
   },
   {
     "id": "PF299783",
