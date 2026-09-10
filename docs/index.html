@@ -210,8 +210,8 @@ function fmt(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 
 /* ─────────── 저장/불러오기 (기기 저장 — 다시 열어도 유지) ─────────── */
-async function load(key){ try{const r=await window.storage.get(key);return r?JSON.parse(r.value):null}catch(e){return null} }
-async function save(key,val){ try{await window.storage.set(key,JSON.stringify(val))}catch(e){ toast("저장 실패 — 이번 세션만 유지됩니다") } }
+async function load(key){ try{const v=localStorage.getItem(key);return v?JSON.parse(v):null}catch(e){return null} }
+async function save(key,val){ try{localStorage.setItem(key,JSON.stringify(val))}catch(e){ toast("저장 실패 — 이번 세션만 유지됩니다") } }
 
 /* ─────────── 달력 ─────────── */
 /* ─────────── 공연 필터 ─────────── */
