@@ -542,7 +542,8 @@ async function syncFromServer(silent){
       fetch("data/casts.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null),
     ]);
     let changed=false;
-    if(Array.isArray(m)){musicals=m;await save("cc:musicals",musicals);changed=true}
+    // 서버 파일이 잠시 비어 있어도(수집 실패 등) 이미 가진 공연 목록을 지우지 않는다
+    if(Array.isArray(m) && (m.length>0 || musicals.length===0)){musicals=m;await save("cc:musicals",musicals);changed=true}
     if(Array.isArray(c)){casts=c;await save("cc:casts",casts);changed=true}
     if(stat){
       const now=new Date();

@@ -21,30 +21,65 @@ from pathlib import Path
 
 import requests
 
+class KopisError(RuntimeError):
+    pass
+
 SERVICE_KEY = os.environ.get("KOPIS_SERVICE_KEY", "")
 
 DAYS_AHEAD = 90          # 오늘부터 며칠 후까지 수집할지
 GENRE_CODE = "GGGA"      # KOPIS 뮤지컬 장르코드
 
-BASE_URL = "http://www.kopis.or.kr/openApi/restful/pblprfr"
+BASE_URLS = ["http://www.kopis.or.kr/openApi/restful/pblprfr",
+             "https://www.kopis.or.kr/openApi/restful/pblprfr"]
+BASE_URL = BASE_URLS[0]
+MIN_KEEP_RATIO = 0.5     # 새로 받은 공연 수가 지난번의 절반도 안 되면 덮어쓰지 않는다
 
 OUT_DIR = Path("docs/data")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def get(url: str, params: dict) -> requests.Response:
+    """네트워크 오류는 세 번까지 다시 시도한다."""
+    last = None
+    for attempt in range(3):
+        try:
+            return requests.get(url, params=params, timeout=20)
+        except requests.RequestException as e:
+            last = e
+            time.sleep(2 * (attempt + 1))
+    raise KopisError(f"KOPIS에 연결하지 못했습니다: {last}")
+
+
 def fetch_list(stdate: str, eddate: str) -> list[dict]:
     """지정 기간의 뮤지컬 목록을 전 페이지 수집."""
+    global BASE_URL
     shows, page = [], 1
     while True:
-        r = requests.get(BASE_URL, params={
-            "service": SERVICE_KEY, "stdate": stdate, "eddate": eddate,
-            "cpage": page, "rows": 100, "shcate": GENRE_CODE,
-        }, timeout=15)
-        if r.status_code == 400:
+        params = {"service": SERVICE_KEY, "stdate": stdate, "eddate": eddate,
+                  "cpage": page, "rows": 100, "shcate": GENRE_CODE}
+        r = get(BASE_URL, params)
+        if page == 1 and r.status_code != 200:
+            # 첫 페이지부터 실패하면 "목록 끝"이 아니라 오류다. 다른 주소(https)로 한 번 더 시도한다.
+            for alt in BASE_URLS:
+                if alt == BASE_URL:
+                    continue
+                r2 = get(alt, params)
+                if r2.status_code == 200:
+                    print(f"  ! {BASE_URL} 실패({r.status_code}) → {alt} 사용")
+                    BASE_URL, r = alt, r2
+                    break
+        if r.status_code == 400 and page > 1:
             break  # KOPIS는 페이지 범위를 넘어서면 빈 목록 대신 400을 준다 → 더 없다는 뜻
-        r.raise_for_status()
-        items = ET.fromstring(r.content).findall("db")
+        if r.status_code != 200:
+            raise KopisError(f"KOPIS 목록 요청 실패 (HTTP {r.status_code}, {stdate}~{eddate}): {r.text[:300]}")
+        try:
+            root = ET.fromstring(r.content)
+        except ET.ParseError:
+            raise KopisError(f"KOPIS 응답이 XML이 아닙니다 ({stdate}~{eddate}): {r.text[:300]}")
+        items = root.findall("db")
         if not items:
+            if page == 1:
+                print(f"  ! {stdate}~{eddate} 목록이 비어 있습니다. 응답 앞부분: {r.text[:300]}")
             break
         for db in items:
             shows.append({
@@ -64,7 +99,7 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
 
 def fetch_detail(show_id: str) -> dict:
     """공연 상세: 출연진·런타임·가격·공연시간·제작사·예매처 링크."""
-    r = requests.get(f"{BASE_URL}/{show_id}", params={"service": SERVICE_KEY}, timeout=15)
+    r = get(f"{BASE_URL}/{show_id}", {"service": SERVICE_KEY})
     r.raise_for_status()
     db = ET.fromstring(r.content).find("db")
     if db is None:
@@ -114,10 +149,20 @@ def main():
             print(f"    {i}/{len(shows)}")
         time.sleep(0.2)
 
-    (OUT_DIR / "musicals.json").write_text(
-        json.dumps(shows, ensure_ascii=False, indent=2), encoding="utf-8")
+    out = OUT_DIR / "musicals.json"
+    try:
+        previous = json.loads(out.read_text(encoding="utf-8"))
+    except Exception:
+        previous = []
+    # KOPIS가 오류나 빈 결과를 주면 기존 데이터를 지우지 않고 실패로 끝낸다 (GitHub이 실패 메일을 보낸다).
+    if not shows or len(shows) < len(previous) * MIN_KEEP_RATIO:
+        raise SystemExit(f"!! 받은 공연이 {len(shows)}건뿐이라(지난번 {len(previous)}건) 기존 데이터를 그대로 둡니다. KOPIS 상태나 인증키를 확인하세요.")
+    out.write_text(json.dumps(shows, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"저장 완료: docs/data/musicals.json ({len(shows)}건)")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KopisError as e:
+        raise SystemExit(f"!! {e}\n기존 docs/data/musicals.json 은 그대로 둡니다.")
