@@ -38,16 +38,43 @@ OUT_DIR = Path("docs/data")
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
+# KOPIS 방화벽은 2026년 11월 말부터 python-requests 기본 User-Agent 요청을 "400 Request Blocked"로 막는다.
+# 앱 이름을 밝히고, 요청 간격을 두고, 막히면 잠시 기다렸다 다시 시도한다.
+HEADERS = {"User-Agent": "musical-scheduler/1.0 (+https://github.com/orgio98/musical-scheduler)",
+           "Accept": "application/xml, text/xml"}
+MIN_INTERVAL = 0.6   # 초
+BLOCK_RETRIES = 3
+BLOCK_WAIT = 15      # 초
+_last_call = 0.0
+
+
 def get(url: str, params: dict) -> requests.Response:
-    """네트워크 오류는 세 번까지 다시 시도한다."""
+    """요청 간격을 지키고, 네트워크 오류·방화벽 차단은 몇 번 다시 시도한다."""
+    global _last_call
     last = None
-    for attempt in range(3):
+    blocked = 0
+    while True:
+        wait = MIN_INTERVAL - (time.time() - _last_call)
+        if wait > 0:
+            time.sleep(wait)
+        _last_call = time.time()
         try:
-            return requests.get(url, params=params, timeout=20)
+            r = requests.get(url, params=params, headers=HEADERS, timeout=20)
         except requests.RequestException as e:
             last = e
-            time.sleep(2 * (attempt + 1))
-    raise KopisError(f"KOPIS에 연결하지 못했습니다: {last}")
+            if blocked + 1 > 3:
+                raise KopisError(f"KOPIS에 연결하지 못했습니다: {last}")
+            blocked += 1
+            time.sleep(2 * blocked)
+            continue
+        if "Request Blocked" in r.text[:2000]:
+            blocked += 1
+            if blocked > BLOCK_RETRIES:
+                raise KopisError("KOPIS 방화벽이 요청을 계속 막고 있습니다 (400 Request Blocked)")
+            print(f"  KOPIS 차단 응답 → {BLOCK_WAIT}초 뒤 다시 시도 ({blocked}/{BLOCK_RETRIES})", flush=True)
+            time.sleep(BLOCK_WAIT)
+            continue
+        return r
 
 
 def fetch_list(stdate: str, eddate: str) -> list[dict]:
@@ -93,7 +120,6 @@ def fetch_list(stdate: str, eddate: str) -> list[dict]:
                 "포스터": db.findtext("poster", ""),
             })
         page += 1
-        time.sleep(0.2)
     return shows
 
 
@@ -147,7 +173,6 @@ def main():
             pass
         if i % 100 == 0:
             print(f"    {i}/{len(shows)}")
-        time.sleep(0.2)
 
     out = OUT_DIR / "musicals.json"
     try:
