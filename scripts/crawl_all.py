@@ -42,15 +42,18 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 # 앱 이름을 밝히고, 요청 간격을 두고, 막히면 잠시 기다렸다 다시 시도한다.
 HEADERS = {"User-Agent": "musical-scheduler/1.0 (+https://github.com/orgio98/musical-scheduler)",
            "Accept": "application/xml, text/xml"}
-MIN_INTERVAL = 0.6   # 초
-BLOCK_RETRIES = 3
-BLOCK_WAIT = 15      # 초
+MIN_INTERVAL = 1.0   # 초 (막히면 자동으로 늘어난다)
+MAX_INTERVAL = 6.0
+BLOCK_RETRIES = 4
+BLOCK_WAIT = 20      # 초 (시도할수록 길어진다)
+DETAIL_REFRESH_DAYS = 7   # 이미 받은 공연의 상세정보는 이 주기로만 다시 받는다
+DETAIL_KEYS = ("출연진", "런타임", "티켓가격", "공연시간", "제작사", "예매처")
 _last_call = 0.0
 
 
 def get(url: str, params: dict) -> requests.Response:
     """요청 간격을 지키고, 네트워크 오류·방화벽 차단은 몇 번 다시 시도한다."""
-    global _last_call
+    global _last_call, MIN_INTERVAL
     last = None
     blocked = 0
     while True:
@@ -69,10 +72,12 @@ def get(url: str, params: dict) -> requests.Response:
             continue
         if "Request Blocked" in r.text[:2000]:
             blocked += 1
+            MIN_INTERVAL = min(MAX_INTERVAL, MIN_INTERVAL * 1.5)   # 막히면 속도를 늦춘다
             if blocked > BLOCK_RETRIES:
                 raise KopisError("KOPIS 방화벽이 요청을 계속 막고 있습니다 (400 Request Blocked)")
-            print(f"  KOPIS 차단 응답 → {BLOCK_WAIT}초 뒤 다시 시도 ({blocked}/{BLOCK_RETRIES})", flush=True)
-            time.sleep(BLOCK_WAIT)
+            wait = BLOCK_WAIT * blocked
+            print(f"  KOPIS 차단 응답 → {wait}초 뒤 다시 시도 ({blocked}/{BLOCK_RETRIES}), 간격 {MIN_INTERVAL:.1f}초", flush=True)
+            time.sleep(wait)
             continue
         return r
 
@@ -165,16 +170,49 @@ def main():
     shows = list(all_shows.values())
     print(f"  목록 {len(shows)}건")
 
-    print("  상세정보 수집 중...")
-    for i, s in enumerate(shows, 1):
+    # 지난 결과의 상세정보는 재사용한다: 새 공연과, 요일별로 나눈 일주일 치 갱신분만 KOPIS에 묻는다.
+    out = OUT_DIR / "musicals.json"
+    try:
+        prev_by_id = {p["id"]: p for p in json.loads(out.read_text(encoding="utf-8")) if p.get("id")}
+    except Exception:
+        prev_by_id = {}
+
+    def reusable(prev: dict) -> bool:
+        if not any(prev.get(k) for k in DETAIL_KEYS):
+            return False
         try:
-            s.update(fetch_detail(s["id"]))
-        except Exception:
-            pass
+            fetched = date.fromisoformat(prev.get("상세갱신") or "2026-11-19")
+        except ValueError:
+            return False
+        age = (today - fetched).days
+        if age >= DETAIL_REFRESH_DAYS + 3:
+            return False
+        digits = "".join(ch for ch in prev.get("id", "") if ch.isdigit()) or "0"
+        return not (age >= 1 and int(digits) % DETAIL_REFRESH_DAYS == today.toordinal() % DETAIL_REFRESH_DAYS)
+
+    print("  상세정보 수집 중...")
+    stats = {"reused": 0, "fetched": 0, "fallback": 0, "missing": 0}
+    for i, s in enumerate(shows, 1):
+        prev = prev_by_id.get(s["id"])
+        if prev and reusable(prev):
+            s.update({k: prev.get(k, "") for k in DETAIL_KEYS}); s["상세갱신"] = prev.get("상세갱신") or "2026-11-19"
+            stats["reused"] += 1
+        else:
+            try:
+                d = fetch_detail(s["id"])
+            except Exception:
+                d = {}
+            if d:
+                s.update(d); s["상세갱신"] = today.isoformat(); stats["fetched"] += 1
+            elif prev:
+                # 상세 조회가 막혀도 지난번 정보를 그대로 둔다.
+                s.update({k: prev.get(k, "") for k in DETAIL_KEYS}); s["상세갱신"] = prev.get("상세갱신", ""); stats["fallback"] += 1
+            else:
+                stats["missing"] += 1
         if i % 100 == 0:
             print(f"    {i}/{len(shows)}")
+    print(f"  상세정보: 새로 받음 {stats['fetched']} · 재사용 {stats['reused']} · 막혀서 지난 정보 사용 {stats['fallback']} · 없음 {stats['missing']}")
 
-    out = OUT_DIR / "musicals.json"
     try:
         previous = json.loads(out.read_text(encoding="utf-8"))
     except Exception:
