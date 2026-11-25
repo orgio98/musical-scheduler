@@ -24,6 +24,10 @@ import requests
 class KopisError(RuntimeError):
     pass
 
+
+class KopisUnreachable(KopisError):
+    """KOPIS에 계속 연결되지 않음 → 시간만 쓰지 말고 수집을 멈춘다 (기존 데이터는 유지)."""
+
 SERVICE_KEY = os.environ.get("KOPIS_SERVICE_KEY", "")
 
 DAYS_AHEAD = 90          # 오늘부터 며칠 후까지 수집할지
@@ -49,11 +53,14 @@ BLOCK_WAIT = 20      # 초 (시도할수록 길어진다)
 DETAIL_REFRESH_DAYS = 7   # 이미 받은 공연의 상세정보는 이 주기로만 다시 받는다
 DETAIL_KEYS = ("출연진", "런타임", "티켓가격", "공연시간", "제작사", "예매처")
 _last_call = 0.0
+_net_fails = 0            # 연달아 연결이 안 된 요청 수
+NET_FAIL_LIMIT = 4
+REQUEST_TIMEOUT = 15      # 초
 
 
 def get(url: str, params: dict) -> requests.Response:
     """요청 간격을 지키고, 네트워크 오류·방화벽 차단은 몇 번 다시 시도한다."""
-    global _last_call, MIN_INTERVAL
+    global _last_call, MIN_INTERVAL, _net_fails
     last = None
     blocked = 0
     while True:
@@ -62,14 +69,18 @@ def get(url: str, params: dict) -> requests.Response:
             time.sleep(wait)
         _last_call = time.time()
         try:
-            r = requests.get(url, params=params, headers=HEADERS, timeout=20)
+            r = requests.get(url, params=params, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         except requests.RequestException as e:
             last = e
             if blocked + 1 > 3:
+                _net_fails += 1
+                if _net_fails >= NET_FAIL_LIMIT:
+                    raise KopisUnreachable(f"KOPIS에 {_net_fails}번 연달아 연결하지 못했습니다: {last}")
                 raise KopisError(f"KOPIS에 연결하지 못했습니다: {last}")
             blocked += 1
             time.sleep(2 * blocked)
             continue
+        _net_fails = 0
         if "Request Blocked" in r.text[:2000]:
             blocked += 1
             MIN_INTERVAL = min(MAX_INTERVAL, MIN_INTERVAL * 1.5)   # 막히면 속도를 늦춘다
@@ -200,6 +211,8 @@ def main():
         else:
             try:
                 d = fetch_detail(s["id"])
+            except KopisUnreachable:
+                raise
             except Exception:
                 d = {}
             if d:
